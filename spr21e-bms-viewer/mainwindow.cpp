@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->parameters->setEnabled(false);
 
     linkAvailable = false;
-    QPixmap scuderiaLogo("/home/luca/Schreibtisch/ScuderiaMensa-Logo-Klein.png");
+    QPixmap scuderiaLogo(":/img/logo.png");
 
     ui->scuderiaLogo->setScaledContents(true);
     ui->scuderiaLogo->setPixmap(scuderiaLogo.scaled(2*38, 2*22, Qt::KeepAspectRatio));
