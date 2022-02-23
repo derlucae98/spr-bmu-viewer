@@ -63,6 +63,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->scuderiaLogo->setScaledContents(true);
     ui->scuderiaLogo->setPixmap(scuderiaLogo.scaled(2*38, 2*22, Qt::KeepAspectRatio));
+
+    diagDialog = new DiagDialog(this);
+    QObject::connect(diagDialog, &DiagDialog::balancing_enable, this, &MainWindow::global_balancing_enable);
 }
 
 MainWindow::~MainWindow()
@@ -199,6 +202,22 @@ void MainWindow::update_ui_balancing()
 
         }
     }
+}
+
+void MainWindow::global_balancing_enable(bool enable)
+{
+    QCanBusFrame frame;
+    QByteArray payload;
+    frame.setFrameId(ID_DIAG_REQUEST);
+    payload.append(0x04);
+    payload.append((quint8) 0x00);
+    if (enable) {
+        payload.append(0x01);
+    } else {
+        payload.append((quint8) 0x00);
+    }
+    frame.setPayload(payload);
+    can->send_frame(frame);
 }
 
 void MainWindow::decomposeCellVoltage(quint8 stack, quint8 cellOffset, QByteArray payload)
@@ -528,5 +547,13 @@ void MainWindow::on_reqTsActive_stateChanged(int arg1)
 void MainWindow::on_clearErrorLog_clicked()
 {
     ui->errorLog->clear();
+}
+
+
+void MainWindow::on_diagButton_clicked()
+{
+    if (diagDialog->isHidden()) {
+        diagDialog->show();
+    }
 }
 

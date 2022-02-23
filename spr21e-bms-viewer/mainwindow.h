@@ -12,6 +12,7 @@
 #include <QDateTime>
 #include <QProgressBar>
 #include <QPixmap>
+#include "diagdialog.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -32,6 +33,8 @@ private slots:
     void on_reqTsActive_stateChanged(int arg1);
 
     void on_clearErrorLog_clicked();
+
+    void on_diagButton_clicked();
 
 private:
     enum LTCError_t{
@@ -148,6 +151,10 @@ private:
     void poll_balance_status();
     void handle_diag_response(QCanBusFrame &frame);
     void update_ui_balancing();
+
+
+    DiagDialog *diagDialog = nullptr;
+    void global_balancing_enable(bool enable);
 signals:
 
 

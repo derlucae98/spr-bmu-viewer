@@ -892,7 +892,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="diagButton">
               <property name="text">
                <string>Diagnostic</string>
               </property>
