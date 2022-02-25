@@ -118,6 +118,7 @@ private:
     void decompose_bms_1(QByteArray payload);
     void decompose_bms_2(QByteArray payload);
     void decompose_bms_3(QByteArray payload);
+    void decompose_balance(QCanBusFrame &frame);
     QString ts_state_to_string(ts_state_t state);
     QString returnValidity(quint8 val);
 

@@ -137,6 +137,7 @@ void Can::message_from_client()
 
     } else if (data.compare("pcan init driver failed") == 0) {
         emit error("Could not load pcan driver!");
+        exit(EXIT_FAILURE);
 
     } else if (data.compare("pcan up success") == 0) {
         if (connect_socket()) {
@@ -147,6 +148,7 @@ void Can::message_from_client()
 
     } else if (data.compare("pcan up failed") == 0) {
         emit error("Could not bring can interface up!");
+
 
     } else if (data.compare("pcan down success") == 0) {
         emit device_down();
