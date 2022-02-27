@@ -267,7 +267,7 @@ void MainWindow::decomposeUid(quint8 stack, QByteArray payload)
 
 void MainWindow::decompose_bms_1(QByteArray payload)
 {
-    bmsInfo.minCellVolt = (float)(((quint16)(payload[0] & 0xFF) << 5) | (quint16)payload[1] >> 3) * 0.001f;
+    bmsInfo.minCellVolt = (float)(((quint16)(payload[0] & 0xFF) << 5) | (quint16)(payload[1] & 0xFF) >> 3) * 0.001f;
     bmsInfo.minCellVoltValid = (payload[1] >> 2) & 0x01;
     bmsInfo.maxCellVolt =(float)((quint16)((payload[1] & 0x03) << 11) | ((quint16)(payload[2] & 0xFF) << 3) | (quint8)payload[3] >> 5) * 0.001f;
     bmsInfo.maxCellVoltValid = (payload[3] >> 4) & 0x01;
