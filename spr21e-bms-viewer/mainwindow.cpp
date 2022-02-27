@@ -272,7 +272,7 @@ void MainWindow::decomposeUid(quint8 stack, QByteArray payload)
 
 void MainWindow::decompose_bms_1(QByteArray payload)
 {
-    bmsInfo.minCellVolt = (float)(((quint16)(payload[0] & 0xFF) << 5) | (quint16)payload[1] >> 3) * 0.001f;
+    bmsInfo.minCellVolt = (float)(((quint16)(payload[0] & 0xFF) << 5) | (quint16)(payload[1] & 0xFF) >> 3) * 0.001f;
     bmsInfo.minCellVoltValid = (payload[1] >> 2) & 0x01;
     bmsInfo.maxCellVolt =(float)((quint16)((payload[1] & 0x03) << 11) | ((quint16)(payload[2] & 0xFF) << 3) | (quint8)payload[3] >> 5) * 0.001f;
     bmsInfo.maxCellVoltValid = (payload[3] >> 4) & 0x01;
@@ -318,18 +318,18 @@ void MainWindow::decompose_balance(QCanBusFrame &frame)
 {
     quint8 index = (quint8)frame.payload().at(0);
 
-    balanceStatus[index][0]  = (frame.payload().at(1) >> 0) & 0x01;
-    balanceStatus[index][1]  = (frame.payload().at(1) >> 1) & 0x01;
-    balanceStatus[index][2]  = (frame.payload().at(1) >> 2) & 0x01;
-    balanceStatus[index][3]  = (frame.payload().at(1) >> 3) & 0x01;
-    balanceStatus[index][4]  = (frame.payload().at(1) >> 4) & 0x01;
-    balanceStatus[index][5]  = (frame.payload().at(1) >> 5) & 0x01;
-    balanceStatus[index][6]  = (frame.payload().at(1) >> 6) & 0x01;
-    balanceStatus[index][7]  = (frame.payload().at(1) >> 7) & 0x01;
-    balanceStatus[index][8]  = (frame.payload().at(2) >> 0) & 0x01;
-    balanceStatus[index][9]  = (frame.payload().at(2) >> 1) & 0x01;
-    balanceStatus[index][10] = (frame.payload().at(2) >> 2) & 0x01;
-    balanceStatus[index][11] = (frame.payload().at(2) >> 3) & 0x01;
+    balanceStatus[index][4]  = (frame.payload().at(1) >> 0) & 0x01;
+    balanceStatus[index][5]  = (frame.payload().at(1) >> 1) & 0x01;
+    balanceStatus[index][6]  = (frame.payload().at(1) >> 2) & 0x01;
+    balanceStatus[index][7]  = (frame.payload().at(1) >> 3) & 0x01;
+    balanceStatus[index][8]  = (frame.payload().at(1) >> 4) & 0x01;
+    balanceStatus[index][9]  = (frame.payload().at(1) >> 5) & 0x01;
+    balanceStatus[index][10]  = (frame.payload().at(1) >> 6) & 0x01;
+    balanceStatus[index][11]  = (frame.payload().at(1) >> 7) & 0x01;
+    balanceStatus[index][0]  = (frame.payload().at(2) >> 4) & 0x01;
+    balanceStatus[index][1]  = (frame.payload().at(2) >> 5) & 0x01;
+    balanceStatus[index][2] = (frame.payload().at(2) >> 6) & 0x01;
+    balanceStatus[index][3] = (frame.payload().at(2) >> 7) & 0x01;
     update_ui_balancing();
 
 //    quint64 gates = 0ULL;
