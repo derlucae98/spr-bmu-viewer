@@ -196,7 +196,7 @@ void MainWindow::update_ui_balancing()
     QTreeWidgetItem *volts = ui->parameters->topLevelItem(1); // Voltages
     for (quint16 stack = 0; stack < 12; stack++) {
         for (quint16 cell = 0; cell < 12; cell++) {
-            if (balanceStatus[stack][cell] == 1) {
+            if (balanceStatus[stack][cell]) {
                 volts->child(stack)->setBackground(cell+2, Qt::darkBlue);
                 volts->child(stack)->setForeground(cell+2, Qt::white);
             } else {
