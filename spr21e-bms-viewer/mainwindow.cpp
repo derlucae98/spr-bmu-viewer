@@ -64,8 +64,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scuderiaLogo->setScaledContents(true);
     ui->scuderiaLogo->setPixmap(scuderiaLogo.scaled(2*38, 2*22, Qt::KeepAspectRatio));
 
-    diagDialog = new DiagDialog(this);
-    QObject::connect(diagDialog, &DiagDialog::balancing_enable, this, &MainWindow::global_balancing_enable);
 }
 
 MainWindow::~MainWindow()
@@ -203,7 +201,7 @@ void MainWindow::update_ui_balancing()
                 volts->child(stack)->setForeground(cell+2, Qt::white);
             } else {
                 volts->child(stack)->setBackground(cell+2, Qt::transparent);
-                volts->child(stack)->setForeground(cell+2, Qt::black);
+                volts->child(stack)->setForeground(cell+2, Qt::white);
             }
         }
     }
@@ -610,9 +608,10 @@ void MainWindow::on_clearErrorLog_clicked()
 
 void MainWindow::on_diagButton_clicked()
 {
-    if (diagDialog->isHidden()) {
-        diagDialog->show();
-    }
+    DiagDialog *diagDialog = new DiagDialog();
+    QObject::connect(diagDialog, &DiagDialog::balancing_enable, this, &MainWindow::global_balancing_enable);
+    diagDialog->setAttribute(Qt::WA_DeleteOnClose);
+    diagDialog->exec();
 }
 
 

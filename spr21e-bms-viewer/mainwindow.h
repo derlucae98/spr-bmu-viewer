@@ -156,8 +156,6 @@ private:
     void handle_diag_response(QCanBusFrame &frame);
     void update_ui_balancing();
 
-
-    DiagDialog *diagDialog = nullptr;
     void global_balancing_enable(bool enable);
 
     void closeEvent(QCloseEvent *event);
