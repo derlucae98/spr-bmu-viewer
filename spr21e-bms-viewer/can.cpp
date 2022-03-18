@@ -8,7 +8,7 @@ Can::Can(QObject *parent) : QObject(parent)
 Can::~Can()
 {
     if (server) {
-        server->close();
+        disconnect_device();
     }
 }
 

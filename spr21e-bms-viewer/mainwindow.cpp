@@ -225,6 +225,13 @@ void MainWindow::global_balancing_enable(bool enable)
     can->send_frame(frame);
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (can) {
+        can->disconnect_device();
+    }
+}
+
 void MainWindow::decomposeCellVoltage(quint8 stack, quint8 cellOffset, QByteArray payload)
 {
     QVector<quint16> voltages(3);
@@ -606,5 +613,13 @@ void MainWindow::on_diagButton_clicked()
     if (diagDialog->isHidden()) {
         diagDialog->show();
     }
+}
+
+
+void MainWindow::on_actionLogfile_converter_triggered()
+{
+    LogfileConverter *logfileConverter = new LogfileConverter();
+    logfileConverter->setAttribute(Qt::WA_DeleteOnClose);
+    logfileConverter->show();
 }
 

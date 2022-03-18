@@ -13,6 +13,7 @@
 #include <QProgressBar>
 #include <QPixmap>
 #include "diagdialog.h"
+#include "logfileconverter.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -35,6 +36,8 @@ private slots:
     void on_clearErrorLog_clicked();
 
     void on_diagButton_clicked();
+
+    void on_actionLogfile_converter_triggered();
 
 private:
     enum LTCError_t{
@@ -156,6 +159,9 @@ private:
 
     DiagDialog *diagDialog = nullptr;
     void global_balancing_enable(bool enable);
+
+    void closeEvent(QCloseEvent *event);
+
 signals:
 
 

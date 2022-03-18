@@ -11,16 +11,19 @@ CONFIG += c++17
 SOURCES += \
     can.cpp \
     diagdialog.cpp \
+    logfileconverter.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     can.h \
     diagdialog.h \
+    logfileconverter.h \
     mainwindow.h
 
 FORMS += \
     diagdialog.ui \
+    logfileconverter.ui \
     mainwindow.ui
 
 # Default rules for deployment.

@@ -1376,8 +1376,47 @@
      <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuOptions">
+    <property name="title">
+     <string>Options</string>
+    </property>
+    <addaction name="actionDiagnostic"/>
+    <addaction name="actionLogfile_converter"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
+   <addaction name="menuOptions"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionDiagnostic">
+   <property name="text">
+    <string>Diagnostic</string>
+   </property>
+  </action>
+  <action name="actionLogfile_converter">
+   <property name="text">
+    <string>Logfile converter</string>
+   </property>
+   <property name="toolTip">
+    <string>Convert base64 encoded logfiles to CSV files.</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
