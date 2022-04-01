@@ -622,3 +622,17 @@ void MainWindow::on_actionLogfile_converter_triggered()
     logfileConverter->show();
 }
 
+
+void MainWindow::on_actionAbout_SPR_BMS_viewer_triggered()
+{
+    AboutDialog *aboutDialog = new AboutDialog();
+    aboutDialog->setAttribute(Qt::WA_DeleteOnClose);
+    aboutDialog->show();
+}
+
+
+void MainWindow::on_actionDiagnostic_triggered()
+{
+    on_diagButton_clicked();
+}
+

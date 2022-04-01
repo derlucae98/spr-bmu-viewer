@@ -1395,13 +1395,19 @@
     <property name="title">
      <string>Options</string>
     </property>
-    <addaction name="actionDiagnostic"/>
     <addaction name="actionLogfile_converter"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout_SPR_BMS_viewer"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
    <addaction name="menuOptions"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionDiagnostic">
@@ -1415,6 +1421,11 @@
    </property>
    <property name="toolTip">
     <string>Convert base64 encoded logfiles to CSV files.</string>
+   </property>
+  </action>
+  <action name="actionAbout_SPR_BMS_viewer">
+   <property name="text">
+    <string>About SPR BMS viewer</string>
    </property>
   </action>
  </widget>
