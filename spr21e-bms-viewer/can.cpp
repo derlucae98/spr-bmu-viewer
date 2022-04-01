@@ -1,5 +1,7 @@
 #include "can.h"
 
+const QString Can::serverName = "spr_bms_viewer_helper";
+
 Can::Can(QObject *parent) : QObject(parent)
 {
 
@@ -9,6 +11,7 @@ Can::~Can()
 {
     if (server) {
         disconnect_device();
+        QLocalServer::removeServer(serverName);
     }
 }
 
@@ -21,7 +24,7 @@ void Can::init()
     server = new QLocalServer();
     server->setSocketOptions(QLocalServer::WorldAccessOption);
     QObject::connect(server, &QLocalServer::newConnection, this, &Can::new_client_connected);
-    if(!server->listen("spr_bms_viewer_helper")) {
+    if(!server->listen(serverName)) {
         qDebug() << "Could not start server!";
     }
 

@@ -26,6 +26,7 @@ public:
 
 private:
 
+    static const QString serverName;
     QTimer *timeout = nullptr;
     QCanBusDevice *can_device = nullptr;
     bool connect_socket();
