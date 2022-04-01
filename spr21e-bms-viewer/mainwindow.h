@@ -165,6 +165,8 @@ private:
 
     void closeEvent(QCloseEvent *event);
 
+    bool darkMode;
+
 signals:
 
 

@@ -64,6 +64,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scuderiaLogo->setScaledContents(true);
     ui->scuderiaLogo->setPixmap(scuderiaLogo.scaled(2*38, 2*22, Qt::KeepAspectRatio));
 
+    QColor bgColor = ui->parameters->palette().color(QWidget::backgroundRole());
+    if (bgColor.lightness() < 127) {
+        darkMode = true;
+    } else {
+        darkMode = false;
+    }
 }
 
 MainWindow::~MainWindow()
@@ -199,9 +205,15 @@ void MainWindow::update_ui_balancing()
             if (balanceStatus[stack][cell]) {
                 volts->child(stack)->setBackground(cell+2, Qt::darkBlue);
                 volts->child(stack)->setForeground(cell+2, Qt::white);
+
             } else {
                 volts->child(stack)->setBackground(cell+2, Qt::transparent);
-                volts->child(stack)->setForeground(cell+2, Qt::white);
+
+                if (darkMode) {
+                    volts->child(stack)->setForeground(cell+2, Qt::white);
+                } else {
+                    volts->child(stack)->setForeground(cell+2, Qt::black);
+                }
             }
         }
     }
