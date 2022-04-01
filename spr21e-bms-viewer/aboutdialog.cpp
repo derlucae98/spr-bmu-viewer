@@ -11,7 +11,8 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->author->setText(AUTHORS);
     QPixmap scuderiaLogo(":/img/logo_text.png");
     ui->logo->setScaledContents(true);
-    ui->logo->setPixmap(scuderiaLogo/*.scaled(2*38, 2*22, Qt::KeepAspectRatio)*/);
+    ui->logo->setPixmap(scuderiaLogo);
+    this->setFixedSize(this->size());
 }
 
 AboutDialog::~AboutDialog()

@@ -8,7 +8,6 @@ MAJOR=0
 MINOR=0
 BUILD=$$system(date +%F_%H%M%S)
 AUTHOR="Luca Engelmann"
-#BUILD=$$system(date -R)
 
 DEFINES += "VERS_MAJOR=\"$$MAJOR\"" "VERS_MINOR=\"$$MINOR\"" "VERS_BUILD=\"\\\"$$BUILD\\\"\"" "AUTHORS=\"\\\"$$AUTHOR\\\"\""
 
