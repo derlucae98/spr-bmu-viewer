@@ -37,7 +37,7 @@ void Can::init()
         process->deleteLater();
     });
 
-    QString path = QDir::currentPath() + "/../../" + "bms-viewer-helper/build/bms-viewer-helper";
+    QString path = QDir::currentPath() + /* "/../../" + "bms-viewer-helper/build*/ "/bms-viewer-helper";
     process->start("pkexec", QStringList({path}));
 }
 
