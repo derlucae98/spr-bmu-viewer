@@ -7,6 +7,8 @@
 #include <QProcess>
 #include <QTimer>
 
+
+
 class Helper : public QObject
 {
     Q_OBJECT
@@ -18,13 +20,14 @@ public:
 
 private:
 
+    static const QString bitrate;
     QLocalSocket *socket = nullptr;
     void ready_read();
-    void init_driver();
-    void bring_pcan_up(QString pcan);
-    void bring_pcan_down(QString pcan);
+    void load_driver();
+    void bring_pcan_up();
+    void bring_pcan_down();
     void send_response(QString resp);
-    bool killRequest;
+    void handle_error(QLocalSocket::LocalSocketError err);
     QTimer *timeout = nullptr;
     void timeout_reached();
     QString canDevice;
