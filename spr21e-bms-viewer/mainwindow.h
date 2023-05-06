@@ -13,6 +13,8 @@
 #include <QProgressBar>
 #include <QPixmap>
 #include "diagdialog.h"
+#include "logfileconverter.h"
+#include "aboutdialog.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -35,6 +37,12 @@ private slots:
     void on_clearErrorLog_clicked();
 
     void on_diagButton_clicked();
+
+    void on_actionLogfile_converter_triggered();
+
+    void on_actionAbout_SPR_BMS_viewer_triggered();
+
+    void on_actionDiagnostic_triggered();
 
 private:
     enum LTCError_t{
@@ -118,6 +126,7 @@ private:
     void decompose_bms_1(QByteArray payload);
     void decompose_bms_2(QByteArray payload);
     void decompose_bms_3(QByteArray payload);
+    void decompose_balance(QCanBusFrame &frame);
     QString ts_state_to_string(ts_state_t state);
     QString returnValidity(quint8 val);
 
@@ -152,9 +161,12 @@ private:
     void handle_diag_response(QCanBusFrame &frame);
     void update_ui_balancing();
 
-
-    DiagDialog *diagDialog = nullptr;
     void global_balancing_enable(bool enable);
+
+    void closeEvent(QCloseEvent *event);
+
+    bool darkMode;
+
 signals:
 
 

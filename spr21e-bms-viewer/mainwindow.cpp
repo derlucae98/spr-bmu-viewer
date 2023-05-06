@@ -64,8 +64,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scuderiaLogo->setScaledContents(true);
     ui->scuderiaLogo->setPixmap(scuderiaLogo.scaled(2*38, 2*22, Qt::KeepAspectRatio));
 
-    diagDialog = new DiagDialog(this);
-    QObject::connect(diagDialog, &DiagDialog::balancing_enable, this, &MainWindow::global_balancing_enable);
+    QColor bgColor = ui->parameters->palette().color(QWidget::backgroundRole());
+    if (bgColor.lightness() < 127) {
+        darkMode = true;
+    } else {
+        darkMode = false;
+    }
 }
 
 MainWindow::~MainWindow()
@@ -124,6 +128,10 @@ void MainWindow::new_frame(QCanBusFrame frame)
         break;
     case ID_DIAG_RESPONSE:
         handle_diag_response(frame);
+        break;
+    case 0x00E:
+        //Balancing activity
+        decompose_balance(frame);
         break;
     }
 
@@ -192,14 +200,21 @@ void MainWindow::handle_diag_response(QCanBusFrame &frame)
 void MainWindow::update_ui_balancing()
 {
     QTreeWidgetItem *volts = ui->parameters->topLevelItem(1); // Voltages
-    for (quint16 stack = 0; stack < 1; stack++) {
+    for (quint16 stack = 0; stack < 12; stack++) {
         for (quint16 cell = 0; cell < 12; cell++) {
-            if (balanceStatus[stack][cell] == 1) {
+            if (balanceStatus[stack][cell]) {
                 volts->child(stack)->setBackground(cell+2, Qt::darkBlue);
+                volts->child(stack)->setForeground(cell+2, Qt::white);
+
             } else {
                 volts->child(stack)->setBackground(cell+2, Qt::transparent);
-            }
 
+                if (darkMode) {
+                    volts->child(stack)->setForeground(cell+2, Qt::white);
+                } else {
+                    volts->child(stack)->setForeground(cell+2, Qt::black);
+                }
+            }
         }
     }
 }
@@ -218,6 +233,13 @@ void MainWindow::global_balancing_enable(bool enable)
     }
     frame.setPayload(payload);
     can->send_frame(frame);
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (can) {
+        can->disconnect_device();
+    }
 }
 
 void MainWindow::decomposeCellVoltage(quint8 stack, quint8 cellOffset, QByteArray payload)
@@ -307,6 +329,52 @@ void MainWindow::decompose_bms_3(QByteArray payload)
     bmsInfo.maxTempValid = (payload[6] >> 3) & 0x01;
     bmsInfo.avgTemp = (float)(((quint16)(payload[6] & 0x07) << 7) | (quint16)((payload[7] >> 1) & 0x7F)) * 0.1f;
     bmsInfo.avgTempValid = payload[7] & 0x01;
+}
+
+void MainWindow::decompose_balance(QCanBusFrame &frame)
+{
+    quint8 index = (quint8)frame.payload().at(0);
+
+    balanceStatus[index][4]  = (frame.payload().at(1) >> 0) & 0x01;
+    balanceStatus[index][5]  = (frame.payload().at(1) >> 1) & 0x01;
+    balanceStatus[index][6]  = (frame.payload().at(1) >> 2) & 0x01;
+    balanceStatus[index][7]  = (frame.payload().at(1) >> 3) & 0x01;
+    balanceStatus[index][8]  = (frame.payload().at(1) >> 4) & 0x01;
+    balanceStatus[index][9]  = (frame.payload().at(1) >> 5) & 0x01;
+    balanceStatus[index][10]  = (frame.payload().at(1) >> 6) & 0x01;
+    balanceStatus[index][11]  = (frame.payload().at(1) >> 7) & 0x01;
+    balanceStatus[index][0]  = (frame.payload().at(2) >> 4) & 0x01;
+    balanceStatus[index][1]  = (frame.payload().at(2) >> 5) & 0x01;
+    balanceStatus[index][2] = (frame.payload().at(2) >> 6) & 0x01;
+    balanceStatus[index][3] = (frame.payload().at(2) >> 7) & 0x01;
+    update_ui_balancing();
+
+//    quint64 gates = 0ULL;
+//    gates |= ((quint64)(frame.payload().at(1) & 0xFF) << 40) | ((quint64)(frame.payload().at(2) & 0xFF) << 32) | ((quint64)(frame.payload().at(3) & 0xFF) << 24)
+//            | ((quint64)(frame.payload().at(4) & 0xFF) << 16) | ((quint64)(frame.payload().at(5) & 0xFF) << 8) | ((quint64)(frame.payload().at(6) & 0xFF));
+
+//    for (size_t i = 0; i < 12; i++) {
+
+//        balanceStatus[3 * frame.payload().at(0)][]
+//    }
+
+//    switch (frame.payload().at(0)) {
+//    case 0:
+//        for (size_t i = 0; i < 6; i++) { //Message/byte
+//            for (size_t j = 0; j < 8; j++) { //bit
+//                balanceStatus[0][]
+//            }
+//        }
+
+//        break;
+//    case 1:
+//        ::mempcpy(&balanceStatus[4][0], &gates, 6);
+//        break;
+//    case 2:
+//        ::mempcpy(&balanceStatus[8][0], &gates, 6);
+//        break;
+//    }
+//    qDebug() << balanceStatus[0][2];
 }
 
 QString MainWindow::ts_state_to_string(ts_state_t state)
@@ -510,7 +578,7 @@ void MainWindow::updateCellVoltagePeriodic()
     ::memset(cellVoltages, 0, 144);
     ::memset(temperatures, 0, 12*14);
 
-    poll_balance_status();
+    //poll_balance_status();
 
 }
 
@@ -552,8 +620,31 @@ void MainWindow::on_clearErrorLog_clicked()
 
 void MainWindow::on_diagButton_clicked()
 {
-    if (diagDialog->isHidden()) {
-        diagDialog->show();
-    }
+    DiagDialog *diagDialog = new DiagDialog();
+    QObject::connect(diagDialog, &DiagDialog::balancing_enable, this, &MainWindow::global_balancing_enable);
+    diagDialog->setAttribute(Qt::WA_DeleteOnClose);
+    diagDialog->exec();
+}
+
+
+void MainWindow::on_actionLogfile_converter_triggered()
+{
+    LogfileConverter *logfileConverter = new LogfileConverter();
+    logfileConverter->setAttribute(Qt::WA_DeleteOnClose);
+    logfileConverter->show();
+}
+
+
+void MainWindow::on_actionAbout_SPR_BMS_viewer_triggered()
+{
+    AboutDialog *aboutDialog = new AboutDialog();
+    aboutDialog->setAttribute(Qt::WA_DeleteOnClose);
+    aboutDialog->show();
+}
+
+
+void MainWindow::on_actionDiagnostic_triggered()
+{
+    on_diagButton_clicked();
 }
 

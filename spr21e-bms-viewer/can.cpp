@@ -1,5 +1,7 @@
 #include "can.h"
 
+const QString Can::serverName = "spr_bms_viewer_helper";
+
 Can::Can(QObject *parent) : QObject(parent)
 {
 
@@ -8,7 +10,8 @@ Can::Can(QObject *parent) : QObject(parent)
 Can::~Can()
 {
     if (server) {
-        server->close();
+        disconnect_device();
+        QLocalServer::removeServer(serverName);
     }
 }
 
@@ -21,7 +24,7 @@ void Can::init()
     server = new QLocalServer();
     server->setSocketOptions(QLocalServer::WorldAccessOption);
     QObject::connect(server, &QLocalServer::newConnection, this, &Can::new_client_connected);
-    if(!server->listen("spr_bms_viewer_helper")) {
+    if(!server->listen(serverName)) {
         qDebug() << "Could not start server!";
     }
 
@@ -34,7 +37,7 @@ void Can::init()
         process->deleteLater();
     });
 
-    QString path = QDir::currentPath() + "/../../" + "bms-viewer-helper/build/bms-viewer-helper";
+    QString path = QDir::currentPath() + /* "/../../" + "bms-viewer-helper/build*/ "/bms-viewer-helper";
     process->start("pkexec", QStringList({path}));
 }
 
@@ -137,6 +140,7 @@ void Can::message_from_client()
 
     } else if (data.compare("pcan init driver failed") == 0) {
         emit error("Could not load pcan driver!");
+        exit(EXIT_FAILURE);
 
     } else if (data.compare("pcan up success") == 0) {
         if (connect_socket()) {
@@ -147,6 +151,7 @@ void Can::message_from_client()
 
     } else if (data.compare("pcan up failed") == 0) {
         emit error("Could not bring can interface up!");
+
 
     } else if (data.compare("pcan down success") == 0) {
         emit device_down();
