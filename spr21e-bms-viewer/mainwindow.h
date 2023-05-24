@@ -15,6 +15,7 @@
 #include "diagdialog.h"
 #include "logfileconverter.h"
 #include "aboutdialog.h"
+#include "config.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -43,6 +44,8 @@ private slots:
     void on_actionAbout_SPR_BMS_viewer_triggered();
 
     void on_actionDiagnostic_triggered();
+
+    void on_actionConfig_triggered();
 
 private:
     enum LTCError_t{

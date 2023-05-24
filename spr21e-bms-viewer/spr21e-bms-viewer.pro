@@ -18,6 +18,7 @@ DEFINES += "VERS_MAJOR=\"$$MAJOR\"" "VERS_MINOR=\"$$MINOR\"" "VERS_BUILD=\"\\\"$
 SOURCES += \
     aboutdialog.cpp \
     can.cpp \
+    config.cpp \
     diagdialog.cpp \
     logfileconverter.cpp \
     main.cpp \
@@ -26,12 +27,14 @@ SOURCES += \
 HEADERS += \
     aboutdialog.h \
     can.h \
+    config.h \
     diagdialog.h \
     logfileconverter.h \
     mainwindow.h
 
 FORMS += \
     aboutdialog.ui \
+    config.ui \
     diagdialog.ui \
     logfileconverter.ui \
     mainwindow.ui

@@ -648,3 +648,11 @@ void MainWindow::on_actionDiagnostic_triggered()
     on_diagButton_clicked();
 }
 
+
+void MainWindow::on_actionConfig_triggered()
+{
+    Config *configDialog = new Config();
+    configDialog->setAttribute(Qt::WA_DeleteOnClose);
+    configDialog->show();
+}
+
