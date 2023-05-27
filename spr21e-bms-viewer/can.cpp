@@ -90,6 +90,7 @@ void Can::send_frame(QCanBusFrame frame)
 {
     if (can_device) {
         can_device->writeFrame(frame);
+        qDebug() << "Send frame for ID " << frame.frameId();
     }
 }
 

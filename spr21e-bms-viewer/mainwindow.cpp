@@ -652,6 +652,8 @@ void MainWindow::on_actionDiagnostic_triggered()
 void MainWindow::on_actionConfig_triggered()
 {
     Config *configDialog = new Config();
+    QObject::connect(can, &Can::new_frame, configDialog, &Config::can_recv);
+    QObject::connect(configDialog, &Config::can_send, can, &Can::send_frame);
     configDialog->setAttribute(Qt::WA_DeleteOnClose);
     configDialog->show();
 }
