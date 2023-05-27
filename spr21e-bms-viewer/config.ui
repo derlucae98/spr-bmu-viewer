@@ -27,9 +27,9 @@
        <item row="0" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
-          <widget class="QCheckBox" name="cbLoggerEnabled">
+          <widget class="QLabel" name="lLoggerEnabled">
            <property name="text">
-            <string>Logger enabled</string>
+            <string>Logger disabled</string>
            </property>
           </widget>
          </item>
@@ -124,24 +124,31 @@
        <string>Config</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout">
+       <item row="7" column="0">
+        <widget class="QCheckBox" name="cbSdcAutoReset">
+         <property name="text">
+          <string>SDC auto-reset on startup</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QPushButton" name="btnLoad">
+          <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Load config</string>
+            <string>BMU time:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="btnDefault">
+          <widget class="QLabel" name="bmuTime">
            <property name="text">
-            <string>Default</string>
+            <string>xxxx-xx-xx xx:xx:xx</string>
            </property>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer">
+          <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -154,9 +161,9 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="btnWrite">
+          <widget class="QPushButton" name="btnSyncRtc">
            <property name="text">
-            <string>Write config</string>
+            <string>Sync RTC</string>
            </property>
           </widget>
          </item>
@@ -179,13 +186,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item row="1" column="0">
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
        </item>
        <item row="2" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -241,56 +241,11 @@
         </layout>
        </item>
        <item row="6" column="0">
-        <widget class="QCheckBox" name="cbSdcAutoReset">
-         <property name="text">
-          <string>SDC auto-reset on startup</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
         <widget class="QCheckBox" name="cbDeleteOldestLog">
          <property name="text">
           <string>Delete oldest logfile</string>
          </property>
         </widget>
-       </item>
-       <item row="7" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>BMU time:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="bmuTime">
-           <property name="text">
-            <string>xxxx-xx-xx xx:xx:xx</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnSyncRtc">
-           <property name="text">
-            <string>Sync RTC</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </item>
        <item row="4" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -325,6 +280,58 @@
           </spacer>
          </item>
         </layout>
+       </item>
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="btnLoad">
+           <property name="text">
+            <string>Load config</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnDefault">
+           <property name="text">
+            <string>Default</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnWrite">
+           <property name="text">
+            <string>Write config</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QCheckBox" name="cbLoggerEnabled">
+         <property name="text">
+          <string>Logger enabled</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
