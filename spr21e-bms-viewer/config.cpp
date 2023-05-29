@@ -11,6 +11,8 @@ Config::Config(QWidget *parent) :
     pollTimer = new QTimer();
     pollTimer->setInterval(1000);
     QObject::connect(pollTimer, &QTimer::timeout, this, &Config::poll_timer_callback);
+    ui->downloadProgress->setVisible(false);
+    ui->status->setText("");
 
 
 }
@@ -92,20 +94,22 @@ void Config::handle_format_sd_response(QCanBusFrame &frame)
     switch (frame.payload().at(2)) {
     case CARD_FORMATTING_FINISHED:
         pollTimer->stop();
-        QMessageBox::information(this, "Format SD card finished!",
-                                    "Formatting finished!\n");
+        ui->status->setText("Done!");
+        ui->tabWidget->setEnabled(true);
         break;
     case CARD_FORMATTING_BUSY:
+        ui->status->setText("Formatting SD card...");
+        ui->tabWidget->setEnabled(false);
         break;
     case ERROR_CARD_FORMATTING_FAILED:
         pollTimer->stop();
-        QMessageBox::critical(this, "Format SD card failed!",
-                                    "Formatting failed!\n");
+        ui->status->setText("Formatting failed!");
+        ui->tabWidget->setEnabled(true);
         break;
     case ERROR_NO_CARD:
         pollTimer->stop();
-        QMessageBox::critical(this, "Format SD card failed!",
-                                    "No card!\n");
+        ui->status->setText("No card!");
+        ui->tabWidget->setEnabled(true);
         break;
     }
 }

@@ -110,13 +110,6 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="loggerStatus">
-         <property name="text">
-          <string>xxx</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
@@ -179,6 +172,19 @@
           </widget>
          </item>
          <item>
+          <spacer name="horizontalSpacer_11">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QPushButton" name="btnForceSocLookup">
            <property name="text">
             <string>Force SOC lookup</string>
@@ -222,7 +228,7 @@
             <string> V</string>
            </property>
            <property name="decimals">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="minimum">
             <double>3.000000000000000</double>
@@ -353,6 +359,13 @@
           <widget class="QComboBox" name="calInput"/>
          </item>
          <item>
+          <widget class="QPushButton" name="btnStartCal">
+           <property name="text">
+            <string>Start calibration</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_7">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -364,13 +377,6 @@
             </size>
            </property>
           </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btnStartCal">
-           <property name="text">
-            <string>Start calibration</string>
-           </property>
-          </widget>
          </item>
         </layout>
        </item>
@@ -508,6 +514,13 @@
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="status">
+     <property name="text">
+      <string>xxx</string>
+     </property>
     </widget>
    </item>
   </layout>
