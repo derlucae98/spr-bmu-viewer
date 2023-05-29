@@ -78,6 +78,26 @@ private:
     void handle_format_sd_response(QCanBusFrame &frame);
     void poll_timer_callback();
 
+    void load_config();
+
+
+    void request_cmd(quint8 ID);
+    quint8 currentCmd;
+    config_t config;
+    void update_UI_config();
+
+    void handle_balancing_enable_response(QCanBusFrame &frame);
+    void handle_balancing_threshold_response(QCanBusFrame &frame);
+    void handle_automatic_soc_lookup_response(QCanBusFrame &frame);
+    void handle_number_of_stacks_response(QCanBusFrame &frame);
+    void handle_logger_enable_response(QCanBusFrame &frame);
+    void handle_logger_delete_oldest_response(QCanBusFrame &frame);
+    void handle_auto_reset_response(QCanBusFrame &frame);
+    bool response_error(QCanBusFrame &frame);
+    bool response_to_set_request(QCanBusFrame &frame);
+
+    void showEvent(QShowEvent *event);
+
 signals:
     void can_send(QCanBusFrame frame);
 };
