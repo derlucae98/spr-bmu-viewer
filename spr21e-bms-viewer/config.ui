@@ -224,6 +224,9 @@
          </item>
          <item>
           <widget class="QDoubleSpinBox" name="balancingThreshold">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="suffix">
             <string> V</string>
            </property>

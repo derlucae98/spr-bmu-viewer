@@ -15,8 +15,7 @@ Config::Config(QWidget *parent) :
     ui->status->setText("");
     currentCmd = ID_GLOBAL_BALANCING_ENABLE;
     ::memset(&config, 0, sizeof(config_t));
-
-
+    ::memset(&oldConfig, 0, sizeof(config_t));
 
 }
 
@@ -156,6 +155,7 @@ void Config::request_cmd(quint8 ID)
 
 void Config::update_UI_config()
 {
+    oldConfig = config;
     ui->cbBalancingEnabled->setChecked(config.globalBalancingEnable);
     ui->cbAutoSocLookup->setChecked(config.automaticSocLookupEnable);
     ui->cbLoggerEnabled->setChecked((bool)config.loggerEnable);
@@ -192,7 +192,7 @@ void Config::handle_balancing_threshold_response(QCanBusFrame &frame)
     if (response_to_set_request(frame)) {
 
     } else {
-        config.balancingThreshold = (quint16)(frame.payload().at(2) << 8) | (quint8)(frame.payload().at(3));
+        config.balancingThreshold = (quint16)(frame.payload().at(3) << 8) | (quint8)(frame.payload().at(2));
         currentCmd = ID_AUTOMATIC_SOC_LOOKUP_ENABLE;
         load_config();
     }
@@ -308,5 +308,86 @@ void Config::showEvent(QShowEvent *event)
 void Config::on_btnDownload_clicked()
 {
 
+}
+
+
+void Config::on_cbBalancingEnabled_stateChanged(int arg1)
+{
+    config.globalBalancingEnable = (bool)arg1;
+    if (config.globalBalancingEnable != oldConfig.globalBalancingEnable) {
+        ui->cbBalancingEnabled->setStyleSheet("color:red");
+    } else {
+        ui->cbBalancingEnabled->setStyleSheet("");
+    }
+}
+
+
+void Config::on_balancingThreshold_valueChanged(double arg1)
+{
+    config.balancingThreshold = (quint16)((arg1 + 0.00005) * 10000);
+    if (config.balancingThreshold != oldConfig.balancingThreshold) {
+        QPalette palette = ui->balancingThreshold->palette();
+        palette.setColor(QPalette::Text, QColor(0xFF, 0, 0));
+        ui->balancingThreshold->setPalette(palette);
+    } else {
+        ui->balancingThreshold->setPalette(this->style()->standardPalette());
+    }
+}
+
+
+void Config::on_cbAutoSocLookup_stateChanged(int arg1)
+{
+    config.automaticSocLookupEnable = (bool)arg1;
+    if (config.automaticSocLookupEnable != oldConfig.automaticSocLookupEnable) {
+        ui->cbAutoSocLookup->setStyleSheet("color:red");
+    } else {
+        ui->cbAutoSocLookup->setStyleSheet("");
+    }
+}
+
+
+void Config::on_numberOfStacks_valueChanged(int arg1)
+{
+    config.numberOfStacks = (quint8)(arg1);
+    if (config.numberOfStacks != oldConfig.numberOfStacks) {
+        QPalette palette = ui->numberOfStacks->palette();
+        palette.setColor(QPalette::Text, QColor(0xFF, 0, 0));
+        ui->numberOfStacks->setPalette(palette);
+    } else {
+        ui->numberOfStacks->setPalette(this->style()->standardPalette());
+    }
+}
+
+
+void Config::on_cbLoggerEnabled_stateChanged(int arg1)
+{
+    config.loggerEnable = (bool)arg1;
+    if (config.loggerEnable != oldConfig.loggerEnable) {
+        ui->cbLoggerEnabled->setStyleSheet("color:red");
+    } else {
+        ui->cbLoggerEnabled->setStyleSheet("");
+    }
+}
+
+
+void Config::on_cbDeleteOldestLog_stateChanged(int arg1)
+{
+    config.loggerDeleteOldestFile = (bool)arg1;
+    if (config.loggerDeleteOldestFile != oldConfig.loggerDeleteOldestFile) {
+        ui->cbDeleteOldestLog->setStyleSheet("color:red");
+    } else {
+        ui->cbDeleteOldestLog->setStyleSheet("");
+    }
+}
+
+
+void Config::on_cbSdcAutoReset_stateChanged(int arg1)
+{
+    config.autoResetOnPowerCycleEnable = (bool)arg1;
+    if (config.autoResetOnPowerCycleEnable != oldConfig.autoResetOnPowerCycleEnable) {
+        ui->cbSdcAutoReset->setStyleSheet("color:red");
+    } else {
+        ui->cbSdcAutoReset->setStyleSheet("");
+    }
 }
 

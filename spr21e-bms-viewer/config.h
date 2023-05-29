@@ -30,6 +30,20 @@ private slots:
 
     void on_btnDownload_clicked();
 
+    void on_cbBalancingEnabled_stateChanged(int arg1);
+
+    void on_balancingThreshold_valueChanged(double arg1);
+
+    void on_cbAutoSocLookup_stateChanged(int arg1);
+
+    void on_numberOfStacks_valueChanged(int arg1);
+
+    void on_cbLoggerEnabled_stateChanged(int arg1);
+
+    void on_cbDeleteOldestLog_stateChanged(int arg1);
+
+    void on_cbSdcAutoReset_stateChanged(int arg1);
+
 private:
     Ui::Config *ui;
 
@@ -84,6 +98,7 @@ private:
     void request_cmd(quint8 ID);
     quint8 currentCmd;
     config_t config;
+    config_t oldConfig;
     void update_UI_config();
 
     void handle_balancing_enable_response(QCanBusFrame &frame);
