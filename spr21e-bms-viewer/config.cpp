@@ -106,15 +106,11 @@ void Config::query_config()
 
 void Config::handle_query_config_response(QByteArray &data)
 {
-    qDebug() << "Handle query config";
     if (data.at(1) == (ID_QUERY_CONFIG & 0x80)) {
         QMessageBox::critical(this, "Error requesting config!", "Could not query config!");
 
         return;
     }
-
-    qDebug() << "size: " << data.size();
-    qDebug() << "Number of bytes: " << QString::number(data.at(2));
 
     if ((data.size() != (sizeof(config_t) + 3)) || data.at(2) != sizeof(config_t)) {
         QMessageBox::critical(this, "Error requesting config!", "Could not query config due to transmission error!");
@@ -151,7 +147,6 @@ void Config::handle_update_config_response(QByteArray &data)
 
 void Config::handle_cal_response(QByteArray data)
 {
-    qDebug() << "Handle cal response";
     switch (data.at(1) & 0x7F) {
         case ID_LOAD_DEFAULT_CONFIG:
             break;
