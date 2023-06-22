@@ -5,6 +5,7 @@
 #include <QAbstractButton>
 #include <QPushButton>
 
+
 namespace Ui {
 class DiagDialog;
 }

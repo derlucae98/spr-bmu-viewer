@@ -9,6 +9,9 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QTimer>
+#include "isotp.h"
+
+
 
 namespace Ui {
 class Config;
@@ -44,10 +47,12 @@ private slots:
 
     void on_cbSdcAutoReset_stateChanged(int arg1);
 
+    void on_btnWrite_clicked();
+
 private:
     Ui::Config *ui;
 
-    struct config_t {
+    struct config_t{
         bool globalBalancingEnable;
         quint16 balancingThreshold;
         bool automaticSocLookupEnable;
@@ -55,26 +60,29 @@ private:
         bool loggerEnable;
         bool loggerDeleteOldestFile;
         bool autoResetOnPowerCycleEnable;
-    };
+        quint16 crc16;
+    }  __attribute__((packed));
+
+    quint16 calc_crc16(quint8 *data, size_t len);
 
     enum {
         ID_LOAD_DEFAULT_CONFIG = 0,
-        ID_GLOBAL_BALANCING_ENABLE,
-        ID_BALANCING_THRESHOLD,
+        ID_QUERY_CONFIG,
+        ID_UPDATE_CONFIG,
         ID_BALANCING_FEEDBACK,
         ID_SOC_LOOKUP,
-        ID_AUTOMATIC_SOC_LOOKUP_ENABLE,
-        ID_NUMBER_OF_STACKS,
-        ID_LOGGER_ENABLE,
-        ID_LOGGER_DELETE_OLDEST_FILE,
-        ID_AUTORESET_ENABLE,
-        ID_SET_GET_RTC,
+        ID_SET_RTC,
         ID_CONTROL_CALIBRATION,
         ID_CALIBRATION_STATE,
         ID_CALIBRATION_VALUE,
         ID_FORMAT_SD_CARD,
-        ID_SAVE_NV,
         ID_FORMAT_SD_CARD_STATUS
+    };
+
+    enum isotp_transmission_type {
+        ISOTP_CAL_REQUEST,
+        ISOTP_CAL_RESPONSE,
+        ISOTP_LOGFILE, //Transmitted data is a logfile
     };
 
     enum {
@@ -82,39 +90,50 @@ private:
         CAN_ID_CAL_RESPONSE = 0x011
     };
 
-    static constexpr quint8 CARD_FORMATTING_FINISHED = 0x10;
-    static constexpr quint8 CARD_FORMATTING_BUSY = 0x11;
-    static constexpr quint8 ERROR_CARD_FORMATTING_FAILED = 0x12;
-    static constexpr quint8 ERROR_NO_CARD = 0x13;
+    enum error_codes {
+        ERROR_PARAM_DOES_NOT_EXIST = 0x00,
+        ERROR_CANNOT_MODIFY_RO_PARAMETER,
+        ERROR_DLC_DOES_NOT_MATCH_NUMBER_OF_BYTES,
+        ERROR_NUMBER_OF_BYTES_DOES_NOT_MATCH_DATATYPE,
+        ERROR_INTERNAL_ERROR,
+        ERROR_CANNOT_READ_WO_PARAMETER,
+        ERROR_ISOTOP_ERROR,
+        ERROR_CRC_ERROR
+    };
+
+    static constexpr quint8  CARD_FORMATTING_FINISHED = 0x10;
+    static constexpr quint8  CARD_FORMATTING_BUSY = 0x11;
+    static constexpr quint8  ERROR_CARD_FORMATTING_FAILED = 0x12;
+    static constexpr quint8  ERROR_NO_CARD  = 0x13;
+    static constexpr quint16 RECV_BUF_SIZE  = 4095;
+    static constexpr quint16 SEND_BUF_SIZE  = 4095;
+    static constexpr quint16 ISOTP_UPLINK   = 0x013;
+    static constexpr quint16 ISOTP_DOWNLINK = 0x012;
+
+
+    Isotp *isotp = nullptr;
+    void on_new_isotp_message(QByteArray message);
 
     QTimer *pollTimer = nullptr;
 
-    void handle_format_sd_response(QCanBusFrame &frame);
+    void handle_format_sd_response(QByteArray &frame);
     void poll_timer_callback();
 
-    void load_config();
+    void query_config();
+    void handle_query_config_response(QByteArray &data);
+    void handle_update_config_response(QByteArray &data);
+    void handle_cal_response(QByteArray data);
 
 
-    void request_cmd(quint8 ID);
-    quint8 currentCmd;
     config_t config;
     config_t oldConfig;
     void update_UI_config();
-
-    void handle_balancing_enable_response(QCanBusFrame &frame);
-    void handle_balancing_threshold_response(QCanBusFrame &frame);
-    void handle_automatic_soc_lookup_response(QCanBusFrame &frame);
-    void handle_number_of_stacks_response(QCanBusFrame &frame);
-    void handle_logger_enable_response(QCanBusFrame &frame);
-    void handle_logger_delete_oldest_response(QCanBusFrame &frame);
-    void handle_auto_reset_response(QCanBusFrame &frame);
-    bool response_error(QCanBusFrame &frame);
-    bool response_to_set_request(QCanBusFrame &frame);
 
     void showEvent(QShowEvent *event);
 
 signals:
     void can_send(QCanBusFrame frame);
+    void isotp_new_frame(QCanBusFrame data);
 };
 
 #endif // CONFIG_H

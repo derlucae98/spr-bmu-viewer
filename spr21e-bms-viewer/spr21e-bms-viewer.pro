@@ -20,6 +20,7 @@ SOURCES += \
     can.cpp \
     config.cpp \
     diagdialog.cpp \
+    isotp.cpp \
     logfileconverter.cpp \
     main.cpp \
     mainwindow.cpp
@@ -29,6 +30,7 @@ HEADERS += \
     can.h \
     config.h \
     diagdialog.h \
+    isotp.h \
     logfileconverter.h \
     mainwindow.h
 
