@@ -49,6 +49,8 @@ private slots:
 
     void on_btnWrite_clicked();
 
+    void on_btnLoggerFetch_clicked();
+
 private:
     Ui::Config *ui;
 
@@ -63,6 +65,12 @@ private:
         quint16 crc16;
     }  __attribute__((packed));
 
+    struct file_info_t {
+        char name[20];
+        quint8 handle;
+        quint32 size;
+    } __attribute__((packed));
+
     quint16 calc_crc16(quint8 *data, size_t len);
 
     enum {
@@ -76,7 +84,8 @@ private:
         ID_CALIBRATION_STATE,
         ID_CALIBRATION_VALUE,
         ID_FORMAT_SD_CARD,
-        ID_FORMAT_SD_CARD_STATUS
+        ID_FORMAT_SD_CARD_STATUS,
+        ID_QUERY_LOGFILE_INFO
     };
 
     enum isotp_transmission_type {
@@ -123,6 +132,7 @@ private:
     void handle_query_config_response(QByteArray &data);
     void handle_update_config_response(QByteArray &data);
     void handle_cal_response(QByteArray data);
+    void handle_logfile_info_response(QByteArray data);
 
 
     config_t config;

@@ -47,6 +47,13 @@
           </spacer>
          </item>
          <item>
+          <widget class="QPushButton" name="btnLoggerFetch">
+           <property name="text">
+            <string>Fetch data</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="btnFormatSD">
            <property name="text">
             <string>Format SD</string>

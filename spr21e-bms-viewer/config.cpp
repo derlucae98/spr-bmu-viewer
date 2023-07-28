@@ -172,6 +172,30 @@ void Config::handle_cal_response(QByteArray data)
         case ID_FORMAT_SD_CARD_STATUS:
             handle_format_sd_response(data);
             break;
+        case ID_QUERY_LOGFILE_INFO:
+            handle_logfile_info_response(data);
+        break;
+    }
+}
+
+void Config::handle_logfile_info_response(QByteArray data)
+{
+    if ((data.size() - 3) % sizeof(file_info_t) != 0) {
+        qDebug() << "Error fetching logfile data!";
+        return;
+    }
+    ui->logList->clear();
+
+    quint8 numberOfLogfiles = (data.size() - 3) / sizeof(file_info_t);
+    file_info_t files[numberOfLogfiles];
+    char *rawData = data.data_ptr()->data() + 3;
+
+    for (quint8 i = 0; i < numberOfLogfiles; i++) {
+        ::memcpy(&files[i], rawData + (i * sizeof(file_info_t)), sizeof(file_info_t));
+    }
+
+    for (quint8 i = 0; i < numberOfLogfiles; i++) {
+        ui->logList->addItem(QString(files[i].name) + " (" + QString::number(files[i].size) + " byte)");
     }
 }
 
@@ -374,5 +398,15 @@ void Config::on_btnWrite_clicked()
     send.append(sizeof(config_t));
     send.append(payload);
     isotp->send(send);
+}
+
+
+void Config::on_btnLoggerFetch_clicked()
+{
+    QByteArray payload;
+    payload.append(char(ISOTP_CAL_REQUEST));
+    payload.append(quint8(ID_QUERY_LOGFILE_INFO));
+    payload.append(char(0));
+    isotp->send(payload);
 }
 
