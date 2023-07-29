@@ -110,6 +110,34 @@ private:
         ERROR_CRC_ERROR
     };
 
+    struct logging_data_t {
+        uint16_t start; //Token to recognize the start of a block of data. Value does not match a valid cell voltage to be distinguishable from following bytes.
+        uint32_t msgCnt; //Relative timestamp in 100 ms intervals
+        uint16_t cellVoltage[12][12];
+        uint16_t temperature[12][6];
+        float current;
+        bool currentValid;
+        float batteryVoltage;
+        float dcLinkVoltage;
+        bool voltageValid;
+        uint16_t minCellVolt;
+        uint16_t maxCellVolt;
+        uint16_t avgCellVolt;
+        bool cellVoltageValid;
+        uint16_t minTemperature;
+        uint16_t maxTemperature;
+        uint16_t avgTemperature;
+        bool temperatureValid;
+        uint32_t stateMachineError;
+        uint8_t stateMachineState;
+        uint16_t minSoc;
+        uint16_t maxSoc;
+        bool socValid;
+        uint16_t isoResistance;
+        bool isoResistanceValid;
+        uint16_t crc16;
+    } __attribute__((packed)); //481 bytes
+
     static constexpr quint8  CARD_FORMATTING_FINISHED = 0x10;
     static constexpr quint8  CARD_FORMATTING_BUSY = 0x11;
     static constexpr quint8  ERROR_CARD_FORMATTING_FAILED = 0x12;

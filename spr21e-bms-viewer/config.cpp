@@ -194,8 +194,12 @@ void Config::handle_logfile_info_response(QByteArray data)
         ::memcpy(&files[i], rawData + (i * sizeof(file_info_t)), sizeof(file_info_t));
     }
 
+
+
     for (quint8 i = 0; i < numberOfLogfiles; i++) {
-        ui->logList->addItem(QString(files[i].name) + " (" + QString::number(files[i].size) + " byte)");
+        // Calculate length of files
+        quint32 lenghtSeconds = files[i].size / (10 * sizeof(logging_data_t));
+        ui->logList->addItem(QString(files[i].name) + QString("\t %1").arg(QDateTime::fromTime_t(lenghtSeconds).toUTC().toString("hh:mm:ss")) + "\t (" + QString::number(files[i].size) + " byte)");
     }
 }
 
