@@ -46,6 +46,18 @@ void Config::on_btnLoad_clicked()
 
 void Config::on_btnFormatSD_clicked()
 {
+    if (config.loggerEnable) {
+        QMessageBox::StandardButton ret = QMessageBox::question(this, "Format SD card",
+                                                                "Logger must be stopped in order to format SD card.\n"
+                                                                "Would you like to stop the logger now?",
+                                                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        config.loggerEnable = false;
+        if (ret == QMessageBox::Yes) {
+            update_config();
+        } else {
+            return;
+        }
+    }
     QMessageBox::StandardButton ret = QMessageBox::question(this, "Format SD card",
                                                             "All data will be lost!\n"
                                                             "This process can take several minutes and cannot be cancelled. Proceed?",
@@ -104,6 +116,29 @@ void Config::query_config()
     isotp->send(payload);
 }
 
+void Config::update_config()
+{
+    ui->status->setText("Updating config...");
+    quint16 crc = calc_crc16((quint8*)&this->config, sizeof(config_t) - sizeof(quint16));
+    this->config.crc16 = crc;
+    QByteArray payload = QByteArray::fromRawData((const char*)&this->config, sizeof(config_t));
+    QByteArray send;
+    send.append(char(ISOTP_CAL_REQUEST));
+    send.append(quint8(ID_UPDATE_CONFIG | 0x80));
+    send.append(sizeof(config_t));
+    send.append(payload);
+    isotp->send(send);
+}
+
+void Config::system_reset()
+{
+    QByteArray send;
+    send.append(char(ISOTP_CAL_REQUEST));
+    send.append(quint8(ID_RESTART_SYSTEM | 0x80));
+    send.append(char(0));
+    isotp->send(send);
+}
+
 void Config::handle_query_config_response(QByteArray &data)
 {
     if (data.at(1) == (ID_QUERY_CONFIG & 0x80)) {
@@ -137,7 +172,6 @@ void Config::handle_update_config_response(QByteArray &data)
 {
     if (data.at(1) == ID_UPDATE_CONFIG) {
         ui->status->setText("Ready.");
-        query_config();
     } else {
         QMessageBox::critical(this, "Error updating config!", QString("Could not update config! Error code: %1").arg(data.at(3)));
         ui->status->setText("Update failed!");
@@ -199,7 +233,7 @@ void Config::handle_logfile_info_response(QByteArray data)
     for (quint8 i = 0; i < numberOfLogfiles; i++) {
         // Calculate length of files
         quint32 lenghtSeconds = files[i].size / (10 * sizeof(logging_data_t));
-        ui->logList->addItem(QString(files[i].name) + QString("\t %1").arg(QDateTime::fromTime_t(lenghtSeconds).toUTC().toString("hh:mm:ss")) + "\t (" + QString::number(files[i].size) + " byte)");
+        ui->logList->addItem(QString(files[i].name) + QString("\t %1").arg(QDateTime::fromTime_t(lenghtSeconds).toUTC().toString("hh:mm:ss")) + "\t (" + QString::number(((files[i].size - 1) / 1000) + 1) + " kB)");
     }
 }
 
@@ -392,16 +426,7 @@ quint16 Config::calc_crc16(quint8 *data, size_t len)
 
 void Config::on_btnWrite_clicked()
 {
-    ui->status->setText("Updating config...");
-    quint16 crc = calc_crc16((quint8*)&this->config, sizeof(config_t) - sizeof(quint16));
-    this->config.crc16 = crc;
-    QByteArray payload = QByteArray::fromRawData((const char*)&this->config, sizeof(config_t));
-    QByteArray send;
-    send.append(char(ISOTP_CAL_REQUEST));
-    send.append(quint8(ID_UPDATE_CONFIG | 0x80));
-    send.append(sizeof(config_t));
-    send.append(payload);
-    isotp->send(send);
+    update_config();
 }
 
 

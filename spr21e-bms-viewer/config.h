@@ -85,7 +85,8 @@ private:
         ID_CALIBRATION_VALUE,
         ID_FORMAT_SD_CARD,
         ID_FORMAT_SD_CARD_STATUS,
-        ID_QUERY_LOGFILE_INFO
+        ID_QUERY_LOGFILE_INFO,
+        ID_RESTART_SYSTEM
     };
 
     enum isotp_transmission_type {
@@ -157,6 +158,8 @@ private:
     void poll_timer_callback();
 
     void query_config();
+    void update_config();
+    void system_reset();
     void handle_query_config_response(QByteArray &data);
     void handle_update_config_response(QByteArray &data);
     void handle_cal_response(QByteArray data);
