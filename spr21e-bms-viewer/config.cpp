@@ -36,6 +36,9 @@ void Config::can_recv(QCanBusFrame frame)
     if (frame.frameId() == ISOTP_DOWNLINK) {
         emit isotp_new_frame(frame);
     }
+    if (frame.frameId() == ID_STARTUP) {
+        query_config();
+    }
 }
 
 void Config::on_btnLoad_clicked()

@@ -147,6 +147,7 @@ private:
     static constexpr quint16 SEND_BUF_SIZE  = 4095;
     static constexpr quint16 ISOTP_UPLINK   = 0x013;
     static constexpr quint16 ISOTP_DOWNLINK = 0x012;
+    static constexpr quint16 ID_STARTUP     = 0x020;
 
 
     Isotp *isotp = nullptr;
