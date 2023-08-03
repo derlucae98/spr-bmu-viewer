@@ -8,8 +8,8 @@
 #include <QCanBusFrame>
 #include <QMessageBox>
 #include <QDebug>
-#include <QTimer>
-#include "isotp.h"
+
+
 
 
 
@@ -28,28 +28,12 @@ public:
 
 private slots:
     void on_btnLoad_clicked();
-
-    void on_btnFormatSD_clicked();
-
-    void on_btnDownload_clicked();
-
     void on_cbBalancingEnabled_stateChanged(int arg1);
-
     void on_balancingThreshold_valueChanged(double arg1);
-
     void on_cbAutoSocLookup_stateChanged(int arg1);
-
     void on_numberOfStacks_valueChanged(int arg1);
-
-    void on_cbLoggerEnabled_stateChanged(int arg1);
-
-    void on_cbDeleteOldestLog_stateChanged(int arg1);
-
     void on_cbSdcAutoReset_stateChanged(int arg1);
-
     void on_btnWrite_clicked();
-
-    void on_btnLoggerFetch_clicked();
 
 private:
     Ui::Config *ui;
@@ -59,123 +43,53 @@ private:
         quint16 balancingThreshold;
         bool automaticSocLookupEnable;
         quint8 numberOfStacks;
-        bool loggerEnable;
-        bool loggerDeleteOldestFile;
         bool autoResetOnPowerCycleEnable;
-        quint16 crc16;
-    }  __attribute__((packed));
-
-    struct file_info_t {
-        char name[20];
-        quint8 handle;
-        quint32 size;
-    } __attribute__((packed));
-
-    quint16 calc_crc16(quint8 *data, size_t len);
-
-    enum {
-        ID_LOAD_DEFAULT_CONFIG = 0,
-        ID_QUERY_CONFIG,
-        ID_UPDATE_CONFIG,
-        ID_BALANCING_FEEDBACK,
-        ID_SOC_LOOKUP,
-        ID_SET_RTC,
-        ID_CONTROL_CALIBRATION,
-        ID_CALIBRATION_STATE,
-        ID_CALIBRATION_VALUE,
-        ID_FORMAT_SD_CARD,
-        ID_FORMAT_SD_CARD_STATUS,
-        ID_QUERY_LOGFILE_INFO,
-        ID_RESTART_SYSTEM
-    };
-
-    enum isotp_transmission_type {
-        ISOTP_CAL_REQUEST,
-        ISOTP_CAL_RESPONSE,
-        ISOTP_LOGFILE, //Transmitted data is a logfile
     };
 
     enum {
-        CAN_ID_CAL_REQUEST  = 0x010,
-        CAN_ID_CAL_RESPONSE = 0x011
+        ID_LOAD_DEFAULT_CONFIG = 0x00,
+        ID_QUERY_CONFIG        = 0x01,
+        ID_UPDATE_CONFIG       = 0x02,
+        ID_SOC_LOOKUP          = 0x10,
+        ID_SET_RTC             = 0x20,
+        ID_CONTROL_CALIBRATION = 0x30,
+        ID_CALIBRATION_STATE   = 0x31,
+        ID_CALIBRATION_VALUE   = 0x32
+    };
+
+    enum {
+        CAN_ID_CAL_REQUEST  = 0x012,
+        CAN_ID_CAL_RESPONSE = 0x013,
+        CAN_ID_STARTUP      = 0x020
     };
 
     enum error_codes {
-        ERROR_PARAM_DOES_NOT_EXIST = 0x00,
-        ERROR_CANNOT_MODIFY_RO_PARAMETER,
-        ERROR_DLC_DOES_NOT_MATCH_NUMBER_OF_BYTES,
-        ERROR_NUMBER_OF_BYTES_DOES_NOT_MATCH_DATATYPE,
-        ERROR_INTERNAL_ERROR,
-        ERROR_CANNOT_READ_WO_PARAMETER,
-        ERROR_ISOTOP_ERROR,
-        ERROR_CRC_ERROR
+        CAL_ERROR_NO_ERROR,
+        CAL_ERROR_PARAM_DOES_NOT_EXIST,
+        CAL_ERROR_DLC_MISMATCH, //Expected more or less bytes of payload
+        CAL_ERROR_INTERNAL_ERROR
     };
 
-    struct logging_data_t {
-        uint16_t start; //Token to recognize the start of a block of data. Value does not match a valid cell voltage to be distinguishable from following bytes.
-        uint32_t msgCnt; //Relative timestamp in 100 ms intervals
-        uint16_t cellVoltage[12][12];
-        uint16_t temperature[12][6];
-        float current;
-        bool currentValid;
-        float batteryVoltage;
-        float dcLinkVoltage;
-        bool voltageValid;
-        uint16_t minCellVolt;
-        uint16_t maxCellVolt;
-        uint16_t avgCellVolt;
-        bool cellVoltageValid;
-        uint16_t minTemperature;
-        uint16_t maxTemperature;
-        uint16_t avgTemperature;
-        bool temperatureValid;
-        uint32_t stateMachineError;
-        uint8_t stateMachineState;
-        uint16_t minSoc;
-        uint16_t maxSoc;
-        bool socValid;
-        uint16_t isoResistance;
-        bool isoResistanceValid;
-        uint16_t crc16;
-    } __attribute__((packed)); //481 bytes
-
-    static constexpr quint8  CARD_FORMATTING_FINISHED = 0x10;
-    static constexpr quint8  CARD_FORMATTING_BUSY = 0x11;
-    static constexpr quint8  ERROR_CARD_FORMATTING_FAILED = 0x12;
-    static constexpr quint8  ERROR_NO_CARD  = 0x13;
-    static constexpr quint16 RECV_BUF_SIZE  = 4095;
-    static constexpr quint16 SEND_BUF_SIZE  = 4095;
-    static constexpr quint16 ISOTP_UPLINK   = 0x013;
-    static constexpr quint16 ISOTP_DOWNLINK = 0x012;
-    static constexpr quint16 ID_STARTUP     = 0x020;
-
-
-    Isotp *isotp = nullptr;
-    void on_new_isotp_message(QByteArray message);
-
-    QTimer *pollTimer = nullptr;
-
-    void handle_format_sd_response(QByteArray &frame);
-    void poll_timer_callback();
 
     void query_config();
     void update_config();
-    void system_reset();
+
     void handle_query_config_response(QByteArray &data);
     void handle_update_config_response(QByteArray &data);
-    void handle_cal_response(QByteArray data);
-    void handle_logfile_info_response(QByteArray data);
 
+    void handle_cal_response(QByteArray data);
 
     config_t config;
     config_t oldConfig;
+
     void update_UI_config();
+
+    void send_frame(QByteArray payload);
 
     void showEvent(QShowEvent *event);
 
 signals:
     void can_send(QCanBusFrame frame);
-    void isotp_new_frame(QCanBusFrame data);
 };
 
 #endif // CONFIG_H
