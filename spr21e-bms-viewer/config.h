@@ -9,7 +9,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QDateTime>
-
+#include <QTimer>
 
 
 
@@ -36,6 +36,10 @@ private slots:
     void on_btnWrite_clicked();
 
     void on_btnSyncRtc_clicked();
+
+    void on_btnStartCal_clicked();
+
+    void on_btnApplyCalValue_clicked();
 
 private:
     Ui::Config *ui;
@@ -72,6 +76,22 @@ private:
         CAL_ERROR_DLC_MISMATCH, //Expected more or less bytes of payload
         CAL_ERROR_INTERNAL_ERROR
     };
+
+    typedef enum {
+        CAL_STATE_STANDBY,              //!< State machine task is suspended
+        CAL_STATE_WAIT_FOR_VALUE_1,     //!< State machine waits for the user to apply the first value (voltage or current) to the corresponding input
+        CAL_STATE_WAIT_FOR_VALUE_2,     //!< State machine waits for the user to apply the second value (voltage or current) to the corresponding input
+        CAL_STATE_UPDATE_CALIBRATION,   //!< New calibration values are calculated and stored to the EEPROM
+        CAL_STATE_FINISH                //!< New calibration is stored in the EEPROM.
+    } adc_cal_state_t;
+
+    adc_cal_state_t calState;
+
+    QTimer *calStateTimer = nullptr;
+    void poll_cal_state();
+    void handle_poll_cal_state_response(QByteArray &data);
+    void config_ui_disable();
+    void config_ui_enable();
 
 
     void query_config();

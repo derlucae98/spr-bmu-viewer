@@ -13,6 +13,14 @@ Config::Config(QWidget *parent) :
     ::memset(&config, 0, sizeof(config_t));
     ::memset(&oldConfig, 0, sizeof(config_t));
 
+    calStateTimer = new QTimer(this);
+    calStateTimer->setInterval(100);
+    QObject::connect(calStateTimer, &QTimer::timeout, this, &Config::poll_cal_state);
+    calState = CAL_STATE_STANDBY;
+    ui->calStatus->setText("");
+
+    config_ui_disable();
+
 }
 
 Config::~Config()
@@ -117,6 +125,7 @@ void Config::handle_cal_response(QByteArray data)
         case ID_CONTROL_CALIBRATION:
             break;
         case ID_CALIBRATION_STATE:
+            handle_poll_cal_state_response(data);
             break;
         case ID_CALIBRATION_VALUE:
             break;
@@ -247,6 +256,92 @@ void Config::on_btnSyncRtc_clicked()
     payload.append(ID_SET_RTC);
     payload.resize(5);
     ::memcpy(payload.data_ptr()->data() + 1, &unixTime, sizeof(quint32));
+    send_frame(payload);
+}
+
+
+void Config::on_btnStartCal_clicked()
+{
+    QByteArray payload;
+    payload.append(ID_CONTROL_CALIBRATION);
+    payload.append(ui->calInput->currentIndex() + 1);
+    send_frame(payload);
+    calStateTimer->start();
+}
+
+void Config::poll_cal_state()
+{
+    QByteArray payload;
+    payload.append(ID_CALIBRATION_STATE);
+    send_frame(payload);
+}
+
+void Config::handle_poll_cal_state_response(QByteArray &data)
+{
+    if (data.at(0) & 0x08) {
+        calStateTimer->stop();
+        QMessageBox::critical(this, "Error polling cal state!", QString("Could not poll cal state! Error %1").arg((quint8)data.at(1)));
+        return;
+    }
+
+    switch (data.at(1)) {
+    case CAL_STATE_STANDBY:
+        calStateTimer->stop();
+        ui->calStatus->setText("Calibration standby.");
+        config_ui_disable();
+        break;
+    case CAL_STATE_WAIT_FOR_VALUE_1:
+        ui->calStatus->setText("Calibration waiting for first value.");
+        config_ui_enable();
+        break;
+    case CAL_STATE_WAIT_FOR_VALUE_2:
+        ui->calStatus->setText("Calibration waiting for second value.");
+        config_ui_enable();
+        break;
+    case CAL_STATE_UPDATE_CALIBRATION:
+        ui->calStatus->setText("Calibration updating...");
+        config_ui_disable();
+        break;
+    case CAL_STATE_FINISH: {
+            QByteArray payload;
+            payload.append(ID_CONTROL_CALIBRATION);
+            payload.append(char(0));
+            send_frame(payload);
+            ui->calStatus->setText("Calibration finished!");
+            config_ui_disable();
+            break;
+        }
+    default:
+        break;
+    }
+}
+
+void Config::config_ui_disable()
+{
+    ui->label_8->setEnabled(false);
+    ui->calActualValue->setEnabled(false);
+    ui->btnApplyCalValue->setEnabled(false);
+    ui->calInput->setEnabled(true);
+    ui->btnStartCal->setEnabled(true);
+}
+
+void Config::config_ui_enable()
+{
+    ui->label_8->setEnabled(true);
+    ui->calActualValue->setEnabled(true);
+    ui->btnApplyCalValue->setEnabled(true);
+    ui->calInput->setEnabled(false);
+    ui->btnStartCal->setEnabled(false);
+}
+
+
+void Config::on_btnApplyCalValue_clicked()
+{
+    float val = ui->calActualValue->value();
+    QByteArray payload;
+    payload.append(ID_CALIBRATION_VALUE);
+    payload.resize(5);
+    ::memcpy(payload.data_ptr()->data() + 1, &val, sizeof(float));
     send_frame(payload);
 }
 
