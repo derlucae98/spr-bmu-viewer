@@ -237,6 +237,7 @@ void MainWindow::global_balancing_enable(bool enable)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    (void) event;
     if (can) {
         can->disconnect_device();
     }

@@ -28,6 +28,9 @@ void Config::can_recv(QCanBusFrame frame)
     if (frame.frameId() == CAN_ID_STARTUP) {
         query_config();
     }
+    if (frame.frameId() == CAN_ID_TIME) {
+        update_time(frame.payload());
+    }
 }
 
 void Config::on_btnLoad_clicked()
@@ -140,12 +143,32 @@ void Config::update_UI_config()
     this->setEnabled(true);
 }
 
+void Config::update_time(QByteArray data)
+{
+    if (data.length() != 8) {
+        return;
+    }
+
+    quint32 uptime;
+    ::memcpy(&uptime, data.data_ptr()->data(), sizeof(quint32));
+    quint32 unixTimestamp;
+    ::memcpy(&unixTimestamp, data.data_ptr()->data() + 4, sizeof(quint32));
+    QDateTime dateTime;
+    dateTime.setTime_t(unixTimestamp);
+
+
+    QString uptimeStr = QString("%1").arg(QDateTime::fromTime_t(uptime / 10).toUTC().toString("hh:mm:ss"));
+
+    ui->lUptime->setText(uptimeStr);
+    ui->bmuTime->setText(dateTime.toString("dd.MM.yyyy hh:mm:ss"));
+}
+
 void Config::send_frame(QByteArray payload)
 {
     QCanBusFrame frame;
     frame.setFrameId(CAN_ID_CAL_REQUEST);
     frame.setPayload(payload);
-    can_send(frame);
+    emit can_send(frame);
 }
 
 
@@ -213,5 +236,17 @@ void Config::on_cbSdcAutoReset_stateChanged(int arg1)
 void Config::on_btnWrite_clicked()
 {
     update_config();
+}
+
+
+void Config::on_btnSyncRtc_clicked()
+{
+    QDateTime dateTime(QDateTime::currentDateTime());
+    quint32 unixTime = dateTime.toTime_t();
+    QByteArray payload;
+    payload.append(ID_SET_RTC);
+    payload.resize(5);
+    ::memcpy(payload.data_ptr()->data() + 1, &unixTime, sizeof(quint32));
+    send_frame(payload);
 }
 

@@ -8,7 +8,7 @@
 #include <QCanBusFrame>
 #include <QMessageBox>
 #include <QDebug>
-
+#include <QDateTime>
 
 
 
@@ -35,6 +35,8 @@ private slots:
     void on_cbSdcAutoReset_stateChanged(int arg1);
     void on_btnWrite_clicked();
 
+    void on_btnSyncRtc_clicked();
+
 private:
     Ui::Config *ui;
 
@@ -60,6 +62,7 @@ private:
     enum {
         CAN_ID_CAL_REQUEST  = 0x012,
         CAN_ID_CAL_RESPONSE = 0x013,
+        CAN_ID_TIME         = 0x014,
         CAN_ID_STARTUP      = 0x020
     };
 
@@ -83,6 +86,7 @@ private:
     config_t oldConfig;
 
     void update_UI_config();
+    void update_time(QByteArray data);
 
     void send_frame(QByteArray payload);
 
