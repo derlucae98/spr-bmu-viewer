@@ -113,12 +113,45 @@ void Config::handle_soc_lookup_response(QByteArray &data)
     }
 }
 
+void Config::handle_set_rtc_response(QByteArray &data)
+{
+    if (data.at(0) & 0x08) {
+        QMessageBox::critical(this, "Error setting RTC!", QString("Could not set RTC! Error %1").arg((quint8)data.at(1)));
+        return;
+    }
+}
+
+void Config::handle_control_calibration_response(QByteArray &data)
+{
+    if (data.at(0) & 0x08) {
+        QMessageBox::critical(this, "Error initializing ADC calibration!", QString("Could not initialize ADC calibration! Error %1").arg((quint8)data.at(1)));
+        return;
+    }
+}
+
+void Config::handle_calibration_value_response(QByteArray &data)
+{
+    if (data.at(0) & 0x08) {
+        QMessageBox::critical(this, "Error setting calibration value!", QString("Could not set calibration value! Error %1").arg((quint8)data.at(1)));
+        return;
+    }
+}
+
+void Config::handle_load_default_config_response(QByteArray &data)
+{
+    if (data.at(0) & 0x08) {
+        QMessageBox::critical(this, "Error loading default config!", QString("Could not load default config! Error %1").arg((quint8)data.at(1)));
+        return;
+    }
+}
+
 void Config::handle_cal_response(QByteArray data)
 {
     quint8 ID = data.at(0) & 0xF7;
 
     switch (ID) {
         case ID_LOAD_DEFAULT_CONFIG:
+            handle_load_default_config_response(data);
             break;
         case ID_QUERY_CONFIG:
             handle_query_config_response(data);
@@ -130,13 +163,16 @@ void Config::handle_cal_response(QByteArray data)
             handle_soc_lookup_response(data);
             break;
         case ID_SET_RTC:
+            handle_set_rtc_response(data);
             break;
         case ID_CONTROL_CALIBRATION:
+            handle_control_calibration_response(data);
             break;
         case ID_CALIBRATION_STATE:
             handle_poll_cal_state_response(data);
             break;
         case ID_CALIBRATION_VALUE:
+            handle_calibration_value_response(data);
             break;
     }
 }
@@ -359,6 +395,14 @@ void Config::on_btnForceSocLookup_clicked()
 {
     QByteArray payload;
     payload.append(ID_SOC_LOOKUP);
+    send_frame(payload);
+}
+
+
+void Config::on_btnDefault_clicked()
+{
+    QByteArray payload;
+    payload.append(ID_LOAD_DEFAULT_CONFIG);
     send_frame(payload);
 }
 
