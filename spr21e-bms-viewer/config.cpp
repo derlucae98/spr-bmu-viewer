@@ -105,6 +105,14 @@ void Config::handle_update_config_response(QByteArray &data)
     ui->status->setText("Ready.");
 }
 
+void Config::handle_soc_lookup_response(QByteArray &data)
+{
+    if (data.at(0) & 0x08) {
+        QMessageBox::critical(this, "Error updating SOC!", QString("Could not force SOC update! Error %1").arg((quint8)data.at(1)));
+        return;
+    }
+}
+
 void Config::handle_cal_response(QByteArray data)
 {
     quint8 ID = data.at(0) & 0xF7;
@@ -119,6 +127,7 @@ void Config::handle_cal_response(QByteArray data)
             handle_update_config_response(data);
             break;
         case ID_SOC_LOOKUP:
+            handle_soc_lookup_response(data);
             break;
         case ID_SET_RTC:
             break;
@@ -342,6 +351,14 @@ void Config::on_btnApplyCalValue_clicked()
     payload.append(ID_CALIBRATION_VALUE);
     payload.resize(5);
     ::memcpy(payload.data_ptr()->data() + 1, &val, sizeof(float));
+    send_frame(payload);
+}
+
+
+void Config::on_btnForceSocLookup_clicked()
+{
+    QByteArray payload;
+    payload.append(ID_SOC_LOOKUP);
     send_frame(payload);
 }
 

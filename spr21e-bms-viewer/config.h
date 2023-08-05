@@ -41,6 +41,8 @@ private slots:
 
     void on_btnApplyCalValue_clicked();
 
+    void on_btnForceSocLookup_clicked();
+
 private:
     Ui::Config *ui;
 
@@ -99,6 +101,7 @@ private:
 
     void handle_query_config_response(QByteArray &data);
     void handle_update_config_response(QByteArray &data);
+    void handle_soc_lookup_response(QByteArray &data);
 
     void handle_cal_response(QByteArray data);
 
