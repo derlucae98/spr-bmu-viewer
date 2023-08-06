@@ -68,10 +68,10 @@ private:
     };
 
     enum {
-        CAN_ID_CAL_REQUEST  = 0x012,
-        CAN_ID_CAL_RESPONSE = 0x013,
-        CAN_ID_TIME         = 0x014,
-        CAN_ID_STARTUP      = 0x020
+        CAN_ID_STARTUP      = 0x001,
+        CAN_ID_TIME         = 0x00D,
+        CAN_ID_CAL_REQUEST  = 0x00E,
+        CAN_ID_CAL_RESPONSE = 0x00F
     };
 
     enum error_codes {

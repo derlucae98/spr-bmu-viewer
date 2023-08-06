@@ -891,13 +891,6 @@
               </item>
              </layout>
             </item>
-            <item>
-             <widget class="QPushButton" name="diagButton">
-              <property name="text">
-               <string>Diagnostic</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
          </item>
@@ -1373,7 +1366,7 @@
      <x>0</x>
      <y>0</y>
      <width>1543</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

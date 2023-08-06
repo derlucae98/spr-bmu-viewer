@@ -12,10 +12,13 @@
 #include <QDateTime>
 #include <QProgressBar>
 #include <QPixmap>
-#include "diagdialog.h"
 #include "logfileconverter.h"
 #include "aboutdialog.h"
 #include "config.h"
+
+#define MAX_NUM_OF_SLAVES 12
+#define MAX_NUM_OF_CELLS  12
+#define MAX_NUM_OF_TEMPSENS 6
 
 
 QT_BEGIN_NAMESPACE
@@ -32,19 +35,10 @@ public:
 
 private slots:
     void on_btnConnectPcan_clicked();
-
     void on_reqTsActive_stateChanged(int arg1);
-
     void on_clearErrorLog_clicked();
-
-    void on_diagButton_clicked();
-
     void on_actionLogfile_converter_triggered();
-
     void on_actionAbout_SPR_BMS_viewer_triggered();
-
-    void on_actionDiagnostic_triggered();
-
     void on_actionConfig_triggered();
 
 private:
@@ -55,20 +49,23 @@ private:
         OPENCELLWIRE    = 0x3, //!< OPENCELLWIRE
     };
 
-    enum canIds {
-        ID_BMS_INFO_1  = 0x1,
-        ID_BMS_INFO_2  = 0x2,
-        ID_BMS_INFO_3  = 0x3,
-        ID_CELL_TEMP_1 = 0x4,
-        ID_CELL_TEMP_2 = 0x5,
-        ID_CELL_TEMP_3 = 0x6,
-        ID_CELL_VOLT_1 = 0x7,
-        ID_CELL_VOLT_2 = 0x8,
-        ID_CELL_VOLT_3 = 0x9,
-        ID_CELL_VOLT_4 = 0xA,
-        ID_UID         = 0xB,
-        ID_DIAG_REQUEST = 0xC,
-        ID_DIAG_RESPONSE = 0xD
+    enum can_id {
+        CAN_ID_TS_REQUEST         = 0x000,
+        CAN_ID_STARTUP            = 0x001,
+        CAN_ID_INFO               = 0x002,
+        CAN_ID_STATS_1            = 0x003,
+        CAN_ID_STATS_2            = 0x004,
+        CAN_ID_UIP                = 0x005,
+        CAN_ID_CELL_VOLTAGE_1     = 0x006,
+        CAN_ID_CELL_VOLTAGE_2     = 0x007,
+        CAN_ID_CELL_VOLTAGE_3     = 0x008,
+        CAN_ID_CELL_VOLTAGE_4     = 0x009,
+        CAN_ID_CELL_TEMPERATURE   = 0x00A,
+        CAN_ID_BALANCING_FEEDBACK = 0x00B,
+        CAN_ID_UNIQUE_ID          = 0x00C,
+        CAN_ID_TIME               = 0x00D,
+        CAN_ID_DIAG_REQUEST       = 0x00E,
+        CAN_ID_DIAG_RESPONSE      = 0x00F
     };
 
     enum ts_state_t {
@@ -78,93 +75,108 @@ private:
         TS_STATE_ERROR
     };
 
-    enum error_code_t {
-        ERROR_NO_ERROR,
-        ERROR_SYSTEM_NOT_HEALTHY,
-        ERROR_CONTACTOR_IMPLAUSIBLE,
-        ERROR_PRE_CHARGE_TOO_SHORT,
-        ERROR_PRE_CHARGE_TIMEOUT
+    enum contactor_error_t {
+        ERROR_NO_ERROR                    = 0x0,
+        ERROR_IMD_FAULT                   = 0x1,
+        ERROR_AMS_FAULT                   = 0x2,
+        ERROR_IMPLAUSIBLE_CONTACTOR       = 0x4,
+        ERROR_IMPLAUSIBLE_DC_LINK_VOLTAGE = 0x8,
+        ERROR_IMPLAUSIBLE_BATTERY_VOLTAGE = 0x10,
+        ERROR_IMPLAUSIBLE_CURRENT         = 0x20,
+        ERROR_CURRENT_OUT_OF_RANGE        = 0x40,
+        ERROR_PRE_CHARGE_TIMEOUT          = 0x80,
+        ERROR_SDC_OPEN                    = 0x100,
+        ERROR_AMS_POWERSTAGE_DISABLED     = 0x200,
+        ERROR_IMD_POWERSTAGE_DISABLED     = 0x400
     };
 
-    struct bms_info_t {
+    struct can_data_t {
+        //Info
+        float isolationResistance;
+        bool isolationResistanceValid;
+        quint32 errorCode;
+        ts_state_t tsState;
+
+        //Stats1
         float minCellVolt;
-        bool minCellVoltValid;
         float maxCellVolt;
-        bool maxCellVoltValid;
         float avgCellVolt;
-        bool avgCellVoltValid;
-        float minSoc;
-        bool minSocValid;
-        float maxSoc;
-        bool maxSocValid;
-        float batteryVoltage;
-        bool batteryVoltageValid;
+        bool voltageValid;
+
+        //Stats2
+        quint16 minSoc;
+        quint16 maxSoc;
+        bool socValid;
         float dcLinkVoltage;
         bool dcLinkVoltageValid;
+        float minTemp;
+        float maxTemp;
+        float avgTemp;
+        bool tempValid;
+
+        //UIP
+        float batteryVoltage;
+        bool batteryVoltageValid;
         float current;
         bool currentValid;
-        float isoRes;
-        bool isoResValid;
-        bool imdStatus;
-        bool imdScStatus;
-        bool amsStatus;
-        bool amsScStatus;
-        ts_state_t tsState;
-        bool shutdownStatus;
-        error_code_t error;
-        float minTemp;
-        bool minTempValid;
-        float maxTemp;
-        bool maxTempValid;
-        float avgTemp;
-        bool avgTempValid;
+        float batteryPower;
+        bool batteryPowerValid;
+
+        //Unique ID
+        quint32 UID[MAX_NUM_OF_SLAVES];
+
+        //Cell voltage / temperature
+        float cellVoltage[MAX_NUM_OF_SLAVES][MAX_NUM_OF_CELLS];
+        quint8 cellVoltageStatus[MAX_NUM_OF_SLAVES][MAX_NUM_OF_CELLS+1];
+        float temperature[MAX_NUM_OF_SLAVES][MAX_NUM_OF_TEMPSENS];
+        quint8 temperatureStatus[MAX_NUM_OF_SLAVES][MAX_NUM_OF_TEMPSENS];
+
+        //Balancing feedback
+        quint8 balance[MAX_NUM_OF_SLAVES][MAX_NUM_OF_CELLS];
+
+        //Time
+        quint32 uptime;
+        quint32 sysTime;
     };
+
+    can_data_t canData;
 
     QTimer *updateTimer = nullptr;
     Ui::MainWindow *ui;
 
-    void decomposeCellVoltage(quint8 stack, quint8 cellOffset, QByteArray payload);
-    void decomposeCellTemperatures(quint8 stack, quint8 offset, QByteArray payload);
-    void decomposeUid(quint8 stack, QByteArray payload);
-    void decompose_bms_1(QByteArray payload);
-    void decompose_bms_2(QByteArray payload);
-    void decompose_bms_3(QByteArray payload);
-    void decompose_balance(QCanBusFrame &frame);
+    void decompose_info(QByteArray data);
+    void decompose_stats_1(QByteArray data);
+    void decompose_stats_2(QByteArray data);
+    void decompose_uip(QByteArray data);
+    void decompose_cell_voltage_1(QByteArray data);
+    void decompose_cell_voltage_2(QByteArray data);
+    void decompose_cell_voltage_3(QByteArray data);
+    void decompose_cell_voltage_4(QByteArray data);
+    void decompose_cell_temperature(QByteArray data);
+    void decompose_balancing_feedback(QByteArray data);
+    void decompose_unique_id(QByteArray data);
+
+
     QString ts_state_to_string(ts_state_t state);
     QString returnValidity(quint8 val);
-
-    quint16 cellVoltages[12][12];
-    quint8 cellVoltageValidity[12][13];
-    float temperatures[12][14];
-    quint8 temperatureValidity[12][14];
-    quint32 uid[12];
-    bool balanceStatus[12][12];
-
-    void setUID(QVector<quint32> uid);
-
-    void updateCellVoltagePeriodic();
-    void calculateMedian(quint16 cellVoltages[12][12], double *cellVoltageAvg);
 
     bool interfaceUp;
 
     void new_frame(QCanBusFrame frame);
 
     Can *can = nullptr;
-
-    bms_info_t bmsInfo;
-
     QTimer *sendTimer = nullptr;
     void send_ts_req();
 
-    QString error_to_string(error_code_t error);
-
+    QString error_to_string(contactor_error_t error);
     bool linkAvailable;
 
-    void poll_balance_status();
-    void handle_diag_response(QCanBusFrame &frame);
     void update_ui_balancing();
-
-    void global_balancing_enable(bool enable);
+    void update_ui_uid();
+    void update_ui_voltage();
+    void update_ui_temperature();
+    void update_ui_stats();
+    void update_ui_periodic();
 
     void closeEvent(QCloseEvent *event);
 
