@@ -89,6 +89,7 @@ void Can::disconnect_device()
 void Can::send_frame(QCanBusFrame frame)
 {
     if (can_device) {
+        can_device->clear();
         can_device->writeFrame(frame);
     }
 }
@@ -125,7 +126,6 @@ void Can::new_client_connected()
 
 void Can::message_from_client()
 {
-    qDebug() << "New data from socket!";
     QByteArray raw = socket->readAll();
     QString data(raw);
     qDebug() << data;

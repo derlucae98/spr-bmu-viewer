@@ -1373,7 +1373,7 @@
      <x>0</x>
      <y>0</y>
      <width>1543</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1396,6 +1396,7 @@
      <string>Options</string>
     </property>
     <addaction name="actionLogfile_converter"/>
+    <addaction name="actionConfig"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1426,6 +1427,11 @@
   <action name="actionAbout_SPR_BMS_viewer">
    <property name="text">
     <string>About SPR BMS viewer</string>
+   </property>
+  </action>
+  <action name="actionConfig">
+   <property name="text">
+    <string>Config</string>
    </property>
   </action>
  </widget>

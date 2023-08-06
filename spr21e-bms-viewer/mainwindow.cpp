@@ -237,6 +237,7 @@ void MainWindow::global_balancing_enable(bool enable)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    (void) event;
     if (can) {
         can->disconnect_device();
     }
@@ -646,5 +647,15 @@ void MainWindow::on_actionAbout_SPR_BMS_viewer_triggered()
 void MainWindow::on_actionDiagnostic_triggered()
 {
     on_diagButton_clicked();
+}
+
+
+void MainWindow::on_actionConfig_triggered()
+{
+    Config *configDialog = new Config(this);
+    QObject::connect(can, &Can::new_frame, configDialog, &Config::can_recv);
+    QObject::connect(configDialog, &Config::can_send, can, &Can::send_frame);
+    configDialog->setAttribute(Qt::WA_DeleteOnClose);
+    configDialog->show();
 }
 
