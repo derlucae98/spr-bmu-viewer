@@ -45,6 +45,8 @@ private slots:
 
     void on_btnDefault_clicked();
 
+    void on_cbHvVoltPlausibility_stateChanged(int arg1);
+
 private:
     Ui::Config *ui;
 
@@ -54,6 +56,7 @@ private:
         bool automaticSocLookupEnable;
         quint8 numberOfStacks;
         bool autoResetOnPowerCycleEnable;
+        bool voltagePlausibilityCheckEnable;
     };
 
     enum {

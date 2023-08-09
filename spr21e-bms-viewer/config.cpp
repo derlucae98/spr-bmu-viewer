@@ -67,7 +67,7 @@ void Config::update_config()
                  | ((config.automaticSocLookupEnable & 0x01) << 5)
                  | ((config.autoResetOnPowerCycleEnable & 0x01) << 4)
                  | (config.numberOfStacks & 0x0F));
-    payload.append(char(0));
+    payload.append((config.voltagePlausibilityCheckEnable & 0x01) << 7);
     payload.append(char(0));
     payload.append(char(0));
 
@@ -88,6 +88,7 @@ void Config::handle_query_config_response(QByteArray &data)
     config.autoResetOnPowerCycleEnable = ((quint8)data.at(4) >> 4) & 0x01;
     config.automaticSocLookupEnable = ((quint8)data.at(4) >> 5) & 0x01;
     config.globalBalancingEnable = (data.at(4) >> 6) & 0x01;
+    config.voltagePlausibilityCheckEnable = (data.at(5) >> 7) & 0x01;
 
     qDebug() << "Balancing threshold: " << config.balancingThreshold;
     this->config = config;
@@ -185,6 +186,7 @@ void Config::update_UI_config()
     ui->cbSdcAutoReset->setChecked(config.autoResetOnPowerCycleEnable);
     ui->numberOfStacks->setValue(config.numberOfStacks);
     ui->balancingThreshold->setValue((float)config.balancingThreshold / 10000.0f);
+    ui->cbHvVoltPlausibility->setChecked(config.voltagePlausibilityCheckEnable);
 
     //Clear all stylesheets after querying config
     ui->cbBalancingEnabled->setStyleSheet("");
@@ -192,6 +194,7 @@ void Config::update_UI_config()
     ui->cbAutoSocLookup->setStyleSheet("");
     ui->numberOfStacks->setPalette(this->style()->standardPalette());
     ui->cbSdcAutoReset->setStyleSheet("");
+    ui->cbHvVoltPlausibility->setStyleSheet("");
 
     ui->status->setText("Ready.");
     this->setEnabled(true);
@@ -404,5 +407,16 @@ void Config::on_btnDefault_clicked()
     QByteArray payload;
     payload.append(ID_LOAD_DEFAULT_CONFIG);
     send_frame(payload);
+}
+
+
+void Config::on_cbHvVoltPlausibility_stateChanged(int arg1)
+{
+    config.voltagePlausibilityCheckEnable = (bool)arg1;
+    if (config.voltagePlausibilityCheckEnable != oldConfig.voltagePlausibilityCheckEnable) {
+        ui->cbHvVoltPlausibility->setStyleSheet("color:red");
+    } else {
+        ui->cbHvVoltPlausibility->setStyleSheet("");
+    }
 }
 
