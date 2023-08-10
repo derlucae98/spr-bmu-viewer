@@ -288,7 +288,7 @@ void MainWindow::decompose_uip(QByteArray data)
     canData.currentValid = ((quint8)data.at(0) >> 1) & 0x01;
     canData.batteryVoltageValid = ((quint8)data.at(0) >> 0) & 0x01;
     canData.batteryVoltage = (((quint8)data.at(1) << 8) | (quint8)data.at(2)) * 0.1f;
-    canData.current = (((quint8)data.at(3) << 8) | (quint8)data.at(4)) * 0.00625f;
+    canData.current = qint16((((quint8)data.at(3) << 8) | (quint8)data.at(4))) * 0.00625f;
     canData.batteryPower = (((quint8)data.at(5) << 8) | (quint8)data.at(6)) * 0.0025f;
 }
 
