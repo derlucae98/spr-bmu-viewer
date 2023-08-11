@@ -66,6 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
     } else {
         darkMode = false;
     }
+
+    ui->reqTsActive->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -135,7 +137,8 @@ void MainWindow::send_ts_req()
     QCanBusFrame frame;
     QByteArray payload;
     frame.setFrameId(0);
-    payload.append(0xFF);
+    payload.append(0x01);
+    payload.append(ui->reqTsActive->checkState() ? (char)0xFF : (char)0x00);
     frame.setPayload(payload);
     can->send_frame(frame);
 }
@@ -207,21 +210,6 @@ void MainWindow::on_btnConnectPcan_clicked()
     } else {
         can->disconnect_device();
 
-    }
-}
-
-void MainWindow::on_reqTsActive_stateChanged(int arg1)
-{
-    QCanBusFrame frame;
-    QByteArray payload;
-    frame.setFrameId(0);
-    if (arg1 == 0) {
-        sendTimer->stop();
-        payload.append((quint8)0);
-        frame.setPayload(payload);
-        can->send_frame(frame);
-    } else {
-        sendTimer->start();
     }
 }
 
@@ -539,6 +527,28 @@ void MainWindow::closeEvent(QCloseEvent *event)
     (void) event;
     if (can) {
         can->disconnect_device();
+    }
+}
+
+
+void MainWindow::on_tsTakeControl_stateChanged(int arg1)
+{
+    ui->reqTsActive->setEnabled(arg1);
+    if (!arg1) {
+        ui->reqTsActive->setChecked(false);
+    }
+
+    if (arg1) {
+        sendTimer->start();
+    } else {
+        sendTimer->stop();
+        QByteArray payload;
+        QCanBusFrame frame;
+        payload.append((char)0);
+        payload.append((char)0);
+        frame.setPayload(payload);
+        can->send_frame(frame);
+
     }
 }
 

@@ -870,22 +870,16 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_22">
               <item>
-               <widget class="QLabel" name="label_50">
-                <property name="minimumSize">
-                 <size>
-                  <width>95</width>
-                  <height>0</height>
-                 </size>
-                </property>
+               <widget class="QCheckBox" name="reqTsActive">
                 <property name="text">
-                 <string>TS active req.:</string>
+                 <string>TS req.</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="reqTsActive">
+               <widget class="QCheckBox" name="tsTakeControl">
                 <property name="text">
-                 <string/>
+                 <string>Take control</string>
                 </property>
                </widget>
               </item>
@@ -1366,7 +1360,7 @@
      <x>0</x>
      <y>0</y>
      <width>1543</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

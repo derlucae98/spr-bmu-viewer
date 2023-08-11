@@ -35,11 +35,12 @@ public:
 
 private slots:
     void on_btnConnectPcan_clicked();
-    void on_reqTsActive_stateChanged(int arg1);
     void on_clearErrorLog_clicked();
     void on_actionLogfile_converter_triggered();
     void on_actionAbout_SPR_BMS_viewer_triggered();
     void on_actionConfig_triggered();
+
+    void on_tsTakeControl_stateChanged(int arg1);
 
 private:
     enum LTCError_t{
