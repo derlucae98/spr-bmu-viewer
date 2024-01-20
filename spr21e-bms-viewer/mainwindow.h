@@ -19,6 +19,8 @@
 #define MAX_NUM_OF_SLAVES 12
 #define MAX_NUM_OF_CELLS  12
 #define MAX_NUM_OF_TEMPSENS 6
+#define MAX_NUM_OF_LV_CELLS 6
+#define MAX_NUM_OF_LV_TEMPSENS 8
 
 
 QT_BEGIN_NAMESPACE
@@ -66,7 +68,14 @@ private:
         CAN_ID_UNIQUE_ID          = 0x00C,
         CAN_ID_TIME               = 0x00D,
         CAN_ID_DIAG_REQUEST       = 0x00E,
-        CAN_ID_DIAG_RESPONSE      = 0x00F
+        CAN_ID_DIAG_RESPONSE      = 0x00F,
+        CAN_ID_LV_ACCU_STATS_2    = 0x320,
+        CAN_ID_LV_ACCU_STATS_1    = 0x321,
+        CAN_ID_LV_ACCU_STATE      = 0x322,
+        CAN_ID_LV_ACCU_CELL_VOLT_03 = 0x323,
+        CAN_ID_LV_ACCU_CELL_VOLT_45 = 0x324,
+        CAN_ID_LV_ACCU_TEMP_03 = 0x325,
+        CAN_ID_LV_ACCU_TEMP_47 = 0x326
     };
 
     enum ts_state_t {
@@ -142,6 +151,35 @@ private:
 
     can_data_t canData;
 
+    struct can_data_LV_t {
+        //Info
+        quint32 errorCode;
+        ts_state_t state;
+
+        //Stats1
+        float minCellVolt;
+        float maxCellVolt;
+        float avgCellVolt;
+        bool voltageError;
+
+        //Stats2
+        quint16 soc;
+        float batteryVoltage;
+        float minTemp;
+        float maxTemp;
+        float avgTemp;
+        bool tempValidError;
+
+        float current;
+        bool currentError;
+        //Cell voltage / temperature
+        float cellVoltage[MAX_NUM_OF_LV_CELLS];
+        float temperature[MAX_NUM_OF_LV_TEMPSENS];
+
+    };
+
+    can_data_LV_t canDataLv;
+
     QTimer *updateTimer = nullptr;
     Ui::MainWindow *ui;
 
@@ -156,6 +194,15 @@ private:
     void decompose_cell_temperature(QByteArray data);
     void decompose_balancing_feedback(QByteArray data);
     void decompose_unique_id(QByteArray data);
+
+
+    void decompose_lv_stats_1(QByteArray data);
+    void decompose_lv_stats_2(QByteArray data);
+    void decompose_lv_state(QByteArray data);
+    void decompose_lv_cell_volt_03(QByteArray data);
+    void decompose_lv_cell_volt_45(QByteArray data);
+    void decompose_lv_temp_03(QByteArray data);
+    void decompose_lv_temp_47(QByteArray data);
 
 
     QString ts_state_to_string(ts_state_t state);
@@ -178,6 +225,7 @@ private:
     void update_ui_temperature();
     void update_ui_stats();
     void update_ui_periodic();
+    void update_ui_lv();
 
     void closeEvent(QCloseEvent *event);
 

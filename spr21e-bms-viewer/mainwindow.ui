@@ -94,1262 +94,2128 @@
      </layout>
     </item>
     <item row="1" column="0">
-     <widget class="QFrame" name="infoFrame">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>201</height>
-       </size>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
       </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_21">
-         <item>
-          <widget class="QFrame" name="frame_2">
-           <property name="minimumSize">
-            <size>
-             <width>230</width>
-             <height>177</height>
-            </size>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>TS Accu</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="1" column="0">
+         <widget class="QTreeWidget" name="parameters">
+          <column>
+           <property name="text">
+            <string>Parameter</string>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>230</width>
-             <height>177</height>
-            </size>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 0</string>
            </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 1</string>
            </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 2</string>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <item>
-               <widget class="QLabel" name="label_11">
-                <property name="minimumSize">
-                 <size>
-                  <width>135</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Minimum cell voltage:</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="minCellVolt">
-                <property name="minimumSize">
-                 <size>
-                  <width>65</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---   V</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
-              <item>
-               <widget class="QLabel" name="label_12">
-                <property name="minimumSize">
-                 <size>
-                  <width>135</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Maximum cell voltage:</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="maxCellVolt">
-                <property name="minimumSize">
-                 <size>
-                  <width>65</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---   V</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
-              <item>
-               <widget class="QLabel" name="label_13">
-                <property name="minimumSize">
-                 <size>
-                  <width>135</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Average cell voltage:</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="avgCellVolt">
-                <property name="minimumSize">
-                 <size>
-                  <width>65</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---   V</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_10">
-              <item>
-               <widget class="QLabel" name="label_16">
-                <property name="minimumSize">
-                 <size>
-                  <width>135</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Cell voltage delta:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="deltaCellVolt">
-                <property name="minimumSize">
-                 <size>
-                  <width>65</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---   V</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_13">
-              <item>
-               <widget class="QLabel" name="label_31">
-                <property name="minimumSize">
-                 <size>
-                  <width>135</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Minimum temperature:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="minTemp">
-                <property name="minimumSize">
-                 <size>
-                  <width>65</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---  °C</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_14">
-              <item>
-               <widget class="QLabel" name="label_32">
-                <property name="minimumSize">
-                 <size>
-                  <width>135</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Maximum temperature:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="maxTemp">
-                <property name="minimumSize">
-                 <size>
-                  <width>65</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---  °C</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_15">
-              <item>
-               <widget class="QLabel" name="label_33">
-                <property name="minimumSize">
-                 <size>
-                  <width>135</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Average temperature:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="avgTemp">
-                <property name="minimumSize">
-                 <size>
-                  <width>65</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---  °C</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="line_3">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 3</string>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QFrame" name="frame_3">
-           <property name="minimumSize">
-            <size>
-             <width>230</width>
-             <height>177</height>
-            </size>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 4</string>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>230</width>
-             <height>177</height>
-            </size>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 5</string>
            </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 6</string>
            </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 7</string>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_11">
-              <item>
-               <widget class="QLabel" name="label_14">
-                <property name="minimumSize">
-                 <size>
-                  <width>95</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Minimum SOC:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="minSoc">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---    %</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_12">
-              <item>
-               <widget class="QLabel" name="label_15">
-                <property name="minimumSize">
-                 <size>
-                  <width>95</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Maximum SOC:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="maxSoc">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---    %</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_16">
-              <item>
-               <widget class="QLabel" name="label_23">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Battery voltage:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="batteryVoltage">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---    V</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_17">
-              <item>
-               <widget class="QLabel" name="label_24">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>DC-Link voltage:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="dcLinkVoltage">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---    V</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_18">
-              <item>
-               <widget class="QLabel" name="label_25">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Current:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="current">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---    A</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_19">
-              <item>
-               <widget class="QLabel" name="label_26">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Iso resistance:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="isoRes">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---    kΩ</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_20">
-              <item>
-               <widget class="QLabel" name="label_37">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>TS state:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="tsState">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="line_4">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 8</string>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QFrame" name="frame_4">
-           <property name="minimumSize">
-            <size>
-             <width>230</width>
-             <height>177</height>
-            </size>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 9</string>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>230</width>
-             <height>177</height>
-            </size>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 10</string>
            </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 11</string>
            </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 12</string>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QLabel" name="label_39">
-                <property name="minimumSize">
-                 <size>
-                  <width>95</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>IMD status:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="imdStatus">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <widget class="QLabel" name="label_43">
-                <property name="minimumSize">
-                 <size>
-                  <width>95</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>IMD reset:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="imdSC">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <widget class="QLabel" name="label_40">
-                <property name="minimumSize">
-                 <size>
-                  <width>95</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>AMS status:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="amsStatus">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <item>
-               <widget class="QLabel" name="label_44">
-                <property name="minimumSize">
-                 <size>
-                  <width>95</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>AMS reset:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="amsSC">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
-               <widget class="QLabel" name="label_41">
-                <property name="minimumSize">
-                 <size>
-                  <width>95</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>S/C status:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="scStatus">
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Monospace</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>---</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_22">
-              <item>
-               <widget class="QCheckBox" name="reqTsActive">
-                <property name="text">
-                 <string>TS req.</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="tsTakeControl">
-                <property name="text">
-                 <string>Take control</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="line_5">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 13</string>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QFrame" name="frame_5">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>177</height>
-            </size>
+          </column>
+          <item>
+           <property name="text">
+            <string>Identifiers</string>
            </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+           <item>
+            <property name="text">
+             <string>Stack 1</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 3</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 4</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 5</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 6</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 7</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 9</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 10</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 11</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 12</string>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Cell Voltages</string>
            </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
+           <property name="text">
+            <string/>
            </property>
-           <layout class="QGridLayout" name="gridLayout_3">
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_23">
-              <item>
-               <widget class="QLabel" name="label_42">
-                <property name="minimumSize">
-                 <size>
-                  <width>95</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>16</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Error log:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="clearErrorLog">
-                <property name="text">
-                 <string>Clear</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="0">
-             <widget class="QTextEdit" name="errorLog">
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>190</height>
-               </size>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QTreeWidget" name="parameters">
-      <column>
-       <property name="text">
-        <string>Parameter</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 0</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 1</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 2</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 3</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 4</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 5</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 6</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 7</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 8</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 9</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 10</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 11</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 12</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Value 13</string>
-       </property>
-      </column>
-      <item>
-       <property name="text">
-        <string>Identifiers</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>Stack 1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 4</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 5</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 6</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 7</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 8</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 9</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 10</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 11</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 12</string>
-        </property>
-       </item>
-      </item>
-      <item>
-       <property name="text">
-        <string>Cell Voltages</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <item>
-        <property name="text">
-         <string>Stack 1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 4</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 5</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 6</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 7</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 8</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 9</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 10</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 11</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 12</string>
-        </property>
-       </item>
-      </item>
-      <item>
-       <property name="text">
-        <string>Open Wires</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>Stack 1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 4</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 5</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 6</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 7</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 8</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 9</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 10</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 11</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 12</string>
-        </property>
-       </item>
-      </item>
-      <item>
-       <property name="text">
-        <string>Temperatures</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>Stack 1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 4</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 5</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 6</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 7</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 8</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 9</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 10</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 11</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Stack 12</string>
-        </property>
-       </item>
-      </item>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Stack 1</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 3</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 4</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 5</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 6</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 7</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 9</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 10</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 11</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 12</string>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Open Wires</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Stack 1</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 3</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 4</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 5</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 6</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 7</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 9</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 10</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 11</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 12</string>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Temperatures</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Stack 1</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 3</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 4</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 5</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 6</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 7</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 9</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 10</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 11</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 12</string>
+            </property>
+           </item>
+          </item>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QFrame" name="infoFrame">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>201</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_21">
+             <item>
+              <widget class="QFrame" name="frame_2">
+               <property name="minimumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_7">
+                  <item>
+                   <widget class="QLabel" name="label_11">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Minimum cell voltage:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="minCellVolt">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---   V</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_8">
+                  <item>
+                   <widget class="QLabel" name="label_12">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Maximum cell voltage:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="maxCellVolt">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---   V</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_9">
+                  <item>
+                   <widget class="QLabel" name="label_13">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Average cell voltage:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="avgCellVolt">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---   V</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_10">
+                  <item>
+                   <widget class="QLabel" name="label_16">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Cell voltage delta:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="deltaCellVolt">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---   V</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_13">
+                  <item>
+                   <widget class="QLabel" name="label_31">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Minimum temperature:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="minTemp">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---  °C</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_14">
+                  <item>
+                   <widget class="QLabel" name="label_32">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Maximum temperature:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="maxTemp">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---  °C</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_15">
+                  <item>
+                   <widget class="QLabel" name="label_33">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Average temperature:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="avgTemp">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---  °C</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line_3">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_3">
+               <property name="minimumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_3">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_11">
+                  <item>
+                   <widget class="QLabel" name="label_14">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Minimum SOC:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="minSoc">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---    %</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_12">
+                  <item>
+                   <widget class="QLabel" name="label_15">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Maximum SOC:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="maxSoc">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---    %</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_16">
+                  <item>
+                   <widget class="QLabel" name="label_23">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Battery voltage:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="batteryVoltage">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---    V</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_17">
+                  <item>
+                   <widget class="QLabel" name="label_24">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>DC-Link voltage:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="dcLinkVoltage">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---    V</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_18">
+                  <item>
+                   <widget class="QLabel" name="label_25">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Current:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="current">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---    A</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_19">
+                  <item>
+                   <widget class="QLabel" name="label_26">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Iso resistance:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="isoRes">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---    kΩ</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_20">
+                  <item>
+                   <widget class="QLabel" name="label_37">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>TS state:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="tsState">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line_4">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_4">
+               <property name="minimumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_2">
+                  <item>
+                   <widget class="QLabel" name="label_39">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>IMD status:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="imdStatus">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_3">
+                  <item>
+                   <widget class="QLabel" name="label_43">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>IMD reset:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="imdSC">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_4">
+                  <item>
+                   <widget class="QLabel" name="label_40">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>AMS status:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="amsStatus">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_5">
+                  <item>
+                   <widget class="QLabel" name="label_44">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>AMS reset:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="amsSC">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_6">
+                  <item>
+                   <widget class="QLabel" name="label_41">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>S/C status:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="scStatus">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_22">
+                  <item>
+                   <widget class="QCheckBox" name="reqTsActive">
+                    <property name="text">
+                     <string>TS req.</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="tsTakeControl">
+                    <property name="text">
+                     <string>Take control</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line_5">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_5">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_3">
+                <item row="0" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_23">
+                  <item>
+                   <widget class="QLabel" name="label_42">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Error log:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_2">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="clearErrorLog">
+                    <property name="text">
+                     <string>Clear</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QTextEdit" name="errorLog">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>190</height>
+                   </size>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>LV Accu</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="0" column="0">
+         <widget class="QFrame" name="infoFrame_2">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>201</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_24">
+             <item>
+              <widget class="QFrame" name="frame_6">
+               <property name="minimumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_4">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_25">
+                  <item>
+                   <widget class="QLabel" name="label_17">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Minimum cell voltage:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="minCellVolt_LV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---   V</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_26">
+                  <item>
+                   <widget class="QLabel" name="label_18">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Maximum cell voltage:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="maxCellVolt_LV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---   V</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_27">
+                  <item>
+                   <widget class="QLabel" name="label_19">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Average cell voltage:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="avgCellVolt_LV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---   V</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_28">
+                  <item>
+                   <widget class="QLabel" name="label_20">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Cell voltage delta:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="deltaCellVolt_LV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---   V</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_29">
+                  <item>
+                   <widget class="QLabel" name="label_34">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Minimum temperature:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="minTemp_LV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---  °C</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_30">
+                  <item>
+                   <widget class="QLabel" name="label_35">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Maximum temperature:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="maxTemp_LV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---  °C</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_31">
+                  <item>
+                   <widget class="QLabel" name="label_36">
+                    <property name="minimumSize">
+                     <size>
+                      <width>135</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Average temperature:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="avgTemp_LV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>65</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---  °C</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line_6">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_7">
+               <property name="minimumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_5">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_32">
+                  <item>
+                   <widget class="QLabel" name="label_21">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>SOC:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="minSoc_LV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---    %</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_34">
+                  <item>
+                   <widget class="QLabel" name="label_27">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>voltage:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="batteryVoltage_LV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---    V</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_36">
+                  <item>
+                   <widget class="QLabel" name="label_29">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Current:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="current_LV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---    A</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_38">
+                  <item>
+                   <widget class="QLabel" name="label_38">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>State</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="tsState_LV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="Line" name="line_7">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_8">
+               <property name="minimumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>230</width>
+                 <height>177</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_39">
+                  <item>
+                   <widget class="QLabel" name="label_45">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>IMD status:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="imdStatus_2">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_40">
+                  <item>
+                   <widget class="QLabel" name="label_46">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>IMD reset:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="imdSC_2">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_41">
+                  <item>
+                   <widget class="QLabel" name="label_47">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>AMS status:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="amsStatus_2">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_42">
+                  <item>
+                   <widget class="QLabel" name="label_48">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>AMS reset:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="amsSC_2">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_43">
+                  <item>
+                   <widget class="QLabel" name="label_49">
+                    <property name="minimumSize">
+                     <size>
+                      <width>95</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>S/C status:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="scStatus_2">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <family>Monospace</family>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>---</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="Line" name="line_8">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTreeWidget" name="parameters_LV">
+          <column>
+           <property name="text">
+            <string>Parameter</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 0</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 1</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 2</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 3</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 4</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 5</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 6</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 7</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 8</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 9</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 10</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 11</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 12</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 13</string>
+           </property>
+          </column>
+          <item>
+           <property name="text">
+            <string>Cell Voltages</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Stack 1</string>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Open Wires</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Stack 1</string>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Temperatures</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Stack 1</string>
+            </property>
+           </item>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>

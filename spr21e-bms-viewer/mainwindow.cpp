@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ::memset(&canData, 0, sizeof(can_data_t));
+    ::memset(&canDataLv, 0, sizeof(can_data_LV_t));
+
     if (geteuid()) {
         QMessageBox mb;
         mb.setText("Some parts of this software require root privileges! Click OK and enter your password or run as root.");
@@ -124,6 +127,26 @@ void MainWindow::new_frame(QCanBusFrame frame)
         decompose_unique_id(frame.payload());
         fullUpdate |= (1 << 10);
         break;
+    case CAN_ID_LV_ACCU_STATS_1:
+        decompose_lv_stats_1(frame.payload());
+        break;
+    case CAN_ID_LV_ACCU_STATS_2:
+        decompose_lv_stats_2(frame.payload());
+        break;
+    case CAN_ID_LV_ACCU_STATE:
+        decompose_lv_state(frame.payload());
+        break;
+    case CAN_ID_LV_ACCU_CELL_VOLT_03:
+        decompose_lv_cell_volt_03(frame.payload());
+        break;
+    case CAN_ID_LV_ACCU_CELL_VOLT_45:
+        decompose_lv_cell_volt_45(frame.payload());
+        break;
+    case CAN_ID_LV_ACCU_TEMP_03:
+        decompose_lv_temp_03(frame.payload());
+        break;
+    case CAN_ID_LV_ACCU_TEMP_47:
+        decompose_lv_temp_47(frame.payload());
     }
 
     if (fullUpdate == 0x7FF) {
@@ -198,6 +221,25 @@ void MainWindow::update_ui_periodic()
     update_ui_stats();
     update_ui_balancing();
     update_ui_uid();
+    update_ui_lv();
+}
+
+void MainWindow::update_ui_lv()
+{
+    ui->minCellVolt_LV->setText(QString("%1 V").arg(canDataLv.minCellVolt, 5, 'f', 3));
+    ui->maxCellVolt_LV->setText(QString("%1 V").arg(canDataLv.maxCellVolt, 5, 'f', 3));
+    ui->avgCellVolt_LV->setText(QString("%1 V").arg(canDataLv.avgCellVolt, 5, 'f', 3));
+    float delta = canDataLv.maxCellVolt - canDataLv.minCellVolt;
+    ui->deltaCellVolt_LV->setText(QString("%1 V").arg(delta, 5, 'f', 3));
+
+    QTreeWidgetItem *volts = ui->parameters_LV->topLevelItem(0);
+    for (quint16 cell = 0; cell < MAX_NUM_OF_LV_CELLS; cell++) {
+        volts->child(0)->setText(cell+2, QString::number(canDataLv.cellVoltage[cell], 'f', 4));
+        //openWire->child(stack)->setText(cell+2, returnValidity(canData.cellVoltageStatus[stack][cell+1]));
+    }
+    //openWire->child(stack)->setText(1, returnValidity(canData.cellVoltageStatus[stack][0]));
+
+    ::memset(canDataLv.cellVoltage, 0, MAX_NUM_OF_LV_CELLS);
 }
 
 void MainWindow::on_btnConnectPcan_clicked()
@@ -364,6 +406,55 @@ void MainWindow::decompose_unique_id(QByteArray data)
 {
     quint8 stack = (quint8)(data.at(0) >> 4) & 0x0F;
     canData.UID[stack] = (quint8)data.at(1) << 24 | (quint8)data.at(2) << 16 | (quint8)data.at(3) << 8 | (quint8)data.at(4);
+}
+
+void MainWindow::decompose_lv_stats_1(QByteArray data)
+{
+    canDataLv.avgCellVolt = (((quint8)data.at(0) << 8) | (quint8)data.at(1)) * 0.0001f;
+    canDataLv.maxCellVolt = (((quint8)data.at(2) << 8) | (quint8)data.at(3)) * 0.0001f;
+    canDataLv.minCellVolt = (((quint8)data.at(4) << 8) | (quint8)data.at(5)) * 0.0001f;
+    qDebug() << "avg cell volt: " << canDataLv.avgCellVolt;
+    qDebug() << "min cell volt: " << canDataLv.minCellVolt;
+    qDebug() << "max cell volt: " << canDataLv.maxCellVolt;
+}
+
+void MainWindow::decompose_lv_stats_2(QByteArray data)
+{
+    canDataLv.maxTemp = (((quint8)data.at(0) << 8) | (quint8)(data.at(1))) * 0.1f;
+    canDataLv.minTemp = (((quint8)data.at(2) << 8) | (quint8)(data.at(3))) * 0.1f;
+//    qDebug() << "Max temp: " << canDataLv.maxTemp;
+//    qDebug() << "Min temp: " << canDataLv.minTemp;
+}
+
+void MainWindow::decompose_lv_state(QByteArray data)
+{
+
+}
+
+void MainWindow::decompose_lv_cell_volt_03(QByteArray data)
+{
+    canDataLv.cellVoltage[0] = (((quint8)data.at(0) << 8) | (quint8)data.at(1)) * 0.0001f;
+    canDataLv.cellVoltage[1] = (((quint8)data.at(2) << 8) | (quint8)data.at(3)) * 0.0001f;
+    canDataLv.cellVoltage[2] = (((quint8)data.at(4) << 8) | (quint8)data.at(5)) * 0.0001f;
+    canDataLv.cellVoltage[3] = (((quint8)data.at(6) << 8) | (quint8)data.at(7)) * 0.0001f;
+}
+
+void MainWindow::decompose_lv_cell_volt_45(QByteArray data)
+{
+    canDataLv.cellVoltage[4] = (((quint8)data.at(0) << 8) | (quint8)data.at(1)) * 0.0001f;
+    canDataLv.cellVoltage[5] = (((quint8)data.at(2) << 8) | (quint8)data.at(3)) * 0.0001f;
+    //todo : SOC
+    //todo: Strom
+}
+
+void MainWindow::decompose_lv_temp_03(QByteArray data)
+{
+
+}
+
+void MainWindow::decompose_lv_temp_47(QByteArray data)
+{
+
 }
 
 void MainWindow::update_ui_balancing()
