@@ -229,6 +229,10 @@ void MainWindow::update_ui_lv()
     ui->minCellVolt_LV->setText(QString("%1 V").arg(canDataLv.minCellVolt, 5, 'f', 3));
     ui->maxCellVolt_LV->setText(QString("%1 V").arg(canDataLv.maxCellVolt, 5, 'f', 3));
     ui->avgCellVolt_LV->setText(QString("%1 V").arg(canDataLv.avgCellVolt, 5, 'f', 3));
+    ui->minTemp_LV->setText(QString("%1 °C").arg(canDataLv.minTemp, 4, 'f', 1));
+    ui->maxTemp_LV->setText(QString("%1 °C").arg(canDataLv.maxTemp, 4, 'f', 1));
+    ui->avgTemp_LV->setText(QString("%1 °C").arg(canDataLv.avgTemp, 4, 'f', 1));
+
     float delta = canDataLv.maxCellVolt - canDataLv.minCellVolt;
     ui->deltaCellVolt_LV->setText(QString("%1 V").arg(delta, 5, 'f', 3));
 
@@ -240,6 +244,12 @@ void MainWindow::update_ui_lv()
     //openWire->child(stack)->setText(1, returnValidity(canData.cellVoltageStatus[stack][0]));
 
     ::memset(canDataLv.cellVoltage, 0, MAX_NUM_OF_LV_CELLS);
+
+    QTreeWidgetItem *temps = ui->parameters_LV->topLevelItem(2); //Temperatures
+    for (quint16 tempsens = 0; tempsens < MAX_NUM_OF_LV_TEMPSENS; tempsens++) {
+        temps->child(0)->setText(tempsens + 1, QString::number(canDataLv.temperature[tempsens], 'f', 1));
+    }
+    ::memset(canDataLv.temperature, 0, MAX_NUM_OF_LV_TEMPSENS);
 }
 
 void MainWindow::on_btnConnectPcan_clicked()
@@ -413,17 +423,14 @@ void MainWindow::decompose_lv_stats_1(QByteArray data)
     canDataLv.avgCellVolt = (((quint8)data.at(0) << 8) | (quint8)data.at(1)) * 0.0001f;
     canDataLv.maxCellVolt = (((quint8)data.at(2) << 8) | (quint8)data.at(3)) * 0.0001f;
     canDataLv.minCellVolt = (((quint8)data.at(4) << 8) | (quint8)data.at(5)) * 0.0001f;
-    qDebug() << "avg cell volt: " << canDataLv.avgCellVolt;
-    qDebug() << "min cell volt: " << canDataLv.minCellVolt;
-    qDebug() << "max cell volt: " << canDataLv.maxCellVolt;
+
 }
 
 void MainWindow::decompose_lv_stats_2(QByteArray data)
 {
     canDataLv.maxTemp = (((quint8)data.at(0) << 8) | (quint8)(data.at(1))) * 0.1f;
     canDataLv.minTemp = (((quint8)data.at(2) << 8) | (quint8)(data.at(3))) * 0.1f;
-//    qDebug() << "Max temp: " << canDataLv.maxTemp;
-//    qDebug() << "Min temp: " << canDataLv.minTemp;
+    //canDataLv.avgTemp = (((quint8)data.at(6) << 8) | (quint8)(data.at(7))) * 0.1f;
 }
 
 void MainWindow::decompose_lv_state(QByteArray data)
