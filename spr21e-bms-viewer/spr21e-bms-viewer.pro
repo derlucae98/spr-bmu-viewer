@@ -19,21 +19,20 @@ SOURCES += \
     aboutdialog.cpp \
     can.cpp \
     config.cpp \
-    logfileconverter.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    ts_accu.cpp
 
 HEADERS += \
     aboutdialog.h \
     can.h \
     config.h \
-    logfileconverter.h \
-    mainwindow.h
+    mainwindow.h \
+    ts_accu.h
 
 FORMS += \
     aboutdialog.ui \
     config.ui \
-    logfileconverter.ui \
     mainwindow.ui
 
 # Default rules for deployment.
