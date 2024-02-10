@@ -96,7 +96,7 @@ public:
 
 
 
-    void can_frame(QCanBusFrame frame);
+    void can_frame(QCanBusFrame frame); //Connect to CAN receive signal
     void open_config_dialog();
     bool link_available();
     void ts_take_control(bool control);
@@ -104,22 +104,22 @@ public:
 
 private:
     enum can_id {
-        CAN_ID_TS_REQUEST         = 0x000,
-        CAN_ID_STARTUP            = 0x001,
-        CAN_ID_INFO               = 0x002,
-        CAN_ID_STATS_1            = 0x003,
-        CAN_ID_STATS_2            = 0x004,
-        CAN_ID_UIP                = 0x005,
-        CAN_ID_CELL_VOLTAGE_1     = 0x006,
-        CAN_ID_CELL_VOLTAGE_2     = 0x007,
-        CAN_ID_CELL_VOLTAGE_3     = 0x008,
-        CAN_ID_CELL_VOLTAGE_4     = 0x009,
-        CAN_ID_CELL_TEMPERATURE   = 0x00A,
-        CAN_ID_BALANCING_FEEDBACK = 0x00B,
-        CAN_ID_UNIQUE_ID          = 0x00C,
-        CAN_ID_TIME               = 0x00D,
-        CAN_ID_DIAG_REQUEST       = 0x00E,
-        CAN_ID_DIAG_RESPONSE      = 0x00F
+        CAN_ID_TS_REQUEST         = 0x100,
+        CAN_ID_STARTUP            = 0x101,
+        CAN_ID_INFO               = 0x102,
+        CAN_ID_STATS_1            = 0x103,
+        CAN_ID_STATS_2            = 0x104,
+        CAN_ID_UIP                = 0x105,
+        CAN_ID_CELL_VOLTAGE_1     = 0x106,
+        CAN_ID_CELL_VOLTAGE_2     = 0x107,
+        CAN_ID_CELL_VOLTAGE_3     = 0x108,
+        CAN_ID_CELL_VOLTAGE_4     = 0x109,
+        CAN_ID_CELL_TEMPERATURE   = 0x10A,
+        CAN_ID_BALANCING_FEEDBACK = 0x10B,
+        CAN_ID_UNIQUE_ID          = 0x10C,
+        CAN_ID_TIME               = 0x10D,
+        CAN_ID_DIAG_REQUEST       = 0x10E,
+        CAN_ID_DIAG_RESPONSE      = 0x10F
     };
 
     ts_battery_data_t canData;
@@ -144,12 +144,11 @@ private:
     bool tsControl;
     bool tsActive;
 
-
 signals:
     void link_availability_changed(bool available);
-    void can_send(QCanBusFrame frame);
+    void can_send(QCanBusFrame frame); //connect to CAN send slot
     void new_data(ts_battery_data_t data);
-    void can_frame_forward(QCanBusFrame, QPrivateSignal);
+    void can_frame_forward(QCanBusFrame, QPrivateSignal); //Needed for config dialog
 };
 
 #endif // TS_ACCU_H
