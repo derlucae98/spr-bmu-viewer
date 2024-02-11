@@ -116,6 +116,7 @@ void TS_Accu::ts_take_control(bool control)
         sendTimer->stop();
         QByteArray payload;
         QCanBusFrame frame;
+        frame.setFrameId(CAN_ID_TS_REQUEST);
         payload.append((char)0);
         payload.append((char)0);
         frame.setPayload(payload);
@@ -257,7 +258,7 @@ void TS_Accu::send_timer_timeout()
 {
     QCanBusFrame frame;
     QByteArray payload;
-    frame.setFrameId(0);
+    frame.setFrameId(CAN_ID_TS_REQUEST);
     payload.append(0x01);
     payload.append(tsActive ? (char)0xFF : (char)0x00);
     frame.setPayload(payload);
