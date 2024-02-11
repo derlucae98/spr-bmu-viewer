@@ -6,13 +6,9 @@
 #include <QDebug>
 #include <QTimer>
 #include <QtMath>
-
 #include "can.h"
-
 #include <QDateTime>
-#include <QProgressBar>
 #include <QPixmap>
-#include "aboutdialog.h"
 #include "ts_accu.h"
 
 

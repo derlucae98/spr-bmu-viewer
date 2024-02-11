@@ -16,7 +16,6 @@ DEFINES += "VERS_MAJOR=\"$$MAJOR\"" "VERS_MINOR=\"$$MINOR\"" "VERS_BUILD=\"\\\"$
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    aboutdialog.cpp \
     can.cpp \
     config.cpp \
     main.cpp \
@@ -24,14 +23,12 @@ SOURCES += \
     ts_accu.cpp
 
 HEADERS += \
-    aboutdialog.h \
     can.h \
     config.h \
     mainwindow.h \
     ts_accu.h
 
 FORMS += \
-    aboutdialog.ui \
     config.ui \
     mainwindow.ui
 
