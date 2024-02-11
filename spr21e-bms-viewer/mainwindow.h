@@ -6,9 +6,9 @@
 #include <QDebug>
 #include <QTimer>
 #include <QtMath>
-#include <QMessageBox>
+
 #include "can.h"
-#include <unistd.h>
+
 #include <QDateTime>
 #include <QProgressBar>
 #include <QPixmap>
@@ -35,15 +35,13 @@ public:
 private slots:
     void on_btnConnectPcan_clicked();
     void on_clearErrorLog_clicked();
-    void on_actionAbout_SPR_BMS_viewer_triggered();
-    void on_actionConfig_triggered();
 
     void on_tsTakeControl_stateChanged(int arg1);
 
 
     void on_reqTsActive_stateChanged(int arg1);
 
-    void on_pushButton_clicked();
+    void on_btnConfig_clicked();
 
 private:
     Ui::MainWindow *ui;

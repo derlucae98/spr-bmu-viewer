@@ -17,6 +17,12 @@ Can::~Can()
 
 void Can::init()
 {
+    if (geteuid()) {
+        QMessageBox mb;
+        mb.setText("Some parts of this software require root privileges! Click OK and enter your password or run as root.");
+        mb.exec();
+    }
+
     timeout = new QTimer(this);
     timeout->setInterval(100);
     QObject::connect(timeout, &QTimer::timeout, this, &Can::send_heartbeat);

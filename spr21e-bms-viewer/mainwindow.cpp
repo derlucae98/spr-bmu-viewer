@@ -7,16 +7,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
-
-
     ::memset(&canDataLv, 0, sizeof(can_data_LV_t));
 
-    if (geteuid()) {
-        QMessageBox mb;
-        mb.setText("Some parts of this software require root privileges! Click OK and enter your password or run as root.");
-        mb.exec();
-    }
+
 
     interfaceUp = false;
     can = new Can(this);
@@ -220,20 +213,6 @@ void MainWindow::on_clearErrorLog_clicked()
 {
     ui->errorLog->clear();
 }
-
-void MainWindow::on_actionAbout_SPR_BMS_viewer_triggered()
-{
-    AboutDialog *aboutDialog = new AboutDialog();
-    aboutDialog->setAttribute(Qt::WA_DeleteOnClose);
-    aboutDialog->show();
-}
-
-void MainWindow::on_actionConfig_triggered()
-{
-
-}
-
-
 
 void MainWindow::decompose_lv_stats_1(QByteArray data)
 {
@@ -448,7 +427,7 @@ void MainWindow::on_reqTsActive_stateChanged(int arg1)
 }
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_btnConfig_clicked()
 {
     if (tsAccu) {
         tsAccu->open_config_dialog();
