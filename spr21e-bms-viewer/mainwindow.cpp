@@ -230,9 +230,7 @@ void MainWindow::on_actionAbout_SPR_BMS_viewer_triggered()
 
 void MainWindow::on_actionConfig_triggered()
 {
-    if (tsAccu) {
-        tsAccu->open_config_dialog();
-    }
+
 }
 
 
@@ -407,22 +405,10 @@ void MainWindow::update_ui_stats()
         ui->imdStatus->setText("OK");
     }
 
-    if (tsBatteryData.errorCode & TS_Accu::ERROR_IMD_POWERSTAGE_DISABLED) {
-        ui->imdSC->setText("Error");
-    } else {
-        ui->imdSC->setText("OK");
-    }
-
     if (tsBatteryData.errorCode & TS_Accu::ERROR_AMS_FAULT) {
         ui->amsStatus->setText("Error");
     } else {
         ui->amsStatus->setText("OK");
-    }
-
-    if (tsBatteryData.errorCode & TS_Accu::ERROR_AMS_POWERSTAGE_DISABLED) {
-        ui->amsSC->setText("Error");
-    } else {
-        ui->amsSC->setText("OK");
     }
 
     if (tsBatteryData.errorCode & TS_Accu::ERROR_SDC_OPEN) {
@@ -458,6 +444,14 @@ void MainWindow::on_reqTsActive_stateChanged(int arg1)
 {
     if (tsAccu) {
         tsAccu->ts_activate((bool)arg1);
+    }
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    if (tsAccu) {
+        tsAccu->open_config_dialog();
     }
 }
 

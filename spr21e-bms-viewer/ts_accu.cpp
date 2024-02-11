@@ -1,6 +1,6 @@
 #include "ts_accu.h"
 
-TS_Accu::TS_Accu(QObject *parent) : QObject(parent)
+TS_Accu::TS_Accu(QWidget *parent) : QWidget(parent)
 {
     ::memset(&canData, 0, sizeof(ts_battery_data_t));
     linkAvailable = false;
@@ -95,11 +95,11 @@ void TS_Accu::can_frame(QCanBusFrame frame)
 
 void TS_Accu::open_config_dialog()
 {
-    Config *configDialog = new Config();
+    Config *configDialog = new Config(this);
     QObject::connect(this, &TS_Accu::can_frame_forward, configDialog, &Config::can_recv);
     QObject::connect(configDialog, &Config::can_send, this, &TS_Accu::can_send);
     configDialog->setAttribute(Qt::WA_DeleteOnClose);
-    configDialog->show();
+    configDialog->exec();
 }
 
 bool TS_Accu::link_available()

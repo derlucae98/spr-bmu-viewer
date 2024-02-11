@@ -6,11 +6,11 @@
 #include <QTimer>
 #include "config.h"
 
-class TS_Accu : public QObject
+class TS_Accu : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TS_Accu(QObject *parent = nullptr);
+    explicit TS_Accu(QWidget *parent = nullptr);
 
     static constexpr int MAX_NUM_OF_SLAVES    = 12;
     static constexpr int  MAX_NUM_OF_CELLS    = 12;

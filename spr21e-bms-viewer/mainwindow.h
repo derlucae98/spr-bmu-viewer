@@ -43,6 +43,8 @@ private slots:
 
     void on_reqTsActive_stateChanged(int arg1);
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
