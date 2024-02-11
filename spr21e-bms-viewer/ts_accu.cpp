@@ -9,6 +9,7 @@ TS_Accu::TS_Accu(QObject *parent) : QObject(parent)
 
     timeoutTimer = new QTimer(this);
     timeoutTimer->setSingleShot(true);
+    timeoutTimer->setInterval(200);
     QObject::connect(timeoutTimer, &QTimer::timeout, this, [=]{
         linkAvailable = false;
         emit link_availability_changed(false);
@@ -23,7 +24,7 @@ TS_Accu::TS_Accu(QObject *parent) : QObject(parent)
     QObject::connect(sendTimer, &QTimer::timeout, this, &TS_Accu::send_timer_timeout);
 
     updateTimer = new QTimer(this);
-    updateTimer->setInterval(150);
+    updateTimer->setInterval(500);
     QObject::connect(updateTimer, &QTimer::timeout, this, [=]{
         emit new_data(canData);
     });
@@ -85,7 +86,9 @@ void TS_Accu::can_frame(QCanBusFrame frame)
         linkAvailable = true;
         timeoutTimer->start();
         emit link_availability_changed(true);
-        updateTimer->start();
+        if (!updateTimer->isActive()) {
+            updateTimer->start();
+        }
         fullUpdate = 0;
     }
 }

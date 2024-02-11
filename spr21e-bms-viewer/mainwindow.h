@@ -106,8 +106,10 @@ private:
 
 
     bool linkAvailable;
+    void ts_link_available(bool available);
 
     TS_Accu::ts_battery_data_t tsBatteryData;
+    void update_ui();
     void update_ui_balancing();
     void update_ui_uid();
     void update_ui_voltage();

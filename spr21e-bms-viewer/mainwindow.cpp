@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(tsAccu, &TS_Accu::new_data, this, &MainWindow::update_ui_ts);
     QObject::connect(can, &Can::new_frame, tsAccu, &TS_Accu::can_frame);
     QObject::connect(tsAccu, &TS_Accu::can_send, can, &Can::send_frame);
+    QObject::connect(tsAccu, &TS_Accu::link_availability_changed, this, &MainWindow::ts_link_available);
 
     ui->infoFrame->setEnabled(false);
     ui->parameters->setEnabled(false);
@@ -99,6 +100,20 @@ void MainWindow::new_frame(QCanBusFrame frame)
     case CAN_ID_LV_ACCU_TEMP_47:
         decompose_lv_temp_47(frame.payload());
     }
+}
+
+void MainWindow::ts_link_available(bool available)
+{
+    if (available) {
+        ui->linkDisplay->setStyleSheet("background-color: rgb(0, 255, 0);");
+    } else {
+        ui->linkDisplay->setStyleSheet("background-color: rgb(255, 0, 0);");
+    }
+}
+
+void MainWindow::update_ui()
+{
+
 }
 
 QString MainWindow::error_to_string(TS_Accu::contactor_error_t error)
@@ -413,13 +428,6 @@ void MainWindow::update_ui_stats()
     } else {
         ui->scStatus->setText("OK");
     }
-
-    if (linkAvailable) {
-        ui->linkDisplay->setStyleSheet("background-color: rgb(0, 255, 0);");
-    } else {
-        ui->linkDisplay->setStyleSheet("background-color: rgb(255, 0, 0);");
-    }
-    linkAvailable = false;
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
