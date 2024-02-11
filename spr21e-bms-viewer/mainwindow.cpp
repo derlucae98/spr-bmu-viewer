@@ -230,7 +230,9 @@ void MainWindow::on_actionAbout_SPR_BMS_viewer_triggered()
 
 void MainWindow::on_actionConfig_triggered()
 {
-
+    if (tsAccu) {
+        tsAccu->open_config_dialog();
+    }
 }
 
 
