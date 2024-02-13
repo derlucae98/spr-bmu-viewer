@@ -11,8 +11,8 @@ QStringList TS_Accu::contactor_error_list  = {
     "Current out of range!",
     "Pre-charge timeout!",
     "SDC open!",
-    "AMS pwerstage waiting for reset...",
-    "IMD pwerstage waiting for reset..."
+    "AMS powerstage waiting for reset...",
+    "IMD powerstage waiting for reset..."
 };
 
 
