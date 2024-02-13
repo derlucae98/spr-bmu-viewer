@@ -8,6 +8,8 @@
 #include <QDir>
 #include <QProcess>
 #include <QTimer>
+#include <unistd.h>
+#include <QMessageBox>
 
 
 class Can : public QObject
