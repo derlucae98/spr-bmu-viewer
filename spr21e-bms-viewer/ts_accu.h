@@ -38,15 +38,16 @@ public:
         ERROR_IMD_POWERSTAGE_DISABLED     = 0x400
     };
 
-    enum LTCError_t{
+    enum sensor_status_t {
         NOERROR         = 0x0, //!< NOERROR
         PECERROR        = 0x1, //!< PECERROR
         VALUEOUTOFRANGE = 0x2, //!< VALUEOUTOFRANGE
-        OPENCELLWIRE    = 0x3, //!< OPENCELLWIRE
+        OPENWIRE    = 0x3, //!< OPENWIRE
     };
 
     static QString ts_state_to_string(TS_Accu::ts_state_t state);
     static QStringList contactor_error_to_string(TS_Accu::contactor_error_t error);
+    static QString sensor_status_to_string(sensor_status_t status);
     struct ts_battery_data_t {
         //Info
         float isolationResistance;
@@ -84,9 +85,9 @@ public:
 
         //Cell voltage / temperature
         float cellVoltage[MAX_NUM_OF_SLAVES][MAX_NUM_OF_CELLS];
-        quint8 cellVoltageStatus[MAX_NUM_OF_SLAVES][MAX_NUM_OF_CELLS+1];
+        sensor_status_t cellVoltageStatus[MAX_NUM_OF_SLAVES][MAX_NUM_OF_CELLS+1];
         float temperature[MAX_NUM_OF_SLAVES][MAX_NUM_OF_TEMPSENS];
-        quint8 temperatureStatus[MAX_NUM_OF_SLAVES][MAX_NUM_OF_TEMPSENS];
+        sensor_status_t temperatureStatus[MAX_NUM_OF_SLAVES][MAX_NUM_OF_TEMPSENS];
 
         //Balancing feedback
         quint8 balance[MAX_NUM_OF_SLAVES][MAX_NUM_OF_CELLS];

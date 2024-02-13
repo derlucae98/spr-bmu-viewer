@@ -31,14 +31,9 @@ public:
 private slots:
     void on_btnConnectPcan_clicked();
     void on_clearErrorLog_clicked();
-
     void on_tsTakeControl_stateChanged(int arg1);
-
-
     void on_reqTsActive_stateChanged(int arg1);
-
     void on_btnConfig_clicked();
-
     void on_btnShowErrors_clicked();
 
 private:
@@ -90,10 +85,6 @@ private:
     void decompose_lv_cell_volt_45(QByteArray data);
     void decompose_lv_temp_03(QByteArray data);
     void decompose_lv_temp_47(QByteArray data);
-
-
-
-    QString returnValidity(quint8 val);
 
     bool interfaceUp;
 

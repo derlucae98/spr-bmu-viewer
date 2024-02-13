@@ -110,24 +110,6 @@ void MainWindow::update_ui()
 
 }
 
-
-
-QString MainWindow::returnValidity(quint8 val)
-{
-    switch (val) {
-    case TS_Accu::NOERROR:
-        return "OK";
-    case TS_Accu::PECERROR:
-        return "PEC error";
-    case TS_Accu::VALUEOUTOFRANGE:
-        return "Value out of range";
-    case TS_Accu::OPENCELLWIRE:
-        return "Open wire";
-    default:
-        return "Unknown error";
-    }
-}
-
 void MainWindow::update_ui_ts(TS_Accu::ts_battery_data_t data)
 {
 
@@ -348,9 +330,9 @@ void MainWindow::update_ui_voltage()
     for (quint16 stack = 0; stack < TS_Accu::MAX_NUM_OF_SLAVES; stack++) {
         for (quint16 cell = 0; cell < TS_Accu::MAX_NUM_OF_CELLS; cell++) {
             volts->child(stack)->setText(cell+2, QString::number(tsBatteryData.cellVoltage[stack][cell], 'f', 4));
-            openWire->child(stack)->setText(cell+2, returnValidity(tsBatteryData.cellVoltageStatus[stack][cell+1]));
+            openWire->child(stack)->setText(cell+2, TS_Accu::sensor_status_to_string(tsBatteryData.cellVoltageStatus[stack][cell+1]));
         }
-        openWire->child(stack)->setText(1, returnValidity(tsBatteryData.cellVoltageStatus[stack][0]));
+        openWire->child(stack)->setText(1, TS_Accu::sensor_status_to_string(tsBatteryData.cellVoltageStatus[stack][0]));
     }
     ::memset(tsBatteryData.cellVoltage, 0, TS_Accu::MAX_NUM_OF_SLAVES * TS_Accu::MAX_NUM_OF_CELLS);
 }
@@ -363,7 +345,7 @@ void MainWindow::update_ui_temperature()
             if (tsBatteryData.temperatureStatus[stack][tempsens] == TS_Accu::NOERROR){
                 temps->child(stack)->setText(tempsens + 1, QString::number(tsBatteryData.temperature[stack][tempsens], 'f', 1));
             } else {
-                temps->child(stack)->setText(tempsens + 1, returnValidity(tsBatteryData.temperatureStatus[stack][tempsens]));
+                temps->child(stack)->setText(tempsens + 1, TS_Accu::sensor_status_to_string(tsBatteryData.temperatureStatus[stack][tempsens]));
             }
         }
     }

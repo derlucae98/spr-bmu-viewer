@@ -196,10 +196,10 @@ void TS_Accu::decompose_uip(QByteArray data)
 void TS_Accu::decompose_cell_voltage_1(QByteArray data)
 {
     quint8 index = (quint8)data.at(0) >> 4;
-    canData.cellVoltageStatus[index][0] = (quint8)data.at(0) & 0x01;
-    canData.cellVoltageStatus[index][1] = (quint8)data.at(1) & 0x03;
-    canData.cellVoltageStatus[index][2] = ((quint8)data.at(1) >> 2) & 0x03;
-    canData.cellVoltageStatus[index][3] = ((quint8)data.at(1) >> 4) & 0x03;
+    canData.cellVoltageStatus[index][0] = static_cast<sensor_status_t>((quint8)data.at(0) & 0x01);
+    canData.cellVoltageStatus[index][1] = static_cast<sensor_status_t>((quint8)data.at(1) & 0x03);
+    canData.cellVoltageStatus[index][2] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 2) & 0x03);
+    canData.cellVoltageStatus[index][3] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 4) & 0x03);
     canData.cellVoltage[index][0] = (((quint8)data.at(2) << 8) | (quint8)data.at(3)) * 0.0001f;
     canData.cellVoltage[index][1] = (((quint8)data.at(4) << 8) | (quint8)data.at(5)) * 0.0001f;
     canData.cellVoltage[index][2] = (((quint8)data.at(6) << 8) | (quint8)data.at(7)) * 0.0001f;
@@ -208,9 +208,9 @@ void TS_Accu::decompose_cell_voltage_1(QByteArray data)
 void TS_Accu::decompose_cell_voltage_2(QByteArray data)
 {
     quint8 index = (quint8)data.at(0) >> 4;
-    canData.cellVoltageStatus[index][4] = (quint8)data.at(1) & 0x03;
-    canData.cellVoltageStatus[index][5] = ((quint8)data.at(1) >> 2) & 0x03;
-    canData.cellVoltageStatus[index][6] = ((quint8)data.at(1) >> 4) & 0x03;
+    canData.cellVoltageStatus[index][4] = static_cast<sensor_status_t>((quint8)data.at(1) & 0x03);
+    canData.cellVoltageStatus[index][5] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 2) & 0x03);
+    canData.cellVoltageStatus[index][6] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 4) & 0x03);
     canData.cellVoltage[index][3] = (((quint8)data.at(2) << 8) | (quint8)data.at(3)) * 0.0001f;
     canData.cellVoltage[index][4] = (((quint8)data.at(4) << 8) | (quint8)data.at(5)) * 0.0001f;
     canData.cellVoltage[index][5] = (((quint8)data.at(6) << 8) | (quint8)data.at(7)) * 0.0001f;
@@ -219,9 +219,9 @@ void TS_Accu::decompose_cell_voltage_2(QByteArray data)
 void TS_Accu::decompose_cell_voltage_3(QByteArray data)
 {
     quint8 index = (quint8)data.at(0) >> 4;
-    canData.cellVoltageStatus[index][7] = (quint8)data.at(1) & 0x03;
-    canData.cellVoltageStatus[index][8] = ((quint8)data.at(1) >> 2) & 0x03;
-    canData.cellVoltageStatus[index][9] = ((quint8)data.at(1) >> 4) & 0x03;
+    canData.cellVoltageStatus[index][7] = static_cast<sensor_status_t>((quint8)data.at(1) & 0x03);
+    canData.cellVoltageStatus[index][8] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 2) & 0x03);
+    canData.cellVoltageStatus[index][9] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 4) & 0x03);
     canData.cellVoltage[index][6] = (((quint8)data.at(2) << 8) | (quint8)data.at(3)) * 0.0001f;
     canData.cellVoltage[index][7] = (((quint8)data.at(4) << 8) | (quint8)data.at(5)) * 0.0001f;
     canData.cellVoltage[index][8] = (((quint8)data.at(6) << 8) | (quint8)data.at(7)) * 0.0001f;
@@ -230,9 +230,9 @@ void TS_Accu::decompose_cell_voltage_3(QByteArray data)
 void TS_Accu::decompose_cell_voltage_4(QByteArray data)
 {
     quint8 index = (quint8)data.at(0) >> 4;
-    canData.cellVoltageStatus[index][10] = (quint8)data.at(1) & 0x03;
-    canData.cellVoltageStatus[index][11] = ((quint8)data.at(1) >> 2) & 0x03;
-    canData.cellVoltageStatus[index][12] = ((quint8)data.at(1) >> 4) & 0x03;
+    canData.cellVoltageStatus[index][10] = static_cast<sensor_status_t>((quint8)data.at(1) & 0x03);
+    canData.cellVoltageStatus[index][11] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 2) & 0x03);
+    canData.cellVoltageStatus[index][12] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 4) & 0x03);
     canData.cellVoltage[index][9]  = (((quint8)data.at(2) << 8) | (quint8)data.at(3)) * 0.0001f;
     canData.cellVoltage[index][10] = (((quint8)data.at(4) << 8) | (quint8)data.at(5)) * 0.0001f;
     canData.cellVoltage[index][11] = (((quint8)data.at(6) << 8) | (quint8)data.at(7)) * 0.0001f;
@@ -241,12 +241,12 @@ void TS_Accu::decompose_cell_voltage_4(QByteArray data)
 void TS_Accu::decompose_cell_temperature(QByteArray data)
 {
     quint8 index = (quint8)data.at(0) >> 4;
-    canData.temperatureStatus[index][0] = ((quint8)data.at(1) >> 0) & 0x03;
-    canData.temperatureStatus[index][1] = ((quint8)data.at(1) >> 2) & 0x03;
-    canData.temperatureStatus[index][2] = ((quint8)data.at(1) >> 4) & 0x03;
-    canData.temperatureStatus[index][3] = ((quint8)data.at(1) >> 6) & 0x03;
-    canData.temperatureStatus[index][4] = ((quint8)data.at(0) >> 0) & 0x03;
-    canData.temperatureStatus[index][5] = ((quint8)data.at(0) >> 2) & 0x03;
+    canData.temperatureStatus[index][0] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 0) & 0x03);
+    canData.temperatureStatus[index][1] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 2) & 0x03);
+    canData.temperatureStatus[index][2] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 4) & 0x03);
+    canData.temperatureStatus[index][3] = static_cast<sensor_status_t>(((quint8)data.at(1) >> 6) & 0x03);
+    canData.temperatureStatus[index][4] = static_cast<sensor_status_t>(((quint8)data.at(0) >> 0) & 0x03);
+    canData.temperatureStatus[index][5] = static_cast<sensor_status_t>(((quint8)data.at(0) >> 2) & 0x03);
     canData.temperature[index][0] = (quint8)data.at(2) * 0.5f;
     canData.temperature[index][1] = (quint8)data.at(3) * 0.5f;
     canData.temperature[index][2] = (quint8)data.at(4) * 0.5f;
@@ -305,6 +305,22 @@ QStringList TS_Accu::contactor_error_to_string(TS_Accu::contactor_error_t error)
         }
     }
     return errorStrings;
+}
+
+QString TS_Accu::sensor_status_to_string(sensor_status_t status)
+{
+    switch (status) {
+    case TS_Accu::NOERROR:
+        return "OK";
+    case TS_Accu::PECERROR:
+        return "PEC error";
+    case TS_Accu::VALUEOUTOFRANGE:
+        return "Value out of range";
+    case TS_Accu::OPENWIRE:
+        return "Open wire";
+    default:
+        return "Unknown error";
+    }
 }
 
 
