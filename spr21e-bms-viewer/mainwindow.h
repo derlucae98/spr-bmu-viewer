@@ -117,6 +117,7 @@ private:
     void ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_error_t);
     void show_error_message();
     QString tsErrorString;
+    void append_error(QString error, quint8 severity);
     void closeEvent(QCloseEvent *event);
 
     bool darkMode;

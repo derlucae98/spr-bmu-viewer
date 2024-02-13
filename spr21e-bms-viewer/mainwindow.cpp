@@ -180,6 +180,7 @@ void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_
         for (const auto &i : errors) {
             errorString.push_back(i);
             errorString.push_back("\n");
+            append_error(i, 2);
         }
         ui->btnShowErrors->setEnabled(true);
         ui->btnShowErrors->setText("Show errors!");
@@ -200,6 +201,7 @@ void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_
     } else {
         ui->btnShowErrors->setEnabled(false);
         ui->btnShowErrors->setText("No errors!");
+        append_error(TS_Accu::contactor_error_to_string(error)[0], 0);
     }
     this->tsErrorString = errorString;
 }
@@ -226,6 +228,24 @@ void MainWindow::show_error_message()
     msg->exec();
     QObject::disconnect(connection);
     msg->deleteLater();
+}
+
+void MainWindow::append_error(QString error, quint8 severity)
+{
+    QString severityString;
+    if (severity == 0) {
+        severityString = "INFO";
+        ui->errorLog->setTextColor(Qt::black);
+    } else if (severity == 1) {
+        severityString = "WARNING";
+        ui->errorLog->setTextColor(Qt::darkYellow);
+    } else {
+        severityString = "ERROR";
+        ui->errorLog->setTextColor(Qt::red);
+    }
+
+    QDateTime dateTime = QDateTime::currentDateTime();
+    ui->errorLog->append("[" + dateTime.date().toString("dd.MM.yyyy") + " " + dateTime.time().toString("hh:mm:ss") + QString("] [%1]: ").arg(severityString) + error);
 }
 
 void MainWindow::on_btnConnectPcan_clicked()
