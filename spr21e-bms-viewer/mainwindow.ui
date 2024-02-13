@@ -1079,8 +1079,8 @@
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout">
-                <item>
+               <layout class="QGridLayout" name="gridLayout_7">
+                <item row="0" column="0">
                  <layout class="QHBoxLayout" name="horizontalLayout_2">
                   <item>
                    <widget class="QLabel" name="label_39">
@@ -1115,7 +1115,7 @@
                   </item>
                  </layout>
                 </item>
-                <item>
+                <item row="1" column="0">
                  <layout class="QHBoxLayout" name="horizontalLayout_4">
                   <item>
                    <widget class="QLabel" name="label_40">
@@ -1150,7 +1150,7 @@
                   </item>
                  </layout>
                 </item>
-                <item>
+                <item row="2" column="0">
                  <layout class="QHBoxLayout" name="horizontalLayout_6">
                   <item>
                    <widget class="QLabel" name="label_41">
@@ -1185,14 +1185,35 @@
                   </item>
                  </layout>
                 </item>
-                <item>
+                <item row="3" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_3">
+                  <item>
+                   <widget class="QPushButton" name="btnShowErrors">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>No errors!</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="cbAlertOnErr">
+                    <property name="text">
+                     <string>Alert on error</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="4" column="0">
                  <widget class="QPushButton" name="btnConfig">
                   <property name="text">
                    <string>Config</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item row="5" column="0">
                  <layout class="QHBoxLayout" name="horizontalLayout_22">
                   <item>
                    <widget class="QCheckBox" name="reqTsActive">

@@ -45,11 +45,13 @@ public:
         OPENCELLWIRE    = 0x3, //!< OPENCELLWIRE
     };
 
+    static QString ts_state_to_string(TS_Accu::ts_state_t state);
+    static QStringList contactor_error_to_string(TS_Accu::contactor_error_t error);
     struct ts_battery_data_t {
         //Info
         float isolationResistance;
         bool isolationResistanceValid;
-        quint32 errorCode;
+        contactor_error_t errorCode;
         ts_state_t tsState;
 
         //Stats1
@@ -144,11 +146,14 @@ private:
     bool tsControl;
     bool tsActive;
 
+    static QStringList contactor_error_list;
+
 signals:
     void link_availability_changed(bool available);
     void can_send(QCanBusFrame frame); //connect to CAN send slot
     void new_data(ts_battery_data_t data);
     void can_frame_forward(QCanBusFrame, QPrivateSignal); //Needed for config dialog
+    void ts_state_changed(TS_Accu::ts_state_t, TS_Accu::contactor_error_t error);
 };
 
 #endif // TS_ACCU_H

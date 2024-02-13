@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(can, &Can::new_frame, tsAccu, &TS_Accu::can_frame);
     QObject::connect(tsAccu, &TS_Accu::can_send, can, &Can::send_frame);
     QObject::connect(tsAccu, &TS_Accu::link_availability_changed, this, &MainWindow::ts_link_available);
+    QObject::connect(tsAccu, &TS_Accu::ts_state_changed, this, &MainWindow::ts_state_changed);
 
     ui->infoFrame->setEnabled(false);
     ui->parameters->setEnabled(false);
@@ -109,37 +110,7 @@ void MainWindow::update_ui()
 
 }
 
-QString MainWindow::error_to_string(TS_Accu::contactor_error_t error)
-{
-//    switch (error) {
-//    case ERROR_NO_ERROR:
-//        return "Error cleared.";
-//    case ERROR_SYSTEM_NOT_HEALTHY:
-//        return "System not healthy!";
-//    case ERROR_CONTACTOR_IMPLAUSIBLE:
-//        return "Contactor state implausible!";
-//    case ERROR_PRE_CHARGE_TOO_SHORT:
-//        return "Pre-charge too short!";
-//    case ERROR_PRE_CHARGE_TIMEOUT:
-//        return "Pre-charge timed out!";
-//    }
-//    return "Undefined error.";
-}
 
-
-QString MainWindow::ts_state_to_string(TS_Accu::ts_state_t state)
-{
-    switch (state) {
-    case TS_Accu::TS_STATE_STANDBY:
-        return "Standby";
-    case TS_Accu::TS_STATE_PRE_CHARGING:
-        return "Pre-charging";
-    case TS_Accu::TS_STATE_OPERATE:
-        return "Operate";
-    case TS_Accu::TS_STATE_ERROR:
-        return "Error";
-    }
-}
 
 QString MainWindow::returnValidity(quint8 val)
 {
@@ -159,12 +130,17 @@ QString MainWindow::returnValidity(quint8 val)
 
 void MainWindow::update_ui_ts(TS_Accu::ts_battery_data_t data)
 {
+
+
     tsBatteryData = data;
+
     update_ui_voltage();
     update_ui_temperature();
     update_ui_stats();
     update_ui_balancing();
     update_ui_uid();
+
+
 //    update_ui_lv();
 }
 
@@ -196,12 +172,67 @@ void MainWindow::update_ui_lv()
     ::memset(canDataLv.temperature, 0, MAX_NUM_OF_LV_TEMPSENS);
 }
 
+void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_error_t error)
+{
+    QString errorString;
+    if (state == TS_Accu::TS_STATE_ERROR) {
+        QStringList errors = TS_Accu::contactor_error_to_string(error);
+        for (const auto &i : errors) {
+            errorString.push_back(i);
+            errorString.push_back("\n");
+        }
+        ui->btnShowErrors->setEnabled(true);
+        ui->btnShowErrors->setText("Show errors!");
+        if (ui->cbAlertOnErr->isChecked()) {
+            /*  What an ugly workaround...
+             *  calling show_error_message(); directly locks the whole system for whatever reason.
+             *  Deferring it to a timer timeout slot solves the problem.
+             *  Fix me I guess?
+             */
+            QTimer *worker = new QTimer();
+            worker->setSingleShot(true);
+            QObject::connect(worker, &QTimer::timeout, this, [=]{
+                show_error_message();
+                worker->deleteLater();
+            });
+            worker->start();
+        }
+    } else {
+        ui->btnShowErrors->setEnabled(false);
+        ui->btnShowErrors->setText("No errors!");
+    }
+    this->tsErrorString = errorString;
+}
+
+void MainWindow::show_error_message()
+{
+    qDebug() << "Show message";
+    // Show Messagebox on button click (or automatically if checkbox is checked)
+    // Close Messagebox if error cleares
+    QMessageBox *msg = new QMessageBox();
+    auto connection = QObject::connect(tsAccu, &TS_Accu::ts_state_changed, this, [=](TS_Accu::ts_state_t state){
+        if (state != TS_Accu::TS_STATE_ERROR) {
+            if (msg) {
+                msg->close();
+            }
+        }
+    });
+    msg->setText(tsErrorString);
+    msg->setIcon(QMessageBox::Critical);
+    msg->setWindowTitle("TS Accu error occurred!");
+    msg->setStyleSheet(
+        "QLabel{min-width: 150px;}"
+    );
+    msg->exec();
+    QObject::disconnect(connection);
+    msg->deleteLater();
+}
+
 void MainWindow::on_btnConnectPcan_clicked()
 {
     if (!interfaceUp) {
         can->set_device_name(ui->cbSelectPCAN->currentText());
         can->connect_device();
-
 
     } else {
         can->disconnect_device();
@@ -376,7 +407,7 @@ void MainWindow::update_ui_stats()
         ui->isoRes->setText("Invalid");
     }
 
-    ui->tsState->setText(ts_state_to_string(tsBatteryData.tsState));
+    ui->tsState->setText(TS_Accu::ts_state_to_string(tsBatteryData.tsState));
 
     if (tsBatteryData.errorCode & TS_Accu::ERROR_IMD_FAULT) {
         ui->imdStatus->setText("Error");
@@ -432,5 +463,11 @@ void MainWindow::on_btnConfig_clicked()
     if (tsAccu) {
         tsAccu->open_config_dialog();
     }
+}
+
+
+void MainWindow::on_btnShowErrors_clicked()
+{
+    show_error_message();
 }
 

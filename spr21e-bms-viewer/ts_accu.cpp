@@ -1,8 +1,25 @@
 #include "ts_accu.h"
 
+QStringList TS_Accu::contactor_error_list  = {
+    "Error cleared.",
+    "IMD fault!",
+    "AMS fault!",
+    "Implausible contactor!",
+    "Implausible DC-Link voltage!",
+    "Implausible Battery voltage!",
+    "Implausible current!",
+    "Current out of range!",
+    "Pre-charge timeout!",
+    "SDC open!",
+    "AMS pwerstage waiting for reset...",
+    "IMD pwerstage waiting for reset..."
+};
+
+
 TS_Accu::TS_Accu(QWidget *parent) : QWidget(parent)
 {
     ::memset(&canData, 0, sizeof(ts_battery_data_t));
+
     linkAvailable = false;
     tsControl = false;
     tsActive = false;
@@ -131,10 +148,18 @@ void TS_Accu::ts_activate(bool active)
 
 void TS_Accu::decompose_info(QByteArray data)
 {
-    canData.errorCode = ((quint8)data.at(0) << 24) | ((quint8)data.at(1) << 16) | ((quint8)data.at(2) << 8) | ((quint8)data.at(3));
+    static ts_state_t tsStateOld = TS_STATE_STANDBY;
+
+    canData.errorCode = static_cast<contactor_error_t>(((quint8)data.at(0) << 24) | ((quint8)data.at(1) << 16) | ((quint8)data.at(2) << 8) | ((quint8)data.at(3)));
     canData.isolationResistance = ((quint8)data.at(4) << 8) | (quint8)data.at(5);
     canData.isolationResistanceValid = (quint8)data.at(6) >> 7;
     canData.tsState = static_cast<ts_state_t>((quint8)data.at(6) & 0x03);
+
+    if (tsStateOld != canData.tsState) {
+        emit ts_state_changed(canData.tsState, canData.errorCode);
+    }
+
+    tsStateOld =  canData.tsState;
 }
 
 void TS_Accu::decompose_stats_1(QByteArray data)
@@ -263,4 +288,36 @@ void TS_Accu::send_timer_timeout()
     payload.append(tsActive ? (char)0xFF : (char)0x00);
     frame.setPayload(payload);
     emit can_send(frame);
+}
+
+QStringList TS_Accu::contactor_error_to_string(TS_Accu::contactor_error_t error)
+{
+    QStringList errorStrings;
+    quint32 err = static_cast<quint32>(error);
+    if (!err) {
+        errorStrings.push_back(contactor_error_list[0]);
+    } else {
+        for (size_t i = 0; i < 32; i++) {
+            quint32 index = (1 << i);
+            if (err & index) {
+                errorStrings.push_back(contactor_error_list[i + 1]);
+            }
+        }
+    }
+    return errorStrings;
+}
+
+
+QString TS_Accu::ts_state_to_string(TS_Accu::ts_state_t state)
+{
+    switch (state) {
+    case TS_Accu::TS_STATE_STANDBY:
+        return "Standby";
+    case TS_Accu::TS_STATE_PRE_CHARGING:
+        return "Pre-charging";
+    case TS_Accu::TS_STATE_OPERATE:
+        return "Operate";
+    case TS_Accu::TS_STATE_ERROR:
+        return "Error";
+    }
 }

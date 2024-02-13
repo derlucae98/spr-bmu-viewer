@@ -39,6 +39,8 @@ private slots:
 
     void on_btnConfig_clicked();
 
+    void on_btnShowErrors_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -90,8 +92,7 @@ private:
     void decompose_lv_temp_47(QByteArray data);
 
 
-    QString ts_state_to_string(TS_Accu::ts_state_t state);
-    QString error_to_string(TS_Accu::contactor_error_t error);
+
     QString returnValidity(quint8 val);
 
     bool interfaceUp;
@@ -113,7 +114,9 @@ private:
     void update_ui_stats();
     void update_ui_ts(TS_Accu::ts_battery_data_t data);
     void update_ui_lv();
-
+    void ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_error_t);
+    void show_error_message();
+    QString tsErrorString;
     void closeEvent(QCloseEvent *event);
 
     bool darkMode;
