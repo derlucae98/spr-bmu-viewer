@@ -156,6 +156,8 @@ void MainWindow::update_ui_lv()
 
 void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_error_t error)
 {
+    static TS_Accu::contactor_error_t errorOld = error;
+
     QString errorString;
     if (state == TS_Accu::TS_STATE_ERROR) {
         QStringList errors = TS_Accu::contactor_error_to_string(error);
@@ -183,14 +185,18 @@ void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_
     } else {
         ui->btnShowErrors->setEnabled(false);
         ui->btnShowErrors->setText("No errors!");
-        append_error(TS_Accu::contactor_error_to_string(error)[0], 0);
+        append_error(TS_Accu::contactor_error_to_string(error).at(0), 0);
     }
     this->tsErrorString = errorString;
+
+    // Error log outputs should be generated here.
+    // Differentiate between Errors and Infos
+    // Append if errors arise and vanish
+    errorOld = error;
 }
 
 void MainWindow::show_error_message()
 {
-    qDebug() << "Show message";
     // Show Messagebox on button click (or automatically if checkbox is checked)
     // Close Messagebox if error cleares
     QMessageBox *msg = new QMessageBox();
@@ -411,22 +417,34 @@ void MainWindow::update_ui_stats()
 
     ui->tsState->setText(TS_Accu::ts_state_to_string(tsBatteryData.tsState));
 
-    if (tsBatteryData.errorCode & TS_Accu::ERROR_IMD_FAULT) {
+   if ((tsBatteryData.errorCode & TS_Accu::ERROR_IMD_FAULT) && (tsBatteryData.errorCode & TS_Accu::ERROR_IMD_POWERSTAGE_DISABLED)) {
         ui->imdStatus->setText("Error");
+        ui->imdStatus->setStyleSheet("color: rgb(255, 0, 0);");
+    } else if (((tsBatteryData.errorCode & TS_Accu::ERROR_IMD_FAULT) == 0) && (tsBatteryData.errorCode & TS_Accu::ERROR_IMD_POWERSTAGE_DISABLED)) {
+        ui->imdStatus->setText("Ready. Reset?");
+        ui->imdStatus->setStyleSheet("color: rgb(255, 127, 0);");
     } else {
         ui->imdStatus->setText("OK");
+        ui->imdStatus->setStyleSheet("color: rgb(0, 127, 0);");
     }
 
-    if (tsBatteryData.errorCode & TS_Accu::ERROR_AMS_FAULT) {
+    if ((tsBatteryData.errorCode & TS_Accu::ERROR_AMS_FAULT) && (tsBatteryData.errorCode & TS_Accu::ERROR_AMS_POWERSTAGE_DISABLED)) {
         ui->amsStatus->setText("Error");
+        ui->amsStatus->setStyleSheet("color: rgb(255, 0, 0);");
+    } else if (((tsBatteryData.errorCode & TS_Accu::ERROR_AMS_FAULT) == 0) && (tsBatteryData.errorCode & TS_Accu::ERROR_AMS_POWERSTAGE_DISABLED)) {
+        ui->amsStatus->setText("Ready. Reset?");
+        ui->amsStatus->setStyleSheet("color: rgb(255, 127, 0);");
     } else {
+        ui->amsStatus->setStyleSheet("color: rgb(0, 127, 0);");
         ui->amsStatus->setText("OK");
     }
 
     if (tsBatteryData.errorCode & TS_Accu::ERROR_SDC_OPEN) {
         ui->scStatus->setText("Error");
+        ui->scStatus->setStyleSheet("color: rgb(255, 0, 0);");
     } else {
         ui->scStatus->setText("OK");
+        ui->scStatus->setStyleSheet("color: rgb(0, 127, 0);");
     }
 }
 
