@@ -108,7 +108,16 @@ private:
     void ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_error_t);
     void show_error_message();
     QString tsErrorString;
-    void append_error(QString error, quint8 severity);
+
+    enum severity_t {
+        SEVERITY_INFO,
+        SEVERITY_INFO_GREEN,
+        SEVERITY_WARNING,
+        SEVERITY_ERROR
+    };
+
+    void append_error(QString error, severity_t severity);
+    void get_error_reason(TS_Accu::contactor_error_t error);
     void closeEvent(QCloseEvent *event);
 
     bool darkMode;

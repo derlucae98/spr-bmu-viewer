@@ -122,6 +122,8 @@ void MainWindow::update_ui_ts(TS_Accu::ts_battery_data_t data)
     update_ui_balancing();
     update_ui_uid();
 
+    get_error_reason(data.errorCode);
+
 
 //    update_ui_lv();
 }
@@ -156,8 +158,7 @@ void MainWindow::update_ui_lv()
 
 void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_error_t error)
 {
-    static quint32 errOld = static_cast<quint32>(error);
-    quint32 err = static_cast<quint32>(error);
+
 
     QString errorString;
     if (state == TS_Accu::TS_STATE_ERROR) {
@@ -188,20 +189,8 @@ void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_
     }
     this->tsErrorString = errorString;
 
-    for (quint32 i = 0; i < 32; i++) {
-        if (((errOld & (1 << i)) == 0) && (err & (1 << i))) {
-            //IMD fault occurred
-            append_error(TS_Accu::contactor_error_to_string(static_cast<TS_Accu::contactor_error_t>(1 << i)).constFirst(), 2);
-        } else if ((errOld & (1 << i)) && ((err & (1 << i)) == 0)) {
-            //IMD fault gone
-            append_error(TS_Accu::contactor_error_to_string(static_cast<TS_Accu::contactor_error_t>(1 << i)).constFirst() + " cleared", 0);
-        }
-    }
-    if ((errOld != TS_Accu::ERROR_NO_ERROR) && (err == TS_Accu::ERROR_NO_ERROR)) {
-        append_error("System ready!", 0);
-    }
 
-    errOld = err;
+
 }
 
 void MainWindow::show_error_message()
@@ -227,22 +216,68 @@ void MainWindow::show_error_message()
     msg->deleteLater();
 }
 
-void MainWindow::append_error(QString error, quint8 severity)
+void MainWindow::append_error(QString error, severity_t severity)
 {
     QString severityString;
-    if (severity == 0) {
+    switch (severity) {
+    case SEVERITY_INFO:
         severityString = "INFO";
         ui->errorLog->setTextColor(Qt::black);
-    } else if (severity == 1) {
+        break;
+    case SEVERITY_INFO_GREEN:
+        severityString = "INFO";
+        ui->errorLog->setTextColor(Qt::darkGreen);
+        break;
+    case SEVERITY_WARNING:
         severityString = "WARNING";
         ui->errorLog->setTextColor(Qt::darkYellow);
-    } else {
+        break;
+    case SEVERITY_ERROR:
         severityString = "ERROR";
         ui->errorLog->setTextColor(Qt::red);
+        break;
     }
 
     QDateTime dateTime = QDateTime::currentDateTime();
     ui->errorLog->append("[" + dateTime.date().toString("dd.MM.yyyy") + " " + dateTime.time().toString("hh:mm:ss") + QString("] [%1]: ").arg(severityString) + error);
+}
+
+void MainWindow::get_error_reason(TS_Accu::contactor_error_t error)
+{
+    static quint32 errOld = static_cast<quint32>(error);
+    quint32 err = static_cast<quint32>(error);
+
+    for (quint32 i = 0; i < 32; i++) {
+        if ((1 << i) == TS_Accu::ERROR_AMS_FAULT || (1 << i) == TS_Accu::ERROR_AMS_POWERSTAGE_DISABLED || (1 << i) == TS_Accu::ERROR_IMD_POWERSTAGE_DISABLED) {
+            // Exclude 0x2 "ERROR_AMS_FAULT", "0x200 "ERROR_AMS_POWERSTAGE_DISABLED" and 0x400 ERROR_IMD_POWERSTAGE_DISABLED from error log
+            // disabled powerstages are a consequence of AMS or IMD faults
+            // If any AMS fault appears, the AMS error bit is set. So there is no point in printing it if you also print the reason
+            continue;
+        }
+
+        if (((errOld & (1 << i)) == 0) && (err & (1 << i))) {
+            // Error arrive
+            if (err & 0xFE7F) {
+                // Check if any bits other than SDC_OPEN or PRECHARGE_TIMEOUT are set
+                if ((1 << i) == TS_Accu::ERROR_SDC_OPEN) {
+                 // Suppress SDC open error if an AMS or IMD fault occurred. Open SDC is a consequence of AMS and IMD faults
+                 // If, however, the SDC id open while AMS and IMD are fine, print the error
+                    continue;
+                }
+            }
+            append_error(TS_Accu::contactor_error_to_string(static_cast<TS_Accu::contactor_error_t>(1 << i)).constFirst() + ".", SEVERITY_ERROR);
+
+        } else if ((errOld & (1 << i)) && ((err & (1 << i)) == 0)) {
+            // Error leave
+            append_error(TS_Accu::contactor_error_to_string(static_cast<TS_Accu::contactor_error_t>(1 << i)).constFirst() + " cleared.", SEVERITY_INFO);
+        }
+    }
+
+    if ((errOld != TS_Accu::ERROR_NO_ERROR) && (err == TS_Accu::ERROR_NO_ERROR)) {
+        append_error("System ready!", SEVERITY_INFO_GREEN);
+    }
+
+    errOld = err;
 }
 
 void MainWindow::on_btnConnectPcan_clicked()
