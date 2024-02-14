@@ -24,18 +24,23 @@ public:
     };
 
     enum contactor_error_t {
-        ERROR_NO_ERROR                    = 0x0,
-        ERROR_IMD_FAULT                   = 0x1,
-        ERROR_AMS_FAULT                   = 0x2,
-        ERROR_IMPLAUSIBLE_CONTACTOR       = 0x4,
-        ERROR_IMPLAUSIBLE_DC_LINK_VOLTAGE = 0x8,
-        ERROR_IMPLAUSIBLE_BATTERY_VOLTAGE = 0x10,
-        ERROR_IMPLAUSIBLE_CURRENT         = 0x20,
-        ERROR_CURRENT_OUT_OF_RANGE        = 0x40,
-        ERROR_PRE_CHARGE_TIMEOUT          = 0x80,
-        ERROR_SDC_OPEN                    = 0x100,
-        ERROR_AMS_POWERSTAGE_DISABLED     = 0x200,
-        ERROR_IMD_POWERSTAGE_DISABLED     = 0x400
+        ERROR_NO_ERROR                          = 0x0,
+        ERROR_IMD_FAULT                         = 0x1,
+        ERROR_AMS_FAULT                         = 0x2,
+        ERROR_IMPLAUSIBLE_CONTACTOR             = 0x4,
+        ERROR_IMPLAUSIBLE_DC_LINK_VOLTAGE       = 0x8,
+        ERROR_IMPLAUSIBLE_BATTERY_VOLTAGE       = 0x10,
+        ERROR_IMPLAUSIBLE_CURRENT               = 0x20,
+        ERROR_CURRENT_OUT_OF_RANGE              = 0x40,
+        ERROR_PRE_CHARGE_TIMEOUT                = 0x80,
+        ERROR_SDC_OPEN                          = 0x100,
+        ERROR_AMS_POWERSTAGE_DISABLED           = 0x200,
+        ERROR_IMD_POWERSTAGE_DISABLED           = 0x400,
+        ERROR_AMS_CELL_VOLTAGE_OUT_OF_RANGE     = 0x800,
+        ERROR_AMS_CELL_TEMPERATURE_OUT_OF_RANGE = 0x1000,
+        ERROR_AMS_CELL_OPEN_WIRE                = 0x2000,
+        ERROR_AMS_TEMPERATURE_OPEN_WIRE         = 0x4000,
+        ERROR_AMS_DAISYCHAIN_ERROR              = 0x8000
     };
 
     enum sensor_status_t {

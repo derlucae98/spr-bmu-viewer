@@ -2,17 +2,22 @@
 
 QStringList TS_Accu::contactor_error_list  = {
     "Error cleared.",
-    "IMD fault!",
-    "AMS fault!",
-    "Implausible contactor!",
-    "Implausible DC-Link voltage!",
-    "Implausible Battery voltage!",
-    "Implausible current!",
-    "Current out of range!",
-    "Pre-charge timeout!",
-    "SDC open!",
-    "AMS powerstage waiting for reset...",
-    "IMD powerstage waiting for reset..."
+    "IMD fault",
+    "AMS fault",
+    "Implausible contactor",
+    "Implausible DC-Link voltage",
+    "Implausible Battery voltage",
+    "Implausible current",
+    "Current out of range",
+    "Pre-charge timeout",
+    "SDC open",
+    "AMS powerstage disabled",
+    "IMD powerstage disabled",
+    "Cell voltage out of range",
+    "Cell temperature out of range",
+    "Cell open wire",
+    "Temperature sensor open wire",
+    "Daisychain error"
 };
 
 

@@ -156,7 +156,8 @@ void MainWindow::update_ui_lv()
 
 void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_error_t error)
 {
-    static TS_Accu::contactor_error_t errorOld = error;
+    static quint32 errOld = static_cast<quint32>(error);
+    quint32 err = static_cast<quint32>(error);
 
     QString errorString;
     if (state == TS_Accu::TS_STATE_ERROR) {
@@ -164,7 +165,6 @@ void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_
         for (const auto &i : errors) {
             errorString.push_back(i);
             errorString.push_back("\n");
-            append_error(i, 2);
         }
         ui->btnShowErrors->setEnabled(true);
         ui->btnShowErrors->setText("Show errors!");
@@ -185,14 +185,23 @@ void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_
     } else {
         ui->btnShowErrors->setEnabled(false);
         ui->btnShowErrors->setText("No errors!");
-        append_error(TS_Accu::contactor_error_to_string(error).at(0), 0);
     }
     this->tsErrorString = errorString;
 
-    // Error log outputs should be generated here.
-    // Differentiate between Errors and Infos
-    // Append if errors arise and vanish
-    errorOld = error;
+    for (quint32 i = 0; i < 32; i++) {
+        if (((errOld & (1 << i)) == 0) && (err & (1 << i))) {
+            //IMD fault occurred
+            append_error(TS_Accu::contactor_error_to_string(static_cast<TS_Accu::contactor_error_t>(1 << i)).constFirst(), 2);
+        } else if ((errOld & (1 << i)) && ((err & (1 << i)) == 0)) {
+            //IMD fault gone
+            append_error(TS_Accu::contactor_error_to_string(static_cast<TS_Accu::contactor_error_t>(1 << i)).constFirst() + " cleared", 0);
+        }
+    }
+    if ((errOld != TS_Accu::ERROR_NO_ERROR) && (err == TS_Accu::ERROR_NO_ERROR)) {
+        append_error("System ready!", 0);
+    }
+
+    errOld = err;
 }
 
 void MainWindow::show_error_message()
