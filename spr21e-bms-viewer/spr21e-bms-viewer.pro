@@ -18,6 +18,7 @@ DEFINES += "VERS_MAJOR=\"$$MAJOR\"" "VERS_MINOR=\"$$MINOR\"" "VERS_BUILD=\"\\\"$
 SOURCES += \
     can.cpp \
     config.cpp \
+    errordialog.cpp \
     main.cpp \
     mainwindow.cpp \
     ts_accu.cpp
@@ -25,11 +26,13 @@ SOURCES += \
 HEADERS += \
     can.h \
     config.h \
+    errordialog.h \
     mainwindow.h \
     ts_accu.h
 
 FORMS += \
     config.ui \
+    errordialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.

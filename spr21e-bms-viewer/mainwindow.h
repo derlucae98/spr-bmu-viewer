@@ -10,6 +10,7 @@
 #include <QDateTime>
 #include <QPixmap>
 #include "ts_accu.h"
+#include "errordialog.h"
 
 
 #define MAX_NUM_OF_LV_CELLS 6
@@ -119,6 +120,7 @@ private:
     void append_error(QString error, severity_t severity);
     void get_error_reason(TS_Accu::contactor_error_t error);
     void closeEvent(QCloseEvent *event);
+    ErrorDialog *errorDialog = nullptr;
 
     bool darkMode;
 

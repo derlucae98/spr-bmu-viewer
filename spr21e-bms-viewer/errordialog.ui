@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ErrorDialog</class>
+ <widget class="QWidget" name="ErrorDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>358</width>
+    <height>380</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>BMU errors</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="imdFault">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0001 IMD fault!</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="amsFault">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0002 AMS fault!</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="impContactor">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0004 Implausible contactor state</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="impDcLink">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0008 Implausible DC-Link voltage</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="impBatteryVolt">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0010 Implausible battery voltage</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="impCurrent">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0020 Implausible current</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="currentOutOfRange">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0040 Current out of range</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="preTimeout">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0080 Pre-charge timeout</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="sdcOpen">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0100 Shutdown circuit open</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="amsPowerstage">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0200 AMS powerstage disabled</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="imdPowerstage">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0400 IMD powerstage disabled</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="cellVoltageOutOfRange">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x0800 Cell voltage out of range</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="cellTemperatureOutOfRange">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x1000 Cell temperature out of range</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="cellwireOpen">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x2000 Cellwire open</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="temperatureOpenWire">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x4000 Temperature sensor wire open</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="daisychainError">
+       <property name="font">
+        <font>
+         <family>Courier New</family>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>0x8000 Daisychain error</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

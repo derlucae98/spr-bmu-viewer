@@ -124,7 +124,6 @@ void MainWindow::update_ui_ts(TS_Accu::ts_battery_data_t data)
 
     get_error_reason(data.errorCode);
 
-
 //    update_ui_lv();
 }
 
@@ -197,23 +196,27 @@ void MainWindow::show_error_message()
 {
     // Show Messagebox on button click (or automatically if checkbox is checked)
     // Close Messagebox if error cleares
-    QMessageBox *msg = new QMessageBox();
-    auto connection = QObject::connect(tsAccu, &TS_Accu::ts_state_changed, this, [=](TS_Accu::ts_state_t state){
+    errorDialog = new ErrorDialog(tsBatteryData.errorCode);
+
+    auto connectionStateChanged = QObject::connect(tsAccu, &TS_Accu::ts_state_changed, this, [=](TS_Accu::ts_state_t state){
         if (state != TS_Accu::TS_STATE_ERROR) {
-            if (msg) {
-                msg->close();
+            if (errorDialog) {
+                errorDialog->close();
             }
         }
     });
-    msg->setText(tsErrorString);
-    msg->setIcon(QMessageBox::Critical);
-    msg->setWindowTitle("TS Accu error occurred!");
-    msg->setStyleSheet(
-        "QLabel{min-width: 150px;}"
-    );
-    msg->exec();
-    QObject::disconnect(connection);
-    msg->deleteLater();
+
+    auto connectionNewData = QObject::connect(tsAccu, &TS_Accu::new_data, this, [=](TS_Accu::ts_battery_data_t data) {
+        if (errorDialog) {
+            errorDialog->updateErrors(data.errorCode);
+        }
+    });
+
+    errorDialog->setAttribute(Qt::WA_DeleteOnClose);
+    errorDialog->exec();
+    QObject::disconnect(connectionStateChanged);
+    QObject::disconnect(connectionNewData);
+
 }
 
 void MainWindow::append_error(QString error, severity_t severity)
