@@ -34,7 +34,6 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(can, &Can::available_devices, this, [=] (QStringList names) {
         ui->cbSelectPCAN->addItems(names);
         this->show();
-        qDebug() << "Show window";
     });
     can->init();
 
@@ -421,8 +420,8 @@ void MainWindow::update_ui_stats()
     }
 
     if (tsBatteryData.socValid) {
-        ui->minSoc->setText(QString("%1 %").arg(tsBatteryData.minSoc));
-        ui->maxSoc->setText(QString("%1 %").arg(tsBatteryData.maxSoc));
+        ui->minSoc->setText(QString("    %1 %").arg(tsBatteryData.minSoc));
+        ui->maxSoc->setText(QString("    %1 %").arg(tsBatteryData.maxSoc));
     } else {
         ui->minSoc->setText("Invalid");
         ui->maxSoc->setText("Invalid");
