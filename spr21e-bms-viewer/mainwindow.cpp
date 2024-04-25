@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ::memset(&canDataLv, 0, sizeof(can_data_LV_t));
+
 
     interfaceUp = false;
     can = new Can(this);
@@ -30,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
         ui->btnConnectPcan->setText("Connect");
         ui->cbSelectPCAN->setEnabled(true);
     });
-    QObject::connect(can, &Can::new_frame, this, &MainWindow::new_frame);
     QObject::connect(can, &Can::available_devices, this, [=] (QStringList names) {
         ui->cbSelectPCAN->addItems(names);
         this->show();
@@ -38,12 +37,19 @@ MainWindow::MainWindow(QWidget *parent)
     can->init();
 
     ::memset(&tsBatteryData, 0, sizeof(TS_Accu::ts_battery_data_t));
+
     tsAccu = new TS_Accu(this);
     QObject::connect(tsAccu, &TS_Accu::new_data, this, &MainWindow::update_ui_ts);
     QObject::connect(can, &Can::new_frame, tsAccu, &TS_Accu::can_frame);
     QObject::connect(tsAccu, &TS_Accu::can_send, can, &Can::send_frame);
     QObject::connect(tsAccu, &TS_Accu::link_availability_changed, this, &MainWindow::ts_link_available);
     QObject::connect(tsAccu, &TS_Accu::ts_state_changed, this, &MainWindow::ts_state_changed);
+
+    ::memset(&lvBatteryData, 0, sizeof(LV_Accu::lv_battery_data_t));
+    QObject::connect(lvAccu, &LV_Accu::new_data, this, &MainWindow::update_ui_lv);
+    QObject::connect(can, &Can::new_frame, lvAccu, &LV_Accu::can_frame);
+    QObject::connect(lvAccu, &LV_Accu::link_availability_changed, this, &MainWindow::lv_link_available);
+    QObject::connect(lvAccu, &LV_Accu::lv_state_changed, this, &MainWindow::lv_state_changed);
 
     ui->infoFrame->setEnabled(false);
     ui->parameters->setEnabled(false);
@@ -69,32 +75,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::new_frame(QCanBusFrame frame)
-{
-    switch (frame.frameId()) {
-    case CAN_ID_LV_ACCU_STATS_1:
-        decompose_lv_stats_1(frame.payload());
-        break;
-    case CAN_ID_LV_ACCU_STATS_2:
-        decompose_lv_stats_2(frame.payload());
-        break;
-    case CAN_ID_LV_ACCU_STATE:
-        decompose_lv_state(frame.payload());
-        break;
-    case CAN_ID_LV_ACCU_CELL_VOLT_03:
-        decompose_lv_cell_volt_03(frame.payload());
-        break;
-    case CAN_ID_LV_ACCU_CELL_VOLT_45:
-        decompose_lv_cell_volt_45(frame.payload());
-        break;
-    case CAN_ID_LV_ACCU_TEMP_03:
-        decompose_lv_temp_03(frame.payload());
-        break;
-    case CAN_ID_LV_ACCU_TEMP_47:
-        decompose_lv_temp_47(frame.payload());
-    }
-}
-
 void MainWindow::ts_link_available(bool available)
 {
     if (available) {
@@ -104,6 +84,11 @@ void MainWindow::ts_link_available(bool available)
     }
 }
 
+void MainWindow::lv_link_available(bool available)
+{
+
+}
+
 void MainWindow::update_ui()
 {
 
@@ -111,8 +96,6 @@ void MainWindow::update_ui()
 
 void MainWindow::update_ui_ts(TS_Accu::ts_battery_data_t data)
 {
-
-
     tsBatteryData = data;
 
     update_ui_voltage();
@@ -122,42 +105,40 @@ void MainWindow::update_ui_ts(TS_Accu::ts_battery_data_t data)
     update_ui_uid();
 
     get_error_reason(data.errorCode);
-
-//    update_ui_lv();
 }
 
-void MainWindow::update_ui_lv()
+void MainWindow::update_ui_lv(LV_Accu::lv_battery_data_t data)
 {
-    ui->minCellVolt_LV->setText(QString("%1 V").arg(canDataLv.minCellVolt, 5, 'f', 3));
-    ui->maxCellVolt_LV->setText(QString("%1 V").arg(canDataLv.maxCellVolt, 5, 'f', 3));
-    ui->avgCellVolt_LV->setText(QString("%1 V").arg(canDataLv.avgCellVolt, 5, 'f', 3));
-    ui->minTemp_LV->setText(QString("%1 °C").arg(canDataLv.minTemp, 4, 'f', 1));
-    ui->maxTemp_LV->setText(QString("%1 °C").arg(canDataLv.maxTemp, 4, 'f', 1));
-    ui->avgTemp_LV->setText(QString("%1 °C").arg(canDataLv.avgTemp, 4, 'f', 1));
+    lvBatteryData = data;
 
-    float delta = canDataLv.maxCellVolt - canDataLv.minCellVolt;
+    ui->minCellVolt_LV->setText(QString("%1 V").arg(lvBatteryData.minCellVolt, 5, 'f', 3));
+    ui->maxCellVolt_LV->setText(QString("%1 V").arg(lvBatteryData.maxCellVolt, 5, 'f', 3));
+    ui->avgCellVolt_LV->setText(QString("%1 V").arg(lvBatteryData.avgCellVolt, 5, 'f', 3));
+    ui->minTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.minTemp, 4, 'f', 1));
+    ui->maxTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.maxTemp, 4, 'f', 1));
+    ui->avgTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.avgTemp, 4, 'f', 1));
+
+    float delta = lvBatteryData.maxCellVolt - lvBatteryData.minCellVolt;
     ui->deltaCellVolt_LV->setText(QString("%1 V").arg(delta, 5, 'f', 3));
 
     QTreeWidgetItem *volts = ui->parameters_LV->topLevelItem(0);
-    for (quint16 cell = 0; cell < MAX_NUM_OF_LV_CELLS; cell++) {
-        volts->child(0)->setText(cell+2, QString::number(canDataLv.cellVoltage[cell], 'f', 4));
+    for (quint16 cell = 0; cell < LV_Accu::MAX_NUM_OF_LV_CELLS; cell++) {
+        volts->child(0)->setText(cell+2, QString::number(lvBatteryData.cellVoltage[cell], 'f', 4));
         //openWire->child(stack)->setText(cell+2, returnValidity(canData.cellVoltageStatus[stack][cell+1]));
     }
     //openWire->child(stack)->setText(1, returnValidity(canData.cellVoltageStatus[stack][0]));
 
-    ::memset(canDataLv.cellVoltage, 0, MAX_NUM_OF_LV_CELLS * sizeof(float));
+    ::memset(lvBatteryData.cellVoltage, 0, LV_Accu::MAX_NUM_OF_LV_CELLS * sizeof(float));
 
     QTreeWidgetItem *temps = ui->parameters_LV->topLevelItem(2); //Temperatures
-    for (quint16 tempsens = 0; tempsens < MAX_NUM_OF_LV_TEMPSENS; tempsens++) {
-        temps->child(0)->setText(tempsens + 1, QString::number(canDataLv.temperature[tempsens], 'f', 1));
+    for (quint16 tempsens = 0; tempsens < LV_Accu::MAX_NUM_OF_LV_TEMPSENS; tempsens++) {
+        temps->child(0)->setText(tempsens + 1, QString::number(lvBatteryData.temperature[tempsens], 'f', 1));
     }
-    ::memset(canDataLv.temperature, 0, MAX_NUM_OF_LV_TEMPSENS);
+    ::memset(lvBatteryData.temperature, 0, LV_Accu::MAX_NUM_OF_LV_TEMPSENS);
 }
 
 void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_error_t error)
 {
-
-
     QString errorString;
     if (state == TS_Accu::TS_STATE_ERROR) {
         QStringList errors = TS_Accu::contactor_error_to_string(error);
@@ -188,6 +169,11 @@ void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_
     this->tsErrorString = errorString;
 
 
+
+}
+
+void MainWindow::lv_state_changed(LV_Accu::lv_state_t state, LV_Accu::contactor_error_t)
+{
 
 }
 
@@ -297,52 +283,6 @@ void MainWindow::on_btnConnectPcan_clicked()
 void MainWindow::on_clearErrorLog_clicked()
 {
     ui->errorLog->clear();
-}
-
-void MainWindow::decompose_lv_stats_1(QByteArray data)
-{
-    canDataLv.avgCellVolt = (((quint8)data.at(0) << 8) | (quint8)data.at(1)) * 0.0001f;
-    canDataLv.maxCellVolt = (((quint8)data.at(2) << 8) | (quint8)data.at(3)) * 0.0001f;
-    canDataLv.minCellVolt = (((quint8)data.at(4) << 8) | (quint8)data.at(5)) * 0.0001f;
-
-}
-
-void MainWindow::decompose_lv_stats_2(QByteArray data)
-{
-    canDataLv.maxTemp = (((quint8)data.at(0) << 8) | (quint8)(data.at(1))) * 0.1f;
-    canDataLv.minTemp = (((quint8)data.at(2) << 8) | (quint8)(data.at(3))) * 0.1f;
-    //canDataLv.avgTemp = (((quint8)data.at(6) << 8) | (quint8)(data.at(7))) * 0.1f;
-}
-
-void MainWindow::decompose_lv_state(QByteArray data)
-{
-
-}
-
-void MainWindow::decompose_lv_cell_volt_03(QByteArray data)
-{
-    canDataLv.cellVoltage[0] = (((quint8)data.at(0) << 8) | (quint8)data.at(1)) * 0.0001f;
-    canDataLv.cellVoltage[1] = (((quint8)data.at(2) << 8) | (quint8)data.at(3)) * 0.0001f;
-    canDataLv.cellVoltage[2] = (((quint8)data.at(4) << 8) | (quint8)data.at(5)) * 0.0001f;
-    canDataLv.cellVoltage[3] = (((quint8)data.at(6) << 8) | (quint8)data.at(7)) * 0.0001f;
-}
-
-void MainWindow::decompose_lv_cell_volt_45(QByteArray data)
-{
-    canDataLv.cellVoltage[4] = (((quint8)data.at(0) << 8) | (quint8)data.at(1)) * 0.0001f;
-    canDataLv.cellVoltage[5] = (((quint8)data.at(2) << 8) | (quint8)data.at(3)) * 0.0001f;
-    //todo : SOC
-    //todo: Strom
-}
-
-void MainWindow::decompose_lv_temp_03(QByteArray data)
-{
-
-}
-
-void MainWindow::decompose_lv_temp_47(QByteArray data)
-{
-
 }
 
 void MainWindow::update_ui_balancing()
