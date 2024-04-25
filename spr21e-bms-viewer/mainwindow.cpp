@@ -9,8 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ::memset(&canDataLv, 0, sizeof(can_data_LV_t));
 
-
-
     interfaceUp = false;
     can = new Can(this);
     QObject::connect(can, &Can::error, this, [=](QString err) {
@@ -35,7 +33,8 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(can, &Can::new_frame, this, &MainWindow::new_frame);
     QObject::connect(can, &Can::available_devices, this, [=] (QStringList names) {
         ui->cbSelectPCAN->addItems(names);
-        this->show();});
+        this->show();
+    });
     can->init();
 
     ::memset(&tsBatteryData, 0, sizeof(TS_Accu::ts_battery_data_t));
@@ -421,8 +420,8 @@ void MainWindow::update_ui_stats()
     }
 
     if (tsBatteryData.socValid) {
-        ui->minSoc->setText(QString("%1 %").arg(tsBatteryData.minSoc));
-        ui->maxSoc->setText(QString("%1 %").arg(tsBatteryData.maxSoc));
+        ui->minSoc->setText(QString("    %1 %").arg(tsBatteryData.minSoc));
+        ui->maxSoc->setText(QString("    %1 %").arg(tsBatteryData.maxSoc));
     } else {
         ui->minSoc->setText("Invalid");
         ui->maxSoc->setText("Invalid");

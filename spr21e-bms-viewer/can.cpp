@@ -17,6 +17,7 @@ Can::~Can()
 
 void Can::init()
 {
+#ifdef Q_OS_LINUX
     if (geteuid()) {
         QMessageBox mb;
         mb.setText("Some parts of this software require root privileges! Click OK and enter your password or run as root.");
@@ -45,6 +46,9 @@ void Can::init()
 
     QString path = QDir::currentPath() + /* "/../../" + "bms-viewer-helper/build*/ "/bms-viewer-helper";
     process->start("pkexec", QStringList({path}));
+#elif defined Q_OS_WINDOWS
+    get_devices();
+#endif
 }
 
 void Can::get_devices()
@@ -56,7 +60,8 @@ void Can::get_devices()
         qDebug() << errorString;
     }
     QStringList names;
-    for (auto it : devices) {
+    for (const auto &it : devices) {
+#ifdef Q_OS_LINUX
         QString channelNumber;
         //peakcan plugin returns device names in format usb0, usb1, ...,
         //socketcan needs the names in format can0, can1, ...
@@ -64,22 +69,35 @@ void Can::get_devices()
         //Device name is the safer solution here.
         channelNumber = it.name().at(3);
         names.append(QString("can%1").arg(channelNumber));
+#elif defined Q_OS_WINDOWS
+        names.append(it.name());
+#endif
     }
     emit available_devices(names);
 }
 
 void Can::send_heartbeat()
 {
+#ifdef Q_OS_LINUX
     if (socket) {
         socket->write("heartbeat");
     }
+#else
+    qDebug() << "Can::send_heartbeat() not available on Windows!";
+#endif
 }
 
 void Can::connect_device()
 {
+#ifdef Q_OS_LINUX
     if (socket) {
         socket->write(QString("pcan up %1").arg(deviceName).toLocal8Bit());
     }
+#else
+    if (connect_socket()) {
+        emit device_up();
+    }
+#endif
 }
 
 void Can::disconnect_device()
@@ -87,9 +105,13 @@ void Can::disconnect_device()
     if (can_device) {
         can_device->disconnectDevice();
     }
+#ifdef Q_OS_LINUX
     if (socket) {
         socket->write(QString("pcan down %1").arg(deviceName).toLocal8Bit());
     }
+#elif defined Q_OS_WINDOWS
+    emit device_down();
+#endif
 }
 
 void Can::send_frame(QCanBusFrame frame)
@@ -108,8 +130,13 @@ void Can::set_device_name(QString deviceName)
 bool Can::connect_socket()
 {
     QString errorString;
+#ifdef Q_OS_LINUX
     can_device = QCanBus::instance()->createDevice(
         QStringLiteral("socketcan"), QString("%1").arg(deviceName), &errorString);
+#elif defined Q_OS_WINDOWS
+    can_device = QCanBus::instance()->createDevice(
+        QStringLiteral("peakcan"), QString("%1").arg(deviceName), &errorString);
+#endif
     can_device->setConfigurationParameter(QCanBusDevice::BitRateKey, 1000000);
     if (!can_device) {
         qDebug("Can device init failed");
@@ -126,12 +153,17 @@ bool Can::connect_socket()
 
 void Can::new_client_connected()
 {
+#ifdef Q_OS_LINUX
     socket = server->nextPendingConnection();
     QObject::connect(socket, &QLocalSocket::readyRead, this, &Can::message_from_client);
+#else
+    qDebug() << "Can::new_client_connected() not available on Windows!";
+#endif
 }
 
 void Can::message_from_client()
 {
+#ifdef Q_OS_LINUX
     QByteArray raw = socket->readAll();
     QString data(raw);
     qDebug() << data;
@@ -164,6 +196,9 @@ void Can::message_from_client()
     } else if (data.compare("pcan down failed") == 0) {
         emit error("Could not bring can interface down!");
     }
+#else
+    qDebug() << "Can::message_from_client() not available on Windows!";
+#endif
 }
 
 void Can::get_frame()
