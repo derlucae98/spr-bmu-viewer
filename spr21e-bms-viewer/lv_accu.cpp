@@ -12,6 +12,9 @@ LV_Accu::LV_Accu(QObject *parent) : QObject(parent)
     QObject::connect(timeoutTimer, &QTimer::timeout, this, [=]{
         linkAvailable = false;
         emit link_availability_changed(false);
+        if (updateTimer) {
+            updateTimer->stop();
+        }
     });
     timeoutTimer->start();
 
@@ -20,6 +23,34 @@ LV_Accu::LV_Accu(QObject *parent) : QObject(parent)
     QObject::connect(updateTimer, &QTimer::timeout, this, [=]{
         emit new_data(canData);
     });
+}
+
+QString LV_Accu::lv_state_to_string(lv_state_t state)
+{
+    switch (state) {
+    case LV_Accu::LV_STATE_STANDBY:
+        return "Standby";
+    case LV_Accu::LV_STATE_OPERATE:
+        return "Operate";
+    case LV_Accu::LV_STATE_ERROR:
+        return "Error";
+    }
+}
+
+QString LV_Accu::sensor_status_to_string(sensor_status_t status)
+{
+    switch (status) {
+    case LV_Accu::NOERROR:
+        return "OK";
+    case LV_Accu::PECERROR:
+        return "PEC error";
+    case LV_Accu::VALUEOUTOFRANGE:
+        return "Value out of range";
+    case LV_Accu::OPENWIRE:
+        return "Open wire";
+    default:
+        return "Unknown error";
+    }
 }
 
 void LV_Accu::can_frame(QCanBusFrame frame)
@@ -73,6 +104,9 @@ void LV_Accu::can_frame(QCanBusFrame frame)
         linkAvailable = true;
         timeoutTimer->start();
         emit link_availability_changed(true);
+        if (!updateTimer->isActive()) {
+            updateTimer->start();
+        }
         fullUpdate = 0;
     }
 }
@@ -97,6 +131,7 @@ void LV_Accu::decompose_stats_2(QByteArray data)
     canData.maxTemp = (quint8)data.at(2) * 0.5f;
     canData.avgTemp = (quint8)data.at(3) * 0.5f;
     canData.soc = (quint8)data.at(4);
+    canData.socValid = ((quint8)data.at(0) >> 1) & 0x01;
 }
 
 void LV_Accu::decompose_state(QByteArray data)
@@ -108,7 +143,8 @@ void LV_Accu::decompose_state(QByteArray data)
 void LV_Accu::decompose_uip(QByteArray data)
 {
     canData.currentValid = ((quint8)data.at(0) >> 1) & 0x01;
-    canData.batteryVoltage = (((quint8)data.at(1) << 8) | (quint8)data.at(2)) * 0.1f;
+    canData.batteryVoltageValid = ((quint8)data.at(0) >> 0) & 0x01;
+    canData.batteryVoltage = (((quint8)data.at(1) << 8) | (quint8)data.at(2)) * 0.01f;
     canData.current = qint16((((quint8)data.at(3) << 8) | (quint8)data.at(4))) * 0.001f;
 }
 

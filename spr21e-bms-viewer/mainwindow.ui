@@ -96,7 +96,7 @@
     <item row="1" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -1393,7 +1393,8 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Monospace</family>
+                      <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1431,7 +1432,8 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Monospace</family>
+                      <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1469,7 +1471,8 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Monospace</family>
+                      <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1504,7 +1507,8 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Monospace</family>
+                      <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1539,7 +1543,8 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Monospace</family>
+                      <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1574,7 +1579,8 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Monospace</family>
+                      <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1609,7 +1615,8 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Monospace</family>
+                      <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1666,7 +1673,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="minSoc_LV">
+                   <widget class="QLabel" name="soc_LV">
                     <property name="minimumSize">
                      <size>
                       <width>100</width>
@@ -1675,7 +1682,8 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Monospace</family>
+                      <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1710,7 +1718,8 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Monospace</family>
+                      <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1745,7 +1754,8 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Monospace</family>
+                      <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1771,7 +1781,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="tsState_LV">
+                   <widget class="QLabel" name="lvState">
                     <property name="minimumSize">
                      <size>
                       <width>100</width>
@@ -1780,7 +1790,8 @@
                     </property>
                     <property name="font">
                      <font>
-                      <family>Monospace</family>
+                      <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1789,6 +1800,19 @@
                    </widget>
                   </item>
                  </layout>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                </layout>
               </widget>
@@ -1798,205 +1822,6 @@
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QFrame" name="frame_8">
-               <property name="minimumSize">
-                <size>
-                 <width>230</width>
-                 <height>177</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>230</width>
-                 <height>177</height>
-                </size>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_6">
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_39">
-                  <item>
-                   <widget class="QLabel" name="label_45">
-                    <property name="minimumSize">
-                     <size>
-                      <width>95</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>IMD status:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="imdStatus_2">
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <family>Monospace</family>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>---</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_40">
-                  <item>
-                   <widget class="QLabel" name="label_46">
-                    <property name="minimumSize">
-                     <size>
-                      <width>95</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>IMD reset:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="imdSC_2">
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <family>Monospace</family>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>---</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_41">
-                  <item>
-                   <widget class="QLabel" name="label_47">
-                    <property name="minimumSize">
-                     <size>
-                      <width>95</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>AMS status:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="amsStatus_2">
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <family>Monospace</family>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>---</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_42">
-                  <item>
-                   <widget class="QLabel" name="label_48">
-                    <property name="minimumSize">
-                     <size>
-                      <width>95</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>AMS reset:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="amsSC_2">
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <family>Monospace</family>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>---</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_43">
-                  <item>
-                   <widget class="QLabel" name="label_49">
-                    <property name="minimumSize">
-                     <size>
-                      <width>95</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>S/C status:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="scStatus_2">
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <family>Monospace</family>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>---</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
               </widget>
              </item>
              <item>

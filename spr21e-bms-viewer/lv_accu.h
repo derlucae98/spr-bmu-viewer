@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QCanBusFrame>
 #include <QTimer>
-
+#include <QDebug>
 
 class LV_Accu : public QObject
 {
@@ -62,7 +62,9 @@ public:
         bool tempValid;
 
         float soc;
+        bool socValid;
         float batteryVoltage;
+        bool batteryVoltageValid;
         float current;
         bool currentValid;
 
@@ -75,7 +77,7 @@ public:
         bool criticalCellvoltage;
     };
 
-    static QString ts_state_to_string(LV_Accu::lv_state_t state);
+    static QString lv_state_to_string(LV_Accu::lv_state_t state);
     static QStringList contactor_error_to_string(LV_Accu::contactor_error_t error);
     static QString sensor_status_to_string(LV_Accu::sensor_status_t status);
 
@@ -94,7 +96,7 @@ private:
         CAN_ID_LV_CELL_TEMPERATURE_1 = 0x30A,
         CAN_ID_LV_CELL_TEMPERATURE_2 = 0x310,
         CAN_ID_LV_BALANCING_FEEDBACK = 0x30B,
-        CAN_ID_LV_STATE = 0x312
+        CAN_ID_LV_STATE = 0x311
     };
 
     lv_battery_data_t canData;
