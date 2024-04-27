@@ -96,7 +96,7 @@
     <item row="1" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -548,6 +548,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -586,6 +587,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -624,6 +626,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -659,6 +662,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -694,6 +698,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -729,6 +734,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -764,6 +770,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -830,6 +837,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -865,6 +873,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -900,6 +909,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -935,6 +945,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -970,6 +981,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1005,6 +1017,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1040,6 +1053,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1106,6 +1120,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1141,6 +1156,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1176,6 +1192,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <bold>true</bold>
                      </font>
                     </property>
                     <property name="text">
@@ -1704,7 +1721,7 @@
                      </size>
                     </property>
                     <property name="text">
-                     <string>voltage:</string>
+                     <string>Voltage:</string>
                     </property>
                    </widget>
                   </item>
