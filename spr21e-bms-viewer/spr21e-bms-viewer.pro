@@ -19,6 +19,7 @@ SOURCES += \
     can.cpp \
     config.cpp \
     errordialog.cpp \
+    gateway.cpp \
     lv_accu.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     can.h \
     config.h \
     errordialog.h \
+    gateway.h \
     lv_accu.h \
     mainwindow.h \
     ts_accu.h

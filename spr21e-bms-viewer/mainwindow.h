@@ -12,6 +12,7 @@
 #include "ts_accu.h"
 #include "errordialog.h"
 #include "lv_accu.h"
+#include "gateway.h"
 
 
 
@@ -45,6 +46,8 @@ private:
     bool interfaceUp;
 
     Can *can = nullptr;
+
+    Gateway *gateway = nullptr;
 
     bool linkAvailable;
     void ts_link_available(bool available);

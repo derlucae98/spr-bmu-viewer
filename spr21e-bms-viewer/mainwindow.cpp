@@ -36,6 +36,32 @@ MainWindow::MainWindow(QWidget *parent)
     });
     can->init();
 
+    gateway = new Gateway(this);
+    QObject::connect(gateway, &Gateway::new_frame, this, [=](quint8 channel, QCanBusFrame frame) {
+        if (channel == 1) {
+            if (tsAccu) {
+                tsAccu->can_frame(frame);
+            }
+            if (lvAccu) {
+                lvAccu->can_frame(frame);
+            }
+        }
+    });
+
+    QObject::connect(gateway, &Gateway::state_changed, this, [=](quint8 channel, QAbstractSocket::SocketState state) {
+        qDebug() << "Gateway channel " << channel << " state: " << state;
+    });
+
+    QUrl ch1;
+    ch1.setHost("192.168.4.101");
+    ch1.setPort(8881);
+    QUrl ch2;
+    ch2.setHost("192.168.4.101");
+    ch2.setPort(8882);
+
+    gateway->connect_device(ch1, ch2);
+
+
     ::memset(&tsBatteryData, 0, sizeof(TS_Accu::ts_battery_data_t));
 
     tsAccu = new TS_Accu(this);
