@@ -31,16 +31,10 @@ private:
     static const QString serverName;
     QTimer *timeout = nullptr;
     QCanBusDevice *can_device = nullptr;
-    bool connect_socket();
-    QLocalServer *server = nullptr;
-    QLocalSocket *socket = nullptr;
-    void socket_received();
-    void new_client_connected();
-    void message_from_client();
+
     QString deviceName;
     void get_frame();
     void get_devices();
-    void send_heartbeat();
 
 signals:
     void new_frame(QCanBusFrame);
