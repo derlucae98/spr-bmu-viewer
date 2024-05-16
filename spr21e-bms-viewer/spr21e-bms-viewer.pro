@@ -23,6 +23,8 @@ SOURCES += \
     lv_accu.cpp \
     main.cpp \
     mainwindow.cpp \
+    mainwindow_lv.cpp \
+    mainwindow_ts.cpp \
     ts_accu.cpp
 
 HEADERS += \

@@ -30,7 +30,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_btnConnectPcan_clicked();
+    void on_btnConnectDevice_clicked();
     void on_clearErrorLog_clicked();
     void on_tsTakeControl_stateChanged(int arg1);
     void on_reqTsActive_stateChanged(int arg1);
@@ -43,25 +43,36 @@ private:
     TS_Accu *tsAccu = nullptr;
     LV_Accu *lvAccu = nullptr;
 
+    void init_ts();
+    void init_lv();
+
     bool interfaceUp;
 
     Can *can = nullptr;
+    void connect_can_dev();
+    void disconnect_can_dev();
 
     Gateway *gateway = nullptr;
+    void connect_gateway();
+    void disconnect_gateway();
 
-    bool linkAvailable;
+    bool tsLinkAvailable;
+    bool lvLinkAvailable;
     void ts_link_available(bool available);
     void lv_link_available(bool available);
+
+    void ui_ts_invalidate_all();
+    void ui_lv_invalidate_all();
 
     TS_Accu::ts_battery_data_t tsBatteryData;
     LV_Accu::lv_battery_data_t lvBatteryData;
 
     void update_ui();
-    void update_ui_balancing();
-    void update_ui_uid();
-    void update_ui_voltage();
-    void update_ui_temperature();
-    void update_ui_stats();
+    void update_ui_ts_balancing();
+    void update_ui_ts_uid();
+    void update_ui_ts_voltage();
+    void update_ui_ts_temperature();
+    void update_ui_ts_stats();
     void update_ui_ts(TS_Accu::ts_battery_data_t data);
     void update_ui_lv(LV_Accu::lv_battery_data_t data);
     void ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_error_t);

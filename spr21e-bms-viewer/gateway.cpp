@@ -22,6 +22,12 @@ void Gateway::connect_device(QUrl ch1, QUrl ch2)
     ch2_socket->connectToHost(ch2.host(), ch2.port());
 }
 
+void Gateway::disconnect_device()
+{
+    ch1_socket->disconnectFromHost();
+    ch2_socket->disconnectFromHost();
+}
+
 QString Gateway::errorString()
 {
     QString ch1;

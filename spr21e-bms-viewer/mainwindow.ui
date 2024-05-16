@@ -21,25 +21,37 @@
        <widget class="QLabel" name="lPCANChannel">
         <property name="minimumSize">
          <size>
-          <width>80</width>
+          <width>50</width>
           <height>0</height>
          </size>
         </property>
         <property name="text">
-         <string>CAN device:</string>
+         <string>Device:</string>
         </property>
         <property name="buddy">
-         <cstring>cbSelectPCAN</cstring>
+         <cstring>cbSelectDevice</cstring>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="cbSelectPCAN"/>
+       <widget class="QComboBox" name="cbSelectDevice">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <item>
+         <property name="text">
+          <string>ECAN_W01</string>
+         </property>
+        </item>
+       </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btnConnectPcan">
+       <widget class="QPushButton" name="btnConnectDevice">
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Der entsprechende PCAN Adapter beginnt zu blinken.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string/>
         </property>
         <property name="text">
          <string>Connect</string>
@@ -47,7 +59,67 @@
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="linkDisplay">
+       <widget class="QPushButton" name="btnConnectionSettings">
+        <property name="text">
+         <string>Settings</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>TS Accu:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="linkTs">
+        <property name="minimumSize">
+         <size>
+          <width>23</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>23</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_9">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>LV Accu:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="linkLv">
         <property name="minimumSize">
          <size>
           <width>23</width>
@@ -84,16 +156,23 @@
         </property>
        </spacer>
       </item>
-      <item>
-       <widget class="QLabel" name="scuderiaLogo">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
-    <item row="1" column="0">
+    <item row="0" column="1">
+     <widget class="QLabel" name="scuderiaLogo">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="Line" name="line_10">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
        <number>0</number>
@@ -104,7 +183,7 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="1" column="0">
-         <widget class="QTreeWidget" name="parameters">
+         <widget class="QTreeWidget" name="tsParameters">
           <column>
            <property name="text">
             <string>Parameter</string>
@@ -482,7 +561,7 @@
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QFrame" name="infoFrame">
+         <widget class="QFrame" name="tsInfoFrame">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -2021,29 +2100,6 @@
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionDiagnostic">
-   <property name="text">
-    <string>Diagnostic</string>
-   </property>
-  </action>
-  <action name="actionLogfile_converter">
-   <property name="text">
-    <string>Logfile converter</string>
-   </property>
-   <property name="toolTip">
-    <string>Convert base64 encoded logfiles to CSV files.</string>
-   </property>
-  </action>
-  <action name="actionAbout_SPR_BMS_viewer">
-   <property name="text">
-    <string>About SPR BMS viewer</string>
-   </property>
-  </action>
-  <action name="actionConfig">
-   <property name="text">
-    <string>Config</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

@@ -24,6 +24,7 @@ public:
     void disconnect_device();
     void send_frame(QCanBusFrame frame);
     void set_device_name(QString deviceName);
+    static QStringList get_available_devices();
 
 
 private:
@@ -34,14 +35,13 @@ private:
 
     QString deviceName;
     void get_frame();
-    void get_devices();
 
 signals:
     void new_frame(QCanBusFrame);
     void error(QString);
     void device_up();
     void device_down();
-    void available_devices(QStringList);
+
 };
 
 #endif // CAN_H

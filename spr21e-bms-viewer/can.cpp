@@ -14,10 +14,9 @@ Can::~Can()
 
 void Can::init()
 {
-    get_devices();
 }
 
-void Can::get_devices()
+QStringList Can::get_available_devices()
 {
     QString errorString;
     const QList<QCanBusDeviceInfo> devices = QCanBus::instance()->availableDevices(
@@ -39,7 +38,7 @@ void Can::get_devices()
         names.append(it.name());
 #endif
     }
-    emit available_devices(names);
+    return names;
 }
 
 void Can::connect_device()
