@@ -1,7 +1,5 @@
 #include "can.h"
 
-const QString Can::serverName = "spr_bms_viewer_helper";
-
 Can::Can(QObject *parent) : QObject(parent)
 {
 
@@ -10,10 +8,6 @@ Can::Can(QObject *parent) : QObject(parent)
 Can::~Can()
 {
 
-}
-
-void Can::init()
-{
 }
 
 QStringList Can::get_available_devices()
@@ -53,6 +47,7 @@ void Can::connect_device()
             emit device_up();
         } else {
             qDebug() << "pcan up failed";
+            emit error("Cannot connect PCAN. Did you run as root?");
         }
         process->deleteLater();
     });

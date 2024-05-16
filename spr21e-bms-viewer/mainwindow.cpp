@@ -11,16 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->cbSelectDevice->addItems(Can::get_available_devices());
 
-
-
-
     init_ts();
 
     init_lv();
-
-
-
-
 
     QPixmap scuderiaLogo(":/img/logo.png");
 
@@ -33,8 +26,6 @@ MainWindow::MainWindow(QWidget *parent)
     } else {
         darkMode = false;
     }
-
-
 }
 
 MainWindow::~MainWindow()
@@ -98,19 +89,10 @@ void MainWindow::append_error(QString error, severity_t severity)
 void MainWindow::connect_gateway()
 {
     gateway = new Gateway(this);
-    QObject::connect(gateway, &Gateway::new_frame, this, [=](quint8 channel, QCanBusFrame frame) {
-        if (channel == 1) {
-            if (tsAccu) {
-                tsAccu->can_frame(frame);
-            }
-            if (lvAccu) {
-                lvAccu->can_frame(frame);
-            }
-        }
-    });
+    QObject::connect(gateway, &Gateway::ch1_new_frame, tsAccu, &TS_Accu::can_frame);
 
-    QObject::connect(gateway, &Gateway::state_changed, this, [=](quint8 channel, QAbstractSocket::SocketState state) {
-        qDebug() << "Gateway channel " << channel << " state: " << state;
+    QObject::connect(gateway, &Gateway::ch1_state_changed, this, [=](QAbstractSocket::SocketState state) {
+        qDebug() << "Gateway channel 1 state: " << state;
     });
 
     QUrl ch1;
@@ -142,10 +124,9 @@ void MainWindow::on_btnConnectDevice_clicked()
         }
     } else {
         if (!interfaceUp) {
-            can->set_device_name(ui->cbSelectDevice->currentText());
-            can->connect_device();
+            connect_can_dev();
         } else {
-            can->disconnect_device();
+            disconnect_can_dev();
         }
     }
 }
@@ -166,6 +147,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::connect_can_dev()
 {
     can = new Can(this);
+
+    can->set_device_name(ui->cbSelectDevice->currentText());
+    can->connect_device();
+
     QObject::connect(can, &Can::error, this, [=](QString err) {
         QMessageBox mb;
         mb.setText(err);
@@ -184,13 +169,17 @@ void MainWindow::connect_can_dev()
         ui->tsParameters->setEnabled(false);
         ui->btnConnectDevice->setText("Connect");
         ui->cbSelectDevice->setEnabled(true);
+        can->deleteLater();
     });
+
+    QObject::connect(can, &Can::new_frame, tsAccu, &TS_Accu::can_frame);
+    QObject::connect(can, &Can::new_frame, lvAccu, &LV_Accu::can_frame);
+    QObject::connect(tsAccu, &TS_Accu::can_send, can, &Can::send_frame);
 }
 
 void MainWindow::disconnect_can_dev()
 {
     if (can) {
         can->disconnect_device();
-        can->deleteLater();
     }
 }

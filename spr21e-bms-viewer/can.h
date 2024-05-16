@@ -18,8 +18,6 @@ class Can : public QObject
 public:
     explicit Can(QObject *parent = nullptr);
     ~Can();
-    void init();
-
     void connect_device();
     void disconnect_device();
     void send_frame(QCanBusFrame frame);
@@ -28,9 +26,6 @@ public:
 
 
 private:
-
-    static const QString serverName;
-    QTimer *timeout = nullptr;
     QCanBusDevice *can_device = nullptr;
 
     QString deviceName;

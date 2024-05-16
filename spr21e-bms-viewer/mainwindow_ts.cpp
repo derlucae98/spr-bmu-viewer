@@ -7,8 +7,6 @@ void MainWindow::init_ts()
 
     tsAccu = new TS_Accu(this);
     QObject::connect(tsAccu, &TS_Accu::new_data, this, &MainWindow::update_ui_ts);
-    QObject::connect(can, &Can::new_frame, tsAccu, &TS_Accu::can_frame);
-    QObject::connect(tsAccu, &TS_Accu::can_send, can, &Can::send_frame);
     QObject::connect(tsAccu, &TS_Accu::link_availability_changed, this, &MainWindow::ts_link_available);
     QObject::connect(tsAccu, &TS_Accu::ts_state_changed, this, &MainWindow::ts_state_changed);
     tsLinkAvailable = false;

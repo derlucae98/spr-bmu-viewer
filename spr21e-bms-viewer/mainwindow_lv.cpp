@@ -6,7 +6,6 @@ void MainWindow::init_lv()
     ::memset(&lvBatteryData, 0, sizeof(LV_Accu::lv_battery_data_t));
     lvAccu = new LV_Accu(this);
     QObject::connect(lvAccu, &LV_Accu::new_data, this, &MainWindow::update_ui_lv);
-    QObject::connect(can, &Can::new_frame, lvAccu, &LV_Accu::can_frame);
     QObject::connect(lvAccu, &LV_Accu::link_availability_changed, this, &MainWindow::lv_link_available);
     QObject::connect(lvAccu, &LV_Accu::lv_state_changed, this, &MainWindow::lv_state_changed);
     lvLinkAvailable = false;
