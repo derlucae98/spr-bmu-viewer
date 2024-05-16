@@ -27,8 +27,10 @@ private:
     QCanBusFrame convert_to_can(QByteArray &data);
 
 signals:
-    void new_frame(quint8 channel, QCanBusFrame frame);
-    void state_changed(quint8 channel, QAbstractSocket::SocketState);
+    void ch1_new_frame(QCanBusFrame);
+    void ch2_new_frame(QCanBusFrame);
+    void ch1_state_changed(QAbstractSocket::SocketState);
+    void ch2_state_changed(QAbstractSocket::SocketState);
 };
 
 #endif // GATEWAY_H

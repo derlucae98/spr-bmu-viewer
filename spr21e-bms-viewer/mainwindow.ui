@@ -96,7 +96,7 @@
     <item row="1" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -548,6 +548,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -587,6 +588,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -626,6 +628,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -662,6 +665,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -698,6 +702,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -734,6 +739,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -770,6 +776,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -837,6 +844,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -873,6 +881,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -909,6 +918,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -945,6 +955,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -981,6 +992,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1017,6 +1029,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1053,6 +1066,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1120,6 +1134,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1156,6 +1171,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1192,6 +1208,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1411,6 +1428,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1450,6 +1468,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1489,6 +1508,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1525,6 +1545,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1561,6 +1582,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1597,6 +1619,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1633,6 +1656,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1700,6 +1724,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1736,6 +1761,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1772,6 +1798,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -1808,6 +1835,7 @@
                     <property name="font">
                      <font>
                       <family>Courier New</family>
+                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
