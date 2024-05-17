@@ -19,6 +19,9 @@ public:
     void connect_device(QUrl ch1, QUrl ch2);
     void disconnect_device();
     QString errorString();
+    void ch1_send_frame(QCanBusFrame frame);
+    void ch2_send_frame(QCanBusFrame frame);
+
 private:
     QTcpSocket *ch1_socket = nullptr;
     QTcpSocket *ch2_socket = nullptr;

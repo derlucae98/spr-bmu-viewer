@@ -11,8 +11,8 @@ void MainWindow::init_ts()
     QObject::connect(tsAccu, &TS_Accu::ts_state_changed, this, &MainWindow::ts_state_changed);
     tsLinkAvailable = false;
     ui->reqTsActive->setEnabled(false);
-    ui->tsInfoFrame->setEnabled(false);
-    ui->tsParameters->setEnabled(false);
+    ui->btnConfig->setEnabled(false);
+    ui->tsTakeControl->setEnabled(false);
 }
 
 void MainWindow::on_tsTakeControl_stateChanged(int arg1)
@@ -51,16 +51,41 @@ void MainWindow::on_btnShowErrors_clicked()
 
 void MainWindow::ui_ts_invalidate_all()
 {
-
+    ui->minCellVolt->setText("---   V");
+    ui->maxCellVolt->setText("---   V");
+    ui->avgCellVolt->setText("---   V");
+    ui->deltaCellVolt->setText("---   V");
+    ui->minSoc->setText("---    %");
+    ui->maxSoc->setText("---    %");
+    ui->minTemp->setText("---  °C");
+    ui->maxTemp->setText("---  °C");
+    ui->avgTemp->setText("---  °C");
+    ui->batteryVoltage->setText("---    V");
+    ui->dcLinkVoltage->setText("---    V");
+    ui->current->setText("---    A");
+    ui->isoRes->setText("---    kΩ");
+    ui->tsState->setText("---");
+    ui->imdStatus->setText("---");
+    ui->imdStatus->setStyleSheet("");
+    ui->amsStatus->setText("---");
+    ui->amsStatus->setStyleSheet("");
+    ui->scStatus->setText("---");
+    ui->scStatus->setStyleSheet("");
 }
 
 void MainWindow::ts_link_available(bool available)
 {
     if (available) {
         ui->linkTs->setStyleSheet("background-color: rgb(0, 255, 0);");
+        ui->reqTsActive->setEnabled(false);
+        ui->btnConfig->setEnabled(true);
+        ui->tsTakeControl->setEnabled(true);
     } else {
         ui->linkTs->setStyleSheet("background-color: rgb(255, 0, 0);");
         ui_ts_invalidate_all();
+        ui->reqTsActive->setEnabled(false);
+        ui->btnConfig->setEnabled(false);
+        ui->tsTakeControl->setEnabled(false);
     }
 }
 
@@ -171,8 +196,8 @@ void MainWindow::update_ui_ts_stats()
 
     if (tsBatteryData.tempValid) {
         ui->minTemp->setText(QString("%1 °C").arg(tsBatteryData.minTemp, 4, 'f', 1));
-            ui->maxTemp->setText(QString("%1 °C").arg(tsBatteryData.maxTemp, 4, 'f', 1));
-            ui->avgTemp->setText(QString("%1 °C").arg(tsBatteryData.avgTemp, 4, 'f', 1));
+        ui->maxTemp->setText(QString("%1 °C").arg(tsBatteryData.maxTemp, 4, 'f', 1));
+        ui->avgTemp->setText(QString("%1 °C").arg(tsBatteryData.avgTemp, 4, 'f', 1));
     } else {
         ui->minTemp->setText("Invalid");
         ui->maxTemp->setText("Invalid");

@@ -37,8 +37,47 @@ QString Gateway::errorString()
     }
     QString ret;
     ret.append(ch1);
+    ret.append("\n");
     ret.append(ch2);
     return ret;
+}
+
+void Gateway::ch1_send_frame(QCanBusFrame frame)
+{
+    QByteArray payload;
+    payload.resize(13);
+    ::memset(payload.data(), 0, payload.length());
+
+    payload[0] = frame.payload().length() & 0x0F;
+    payload[1] = frame.frameId() & 0xFF;
+    payload[2] = frame.frameId() >> 8;
+    payload[3] = frame.frameId() >> 16;
+    payload[4] = frame.frameId() >> 24;
+    for (int i = 0; i < frame.payload().length(); i++) {
+        payload[i + 5] = frame.payload().at(i);
+    }
+    if (ch1_socket && ch1_socket->isOpen()) {
+        ch1_socket->write(payload);
+    }
+}
+
+void Gateway::ch2_send_frame(QCanBusFrame frame)
+{
+    QByteArray payload;
+    payload.resize(13);
+    ::memset(payload.data(), 0, payload.length());
+
+    payload[0] = frame.payload().length() & 0x0F;
+    payload[1] = frame.frameId() & 0xFF;
+    payload[2] = frame.frameId() >> 8;
+    payload[3] = frame.frameId() >> 16;
+    payload[4] = frame.frameId() >> 24;
+    for (int i = 0; i < frame.payload().length(); i++) {
+        payload[i + 5] = frame.payload().at(i);
+    }
+    if (ch2_socket && ch2_socket->isOpen()) {
+        ch2_socket->write(payload);
+    }
 }
 
 void Gateway::ch1_read_frame()

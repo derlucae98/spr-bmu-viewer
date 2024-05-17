@@ -90,9 +90,16 @@ void MainWindow::connect_gateway()
 {
     gateway = new Gateway(this);
     QObject::connect(gateway, &Gateway::ch1_new_frame, tsAccu, &TS_Accu::can_frame);
+    QObject::connect(tsAccu, &TS_Accu::can_send, gateway, &Gateway::ch1_send_frame);
+    QObject::connect(gateway, &Gateway::ch1_new_frame, lvAccu, &LV_Accu::can_frame);
 
     QObject::connect(gateway, &Gateway::ch1_state_changed, this, [=](QAbstractSocket::SocketState state) {
-        qDebug() << "Gateway channel 1 state: " << state;
+        if (state == QAbstractSocket::UnconnectedState) {
+            QMessageBox mb;
+            mb.setText("Coult not connect to gateway! \n" + gateway->errorString());
+            mb.exec();
+            qDebug() << "Gateway channel 1 state: " << state;
+        }
     });
 
     QUrl ch1;

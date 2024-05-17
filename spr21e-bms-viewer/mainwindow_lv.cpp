@@ -23,7 +23,17 @@ void MainWindow::lv_link_available(bool available)
 
 void MainWindow::ui_lv_invalidate_all()
 {
-
+    ui->minCellVolt_LV->setText("---   V");
+    ui->maxCellVolt_LV->setText("---   V");
+    ui->avgCellVolt_LV->setText("---   V");
+    ui->deltaCellVolt_LV->setText("---   V");
+    ui->minTemp_LV->setText("---  °C");
+    ui->maxTemp_LV->setText("---  °C");
+    ui->avgTemp_LV->setText("---  °C");
+    ui->soc_LV->setText("---    %");
+    ui->batteryVoltage_LV->setText("---    V");
+    ui->current_LV->setText("---    A");
+    ui->lvState->setText("---");
 }
 
 void MainWindow::update_ui_lv(LV_Accu::lv_battery_data_t data)
@@ -45,8 +55,8 @@ void MainWindow::update_ui_lv(LV_Accu::lv_battery_data_t data)
 
     if (lvBatteryData.tempValid) {
         ui->minTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.minTemp, 4, 'f', 1));
-            ui->maxTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.maxTemp, 4, 'f', 1));
-            ui->avgTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.avgTemp, 4, 'f', 1));
+        ui->maxTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.maxTemp, 4, 'f', 1));
+        ui->avgTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.avgTemp, 4, 'f', 1));
     } else {
         ui->minTemp_LV->setText("Invalid");
         ui->maxTemp_LV->setText("Invalid");
