@@ -89,17 +89,29 @@ void MainWindow::append_error(QString error, severity_t severity)
 void MainWindow::connect_gateway()
 {
     gateway = new Gateway(this);
-    QObject::connect(gateway, &Gateway::ch1_new_frame, tsAccu, &TS_Accu::can_frame);
-    QObject::connect(tsAccu, &TS_Accu::can_send, gateway, &Gateway::ch1_send_frame);
-    QObject::connect(gateway, &Gateway::ch1_new_frame, lvAccu, &LV_Accu::can_frame);
+    QObject::connect(gateway, &Gateway::ch2_new_frame, tsAccu, &TS_Accu::can_frame);
+    QObject::connect(tsAccu, &TS_Accu::can_send, gateway, &Gateway::ch2_send_frame);
+    QObject::connect(gateway, &Gateway::ch2_new_frame, lvAccu, &LV_Accu::can_frame);
 
-    QObject::connect(gateway, &Gateway::ch1_state_changed, this, [=](QAbstractSocket::SocketState state) {
-        if (state == QAbstractSocket::UnconnectedState) {
-            QMessageBox mb;
-            mb.setText("Coult not connect to gateway! \n" + gateway->errorString());
-            mb.exec();
-            qDebug() << "Gateway channel 1 state: " << state;
+    qDebug() << "Connect gateway";
+
+    QObject::connect(gateway, &Gateway::ch2_state_changed, this, [=](QAbstractSocket::SocketState state) {
+        qDebug() << "Gateway channel 2 state: " << state;
+        if (state == QAbstractSocket::ConnectedState) {
+            interfaceUp = true;
+            ui->btnConnectDevice->setText("Disconnect");
+            ui->cbSelectDevice->setEnabled(false);
+        } else {
+            interfaceUp = false;
+            ui->btnConnectDevice->setText("Connect");
+            ui->cbSelectDevice->setEnabled(true);
         }
+//        if (state == QAbstractSocket::UnconnectedState) {
+//            QMessageBox mb;
+//            mb.setText("Coult not connect to gateway! \n" + gateway->errorString());
+//            mb.exec();
+
+//        }
     });
 
     QUrl ch1;
@@ -156,7 +168,7 @@ void MainWindow::connect_can_dev()
     can = new Can(this);
 
     can->set_device_name(ui->cbSelectDevice->currentText());
-    can->connect_device();
+
 
     QObject::connect(can, &Can::error, this, [=](QString err) {
         QMessageBox mb;
@@ -165,15 +177,11 @@ void MainWindow::connect_can_dev()
     });
     QObject::connect(can, &Can::device_up, this, [=] {
         interfaceUp = true;
-        ui->tsInfoFrame->setEnabled(true);
-        ui->tsParameters->setEnabled(true);
         ui->btnConnectDevice->setText("Disconnect");
         ui->cbSelectDevice->setEnabled(false);
     });
     QObject::connect(can, &Can::device_down, this, [=] {
         interfaceUp = false;
-        ui->tsInfoFrame->setEnabled(false);
-        ui->tsParameters->setEnabled(false);
         ui->btnConnectDevice->setText("Connect");
         ui->cbSelectDevice->setEnabled(true);
         can->deleteLater();
@@ -182,6 +190,8 @@ void MainWindow::connect_can_dev()
     QObject::connect(can, &Can::new_frame, tsAccu, &TS_Accu::can_frame);
     QObject::connect(can, &Can::new_frame, lvAccu, &LV_Accu::can_frame);
     QObject::connect(tsAccu, &TS_Accu::can_send, can, &Can::send_frame);
+
+    can->connect_device();
 }
 
 void MainWindow::disconnect_can_dev()

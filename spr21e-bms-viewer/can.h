@@ -27,7 +27,7 @@ public:
 
 private:
     QCanBusDevice *can_device = nullptr;
-
+    bool connect_socket();
     QString deviceName;
     void get_frame();
 

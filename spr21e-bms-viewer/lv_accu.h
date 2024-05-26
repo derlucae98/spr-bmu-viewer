@@ -87,16 +87,17 @@ public:
 private:
 
     enum can_id {
-        CAN_ID_LV_INFO    = 0x302,
-        CAN_ID_LV_STATS_1 = 0x303,
-        CAN_ID_LV_STATS_2 = 0x304,
-        CAN_ID_LV_UIP     = 0x305,
-        CAN_ID_LV_CELL_VOLTAGE_1 = 0x306,
-        CAN_ID_LV_CELL_VOLTAGE_2 = 0x307,
-        CAN_ID_LV_CELL_TEMPERATURE_1 = 0x30A,
-        CAN_ID_LV_CELL_TEMPERATURE_2 = 0x310,
-        CAN_ID_LV_BALANCING_FEEDBACK = 0x30B,
-        CAN_ID_LV_STATE = 0x311
+        CAN_ID_LV_STARTUP = 0x301,
+        CAN_ID_LV_INFO    = 0x252,
+        CAN_ID_LV_STATS_1 = 0x253,
+        CAN_ID_LV_STATS_2 = 0x254,
+        CAN_ID_LV_UIP     = 0x255,
+        CAN_ID_LV_CELL_VOLTAGE_1 = 0x256,
+        CAN_ID_LV_CELL_VOLTAGE_2 = 0x257,
+        CAN_ID_LV_CELL_TEMPERATURE_1 = 0x25A,
+        CAN_ID_LV_CELL_TEMPERATURE_2 = 0x25B,
+        CAN_ID_LV_BALANCING_FEEDBACK = 0x25C,
+        CAN_ID_LV_STATE = 0x251
     };
 
     lv_battery_data_t canData;
@@ -112,7 +113,7 @@ private:
     void decompose_cell_temperature_2(QByteArray data);
     void decompose_balancing_feedback(QByteArray data);
 
-    bool linkAvailable;
+    uint16_t fullUpdate;
     QTimer *timeoutTimer = nullptr;
     QTimer *updateTimer = nullptr;
 

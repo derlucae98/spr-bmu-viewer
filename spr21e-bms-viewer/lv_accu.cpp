@@ -4,14 +4,12 @@ LV_Accu::LV_Accu(QObject *parent) : QObject(parent)
 {
     ::memset(&canData, 0, sizeof(lv_battery_data_t));
 
-    linkAvailable = false;
-
     timeoutTimer = new QTimer(this);
     timeoutTimer->setSingleShot(true);
-    timeoutTimer->setInterval(200);
+    timeoutTimer->setInterval(500);
     QObject::connect(timeoutTimer, &QTimer::timeout, this, [=]{
-        linkAvailable = false;
         emit link_availability_changed(false);
+        qDebug() << Qt::hex << fullUpdate;
         if (updateTimer) {
             updateTimer->stop();
         }
@@ -23,6 +21,8 @@ LV_Accu::LV_Accu(QObject *parent) : QObject(parent)
     QObject::connect(updateTimer, &QTimer::timeout, this, [=]{
         emit new_data(canData);
     });
+
+    fullUpdate = 0;
 }
 
 QString LV_Accu::lv_state_to_string(lv_state_t state)
@@ -55,7 +55,6 @@ QString LV_Accu::sensor_status_to_string(sensor_status_t status)
 
 void LV_Accu::can_frame(QCanBusFrame frame)
 {
-    static uint16_t fullUpdate = 0;
 
     switch (frame.frameId()) {
     case CAN_ID_LV_INFO:
@@ -101,7 +100,6 @@ void LV_Accu::can_frame(QCanBusFrame frame)
     }
 
     if (fullUpdate == 0x3FF) {
-        linkAvailable = true;
         timeoutTimer->start();
         emit link_availability_changed(true);
         if (!updateTimer->isActive()) {

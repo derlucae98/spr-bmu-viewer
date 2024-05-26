@@ -100,7 +100,9 @@ void Gateway::ch1_read_frame()
             for (int i = 0; i < buffer.length(); i += 13) {
                 QByteArray buf = buffer.mid(i, 13);
                 QCanBusFrame frame = convert_to_can(buf);
-                emit ch1_new_frame(frame);
+                if (frame.frameType() != QCanBusFrame::InvalidFrame) {
+                    emit ch1_new_frame(frame);
+                }
             }
             buffer.clear();
         }
@@ -127,7 +129,10 @@ void Gateway::ch2_read_frame()
             for (int i = 0; i < buffer.length(); i+=13) {
                 QByteArray buf = buffer.mid(i, 13);
                 QCanBusFrame frame = convert_to_can(buf);
-                emit ch2_new_frame(frame);
+                if (frame.frameType() != QCanBusFrame::InvalidFrame) {
+                    emit ch2_new_frame(frame);
+                }
+                //qDebug() << Qt::hex << frame.frameId() << "#" << frame.payload().toHex();
             }
             buffer.clear();
         }
@@ -143,6 +148,12 @@ QCanBusFrame Gateway::convert_to_can(QByteArray &data)
      * Frame identifier (Standard, Extended) and RTR frames are ignored
      */
     quint8 len = data.at(0) & 0xF;
+
+    // Sanity check: In case of implausible length, return invalid frame
+    if (data.length() != 13 || len > 8) {
+        frame.setFrameType(QCanBusFrame::InvalidFrame);
+        return frame;
+    }
 
     /* Frame ID is composed of the following four bytes.
      * Endianess is contrary to the definition in the manual!

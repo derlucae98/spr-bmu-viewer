@@ -44,7 +44,6 @@ void Can::connect_device()
         Q_UNUSED(exitStatus)
         if (exitCode == 0) {
             qDebug() << "pcan up success";
-            emit device_up();
         } else {
             qDebug() << "pcan up failed";
             emit error("Cannot connect PCAN. Did you run as root?");
@@ -53,12 +52,39 @@ void Can::connect_device()
     });
 
     process->start("ip", QStringList({"link", "set", this->deviceName, "up", "type", "can", "bitrate", QString::number(1000000UL), "restart-ms", "100"})); //Requires root
-#else
+
+#endif
+
     if (connect_socket()) {
         emit device_up();
     }
-#endif
+
 }
+
+bool Can::connect_socket()
+{
+    QString errorString;
+#ifdef Q_OS_LINUX
+    can_device = QCanBus::instance()->createDevice(
+        QStringLiteral("socketcan"), QString("%1").arg(deviceName), &errorString);
+#elif defined Q_OS_WINDOWS
+    can_device = QCanBus::instance()->createDevice(
+        QStringLiteral("peakcan"), QString("%1").arg(deviceName), &errorString);
+#endif
+    can_device->setConfigurationParameter(QCanBusDevice::BitRateKey, 1000000);
+    if (!can_device) {
+        qDebug("Can device init failed");
+        return false;
+    }
+    if (!can_device->connectDevice()) {
+        qDebug("Can device init failed");
+        return false;
+    }
+    QObject::connect(can_device, &QCanBusDevice::framesReceived, this, &Can::get_frame);
+    qDebug("Pcan init successful");
+    return true;
+}
+
 
 void Can::disconnect_device()
 {
