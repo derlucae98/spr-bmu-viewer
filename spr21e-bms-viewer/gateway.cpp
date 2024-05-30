@@ -151,6 +151,7 @@ QCanBusFrame Gateway::convert_to_can(QByteArray &data)
 
     // Sanity check: In case of implausible length, return invalid frame
     if (data.length() != 13 || len > 8) {
+        qDebug() << "Invalid frame! Len: " << data.length() << ", DLC: " << len;
         frame.setFrameType(QCanBusFrame::InvalidFrame);
         return frame;
     }
