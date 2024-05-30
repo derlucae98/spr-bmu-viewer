@@ -71,6 +71,23 @@ void MainWindow::ui_ts_invalidate_all()
     ui->amsStatus->setStyleSheet("");
     ui->scStatus->setText("---");
     ui->scStatus->setStyleSheet("");
+
+    QTreeWidgetItem *volts = ui->tsParameters->topLevelItem(1);
+    QTreeWidgetItem *openWire = ui->tsParameters->topLevelItem(2); //Open Wires
+    for (quint16 stack = 0; stack < TS_Accu::MAX_NUM_OF_SLAVES; stack++) {
+        for (quint16 cell = 0; cell < TS_Accu::MAX_NUM_OF_CELLS; cell++) {
+            volts->child(stack)->setText(cell+2, "---");
+            openWire->child(stack)->setText(cell+2, "---");
+        }
+        openWire->child(stack)->setText(1, "---");
+    }
+
+    QTreeWidgetItem *temps = ui->tsParameters->topLevelItem(3); //Temperatures
+    for (quint16 stack = 0; stack < TS_Accu::MAX_NUM_OF_SLAVES; stack++) {
+        for (quint16 tempsens = 0; tempsens < TS_Accu::MAX_NUM_OF_TEMPSENS; tempsens++) {
+            temps->child(stack)->setText(tempsens + 1, "---");
+        }
+    }
 }
 
 void MainWindow::ts_link_available(bool available)
@@ -80,12 +97,16 @@ void MainWindow::ts_link_available(bool available)
         ui->reqTsActive->setEnabled(false);
         ui->btnConfig->setEnabled(true);
         ui->tsTakeControl->setEnabled(true);
+        ui->cbAlertOnErr->setEnabled(true);
+        ui->btnShowErrors->setEnabled(true);
     } else {
         ui->linkTs->setStyleSheet("background-color: rgb(255, 0, 0);");
         ui_ts_invalidate_all();
         ui->reqTsActive->setEnabled(false);
         ui->btnConfig->setEnabled(false);
         ui->tsTakeControl->setEnabled(false);
+        ui->cbAlertOnErr->setEnabled(false);
+        ui->btnShowErrors->setEnabled(false);
     }
 }
 

@@ -31,7 +31,7 @@ TS_Accu::TS_Accu(QWidget *parent) : QWidget(parent)
 
     timeoutTimer = new QTimer(this);
     timeoutTimer->setSingleShot(true);
-    timeoutTimer->setInterval(200);
+    timeoutTimer->setInterval(500);
     QObject::connect(timeoutTimer, &QTimer::timeout, this, [=]{
         linkAvailable = false;
         emit link_availability_changed(false);
