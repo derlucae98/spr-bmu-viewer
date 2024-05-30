@@ -34,6 +34,18 @@ void MainWindow::ui_lv_invalidate_all()
     ui->batteryVoltage_LV->setText("---    V");
     ui->current_LV->setText("---    A");
     ui->lvState->setText("---");
+
+    QTreeWidgetItem *volts = ui->parameters_LV->topLevelItem(0);
+    QTreeWidgetItem *openWire = ui->parameters_LV->topLevelItem(1);
+    for (quint16 cell = 0; cell < LV_Accu::MAX_NUM_OF_LV_CELLS; cell++) {
+        volts->child(0)->setText(cell+2, "---");
+        openWire->child(0)->setText(cell+2, "---");
+    }
+
+    QTreeWidgetItem *temps = ui->parameters_LV->topLevelItem(2); //Temperatures
+    for (quint16 tempsens = 0; tempsens < LV_Accu::MAX_NUM_OF_LV_TEMPSENS; tempsens++) {
+        temps->child(0)->setText(tempsens + 1, "---");
+    }
 }
 
 void MainWindow::update_ui_lv(LV_Accu::lv_battery_data_t data)
