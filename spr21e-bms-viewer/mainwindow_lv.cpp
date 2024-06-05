@@ -14,9 +14,9 @@ void MainWindow::init_lv()
 void MainWindow::lv_link_available(bool available)
 {
     if (available) {
-        ui->linkLv->setStyleSheet("background-color: rgb(0, 255, 0);");
+        //ui->linkLv->setStyleSheet("background-color: rgb(0, 255, 0);");
     } else {
-        ui->linkLv->setStyleSheet("background-color: rgb(255, 0, 0);");
+        //ui->linkLv->setStyleSheet("background-color: rgb(255, 0, 0);");
         ui_lv_invalidate_all();
     }
 }

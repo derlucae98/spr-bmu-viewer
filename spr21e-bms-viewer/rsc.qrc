@@ -2,5 +2,26 @@
     <qresource prefix="/img">
         <file>logo.png</file>
         <file>logo_text.png</file>
+        <file>res/gear.svg</file>
+        <file>res/link.svg</file>
+        <file>res/break-link.svg</file>
+        <file>res/battery-almost-empty.svg</file>
+        <file>res/battery-almost-full.svg</file>
+        <file>res/battery-empty.svg</file>
+        <file>res/battery-full.svg</file>
+        <file>res/bell.svg</file>
+        <file>res/circle-check.svg</file>
+        <file>res/circle-info-ok.svg</file>
+        <file>res/circle-info.svg</file>
+        <file>res/circle-question.svg</file>
+        <file>res/circle-warning.svg</file>
+        <file>res/hex-check.svg</file>
+        <file>res/hex-warning.svg</file>
+        <file>res/no-bell.svg</file>
+        <file>res/temp-cold.svg</file>
+        <file>res/temp-hot.svg</file>
+        <file>res/temp-mid.svg</file>
+        <file>res/emergency-off.svg</file>
+        <file>res/emergency-on.svg</file>
     </qresource>
 </RCC>

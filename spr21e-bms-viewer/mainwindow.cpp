@@ -18,7 +18,28 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap scuderiaLogo(":/img/logo.png");
 
     ui->scuderiaLogo->setScaledContents(true);
-    ui->scuderiaLogo->setPixmap(scuderiaLogo.scaled(2*38, 2*22, Qt::KeepAspectRatio));
+    ui->scuderiaLogo->setPixmap(scuderiaLogo);
+
+    ui->btnConnectDevice->setStyleSheet("image: url(:/img/res/link.svg);");
+    ui->btnConnectDevice->setText("");
+
+    ui->btnConnectionSettings->setStyleSheet("image: url(:/img/res/gear.svg);");
+    ui->btnConnectionSettings->setText("");
+
+    // Logos: https://www.svgrepo.com/collection/dazzle-line-icons/
+    ui->tsConnectionStatus->setStyleSheet("image: url(:/img/res/hex-check.svg);");
+    ui->tsToggleNotification->setStyleSheet("image: url(:/img/res/no-bell.svg);");
+    ui->tsAccuStatus->setStyleSheet("image: url(:/img/res/circle-info-ok.svg);");
+    ui->tsSoc->setStyleSheet("image: url(:/img/res/battery-almost-full.svg);");
+    ui->tsTemperature->setStyleSheet("image: url(:/img/res/temp-hot.svg);");
+
+    ui->lvConnectionStatus->setStyleSheet("image: url(:/img/res/hex-check.svg);");
+    ui->lvToggleNotification->setStyleSheet("image: url(:/img/res/no-bell.svg);");
+    ui->lvAccuStatus->setStyleSheet("image: url(:/img/res/circle-check.svg);");
+    ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-full.svg);");
+    ui->lvTemperature->setStyleSheet("image: url(:/img/res/temp-mid.svg);");
+
+    ui->tsIndicator->setStyleSheet("image: url(:/img/res/emergency-off.svg);");
 
     QColor bgColor = ui->tsParameters->palette().color(QWidget::backgroundRole());
     if (bgColor.lightness() < 127) {
@@ -99,11 +120,11 @@ void MainWindow::connect_gateway()
         qDebug() << "Gateway channel 2 state: " << state;
         if (state == QAbstractSocket::ConnectedState) {
             interfaceUp = true;
-            ui->btnConnectDevice->setText("Disconnect");
+            ui->btnConnectDevice->setStyleSheet("image: url(:/img/res/break-link.svg);");
             ui->cbSelectDevice->setEnabled(false);
         } else {
             interfaceUp = false;
-            ui->btnConnectDevice->setText("Connect");
+            ui->btnConnectDevice->setStyleSheet("image: url(:/img/res/link.svg);");
             ui->cbSelectDevice->setEnabled(true);
         }
 //        if (state == QAbstractSocket::UnconnectedState) {
@@ -177,12 +198,12 @@ void MainWindow::connect_can_dev()
     });
     QObject::connect(can, &Can::device_up, this, [=] {
         interfaceUp = true;
-        ui->btnConnectDevice->setText("Disconnect");
+        ui->btnConnectDevice->setStyleSheet("image: url(:/img/res/break-link.svg);");
         ui->cbSelectDevice->setEnabled(false);
     });
     QObject::connect(can, &Can::device_down, this, [=] {
         interfaceUp = false;
-        ui->btnConnectDevice->setText("Connect");
+        ui->btnConnectDevice->setStyleSheet("image: url(:/img/res/link.svg);");
         ui->cbSelectDevice->setEnabled(true);
         can->deleteLater();
     });

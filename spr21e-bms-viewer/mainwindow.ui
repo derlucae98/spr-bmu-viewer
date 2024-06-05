@@ -10,59 +10,85 @@
     <height>815</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>SPR23e BMS Viewer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_2">
+   <layout class="QGridLayout" name="gridLayout_9">
     <item row="0" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="lPCANChannel">
-        <property name="minimumSize">
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="maximumSize">
          <size>
-          <width>50</width>
-          <height>0</height>
+          <width>208</width>
+          <height>79</height>
          </size>
         </property>
-        <property name="text">
-         <string>Device:</string>
+        <property name="title">
+         <string>Connection</string>
         </property>
-        <property name="buddy">
-         <cstring>cbSelectDevice</cstring>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="cbSelectDevice">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>0</height>
-         </size>
-        </property>
-        <item>
-         <property name="text">
-          <string>ECAN_W01</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnConnectDevice">
-        <property name="toolTip">
-         <string/>
-        </property>
-        <property name="text">
-         <string>Connect</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnConnectionSettings">
-        <property name="text">
-         <string>Settings</string>
-        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
+          <widget class="QComboBox" name="cbSelectDevice">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>35</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string>ECAN_W01</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="btnConnectDevice">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="btnConnectionSettings">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -73,35 +99,120 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>TS Accu:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="linkTs">
+       <widget class="QGroupBox" name="groupBox">
         <property name="minimumSize">
          <size>
-          <width>23</width>
-          <height>23</height>
+          <width>225</width>
+          <height>79</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>23</width>
-          <height>23</height>
+          <width>234</width>
+          <height>79</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true"/>
+        <property name="title">
+         <string>TS ACCU</string>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="0">
+          <widget class="QFrame" name="tsConnectionStatus">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QFrame" name="tsToggleNotification">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QFrame" name="tsAccuStatus">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QFrame" name="tsSoc">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QFrame" name="tsTemperature">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QFrame" name="tsIndicator">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -112,35 +223,134 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>LV Accu:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="linkLv">
+       <widget class="QGroupBox" name="groupBox_2">
         <property name="minimumSize">
          <size>
-          <width>23</width>
-          <height>23</height>
+          <width>225</width>
+          <height>79</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>23</width>
-          <height>23</height>
+          <width>225</width>
+          <height>79</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true"/>
+        <property name="title">
+         <string>LV ACCU</string>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
+        <layout class="QGridLayout" name="gridLayout_8">
+         <item row="0" column="0">
+          <widget class="QFrame" name="lvConnectionStatus">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QFrame" name="lvToggleNotification">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QFrame" name="lvAccuStatus">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QFrame" name="lvSoc">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QFrame" name="lvTemperature">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -150,29 +360,41 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
-          <height>20</height>
+          <width>408</width>
+          <height>17</height>
          </size>
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QLabel" name="scuderiaLogo">
+        <property name="minimumSize">
+         <size>
+          <width>133</width>
+          <height>79</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>133</width>
+          <height>79</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="scuderiaLogo">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
+    <item row="1" column="0">
      <widget class="Line" name="line_10">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </item>
-    <item row="2" column="0" colspan="2">
+    <item row="2" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
        <number>0</number>
@@ -181,385 +403,7 @@
        <attribute name="title">
         <string>TS Accu</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_4">
-        <item row="1" column="0">
-         <widget class="QTreeWidget" name="tsParameters">
-          <column>
-           <property name="text">
-            <string>Parameter</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 0</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 1</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 2</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 3</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 4</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 5</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 6</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 7</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 8</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 9</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 10</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 11</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 12</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value 13</string>
-           </property>
-          </column>
-          <item>
-           <property name="text">
-            <string>Identifiers</string>
-           </property>
-           <item>
-            <property name="text">
-             <string>Stack 1</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 2</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 3</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 4</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 5</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 6</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 7</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 8</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 9</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 10</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 11</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 12</string>
-            </property>
-           </item>
-          </item>
-          <item>
-           <property name="text">
-            <string>Cell Voltages</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <item>
-            <property name="text">
-             <string>Stack 1</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 2</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 3</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 4</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 5</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 6</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 7</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 8</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 9</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 10</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 11</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 12</string>
-            </property>
-           </item>
-          </item>
-          <item>
-           <property name="text">
-            <string>Open Wires</string>
-           </property>
-           <item>
-            <property name="text">
-             <string>Stack 1</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 2</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 3</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 4</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 5</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 6</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 7</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 8</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 9</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 10</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 11</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 12</string>
-            </property>
-           </item>
-          </item>
-          <item>
-           <property name="text">
-            <string>Temperatures</string>
-           </property>
-           <item>
-            <property name="text">
-             <string>Stack 1</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 2</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 3</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 4</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 5</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 6</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 7</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 8</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 9</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 10</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 11</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Stack 12</string>
-            </property>
-           </item>
-          </item>
-         </widget>
-        </item>
+       <layout class="QGridLayout" name="gridLayout_10">
         <item row="0" column="0">
          <widget class="QFrame" name="tsInfoFrame">
           <property name="maximumSize">
@@ -1431,6 +1275,384 @@
             </layout>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTreeWidget" name="tsParameters">
+          <column>
+           <property name="text">
+            <string>Parameter</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 0</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 1</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 2</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 3</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 4</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 5</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 6</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 7</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 8</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 9</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 10</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 11</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 12</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value 13</string>
+           </property>
+          </column>
+          <item>
+           <property name="text">
+            <string>Identifiers</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Stack 1</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 3</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 4</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 5</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 6</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 7</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 9</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 10</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 11</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 12</string>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Cell Voltages</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Stack 1</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 3</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 4</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 5</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 6</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 7</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 9</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 10</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 11</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 12</string>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Open Wires</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Stack 1</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 3</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 4</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 5</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 6</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 7</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 9</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 10</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 11</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 12</string>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Temperatures</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Stack 1</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 3</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 4</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 5</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 6</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 7</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 8</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 9</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 10</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 11</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stack 12</string>
+            </property>
+           </item>
+          </item>
          </widget>
         </item>
        </layout>

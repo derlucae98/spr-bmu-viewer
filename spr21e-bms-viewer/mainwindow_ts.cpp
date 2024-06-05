@@ -93,14 +93,14 @@ void MainWindow::ui_ts_invalidate_all()
 void MainWindow::ts_link_available(bool available)
 {
     if (available) {
-        ui->linkTs->setStyleSheet("background-color: rgb(0, 255, 0);");
+        //ui->linkTs->setStyleSheet("background-color: rgb(0, 255, 0);");
         ui->reqTsActive->setEnabled(false);
         ui->btnConfig->setEnabled(true);
         ui->tsTakeControl->setEnabled(true);
         ui->cbAlertOnErr->setEnabled(true);
         ui->btnShowErrors->setEnabled(true);
     } else {
-        ui->linkTs->setStyleSheet("background-color: rgb(255, 0, 0);");
+        //ui->linkTs->setStyleSheet("background-color: rgb(255, 0, 0);");
         ui_ts_invalidate_all();
         ui->reqTsActive->setEnabled(false);
         ui->btnConfig->setEnabled(false);
