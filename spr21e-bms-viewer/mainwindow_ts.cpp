@@ -13,6 +13,8 @@ void MainWindow::init_ts()
     ui->reqTsActive->setEnabled(false);
     ui->btnConfig->setEnabled(false);
     ui->tsTakeControl->setEnabled(false);
+    tsNotifyOnErrors = false;
+    ui->tsToggleNotification->setStyleSheet("image: url(:/img/res/no-bell.svg);");
 }
 
 void MainWindow::on_tsTakeControl_stateChanged(int arg1)
@@ -88,19 +90,29 @@ void MainWindow::ui_ts_invalidate_all()
             temps->child(stack)->setText(tempsens + 1, "---");
         }
     }
+
+    ui->tsAccuStatus->setStyleSheet("");
+    ui->tsSoc->setStyleSheet("");
+    ui->tsSoc->setToolTip("");
+    ui->tsTemperature->setStyleSheet("");
+    ui->tsTemperature->setToolTip("");
+    ui->tsIndicator->setStyleSheet("");
+    ui->tsIndicator->setToolTip("");
 }
 
 void MainWindow::ts_link_available(bool available)
 {
     if (available) {
-        //ui->linkTs->setStyleSheet("background-color: rgb(0, 255, 0);");
+        ui->tsConnectionStatus->setStyleSheet("image: url(:/img/res/hex-check.svg);");
+        ui->tsConnectionStatus->setToolTip("Connected");
         ui->reqTsActive->setEnabled(false);
         ui->btnConfig->setEnabled(true);
         ui->tsTakeControl->setEnabled(true);
         ui->cbAlertOnErr->setEnabled(true);
         ui->btnShowErrors->setEnabled(true);
     } else {
-        //ui->linkTs->setStyleSheet("background-color: rgb(255, 0, 0);");
+        ui->tsConnectionStatus->setStyleSheet("image: url(:/img/res/hex-warning.svg);");
+        ui->tsConnectionStatus->setToolTip("Disconnected");
         ui_ts_invalidate_all();
         ui->reqTsActive->setEnabled(false);
         ui->btnConfig->setEnabled(false);
@@ -121,7 +133,7 @@ void MainWindow::ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_
         }
         ui->btnShowErrors->setEnabled(true);
         ui->btnShowErrors->setText("Show errors!");
-        if (ui->cbAlertOnErr->isChecked()) {
+        if (tsNotifyOnErrors) {
             /*  What an ugly workaround...
              *  calling show_error_message(); directly locks the whole system for whatever reason.
              *  Deferring it to a timer timeout slot solves the problem.
@@ -210,19 +222,44 @@ void MainWindow::update_ui_ts_stats()
     if (tsBatteryData.socValid) {
         ui->minSoc->setText(QString("    %1 %").arg(tsBatteryData.minSoc));
         ui->maxSoc->setText(QString("    %1 %").arg(tsBatteryData.maxSoc));
+
+        if (tsBatteryData.minSoc <= 10) {
+            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-empty.svg);");
+        } else if (tsBatteryData.minSoc > 10 && tsBatteryData.minSoc <= 40) {
+            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-almost-empty.svg);");
+        } else if (tsBatteryData.minSoc > 40 && tsBatteryData.minSoc <= 70) {
+            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-almost-full.svg);");
+        } else {
+            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-full.svg);");
+        }
+        ui->lvSoc->setToolTip(QString("%1 %").arg(tsBatteryData.minSoc));
+
     } else {
         ui->minSoc->setText("Invalid");
         ui->maxSoc->setText("Invalid");
+        ui->lvSoc->setStyleSheet("");
+        ui->lvSoc->setToolTip("");
     }
 
     if (tsBatteryData.tempValid) {
         ui->minTemp->setText(QString("%1 °C").arg(tsBatteryData.minTemp, 4, 'f', 1));
         ui->maxTemp->setText(QString("%1 °C").arg(tsBatteryData.maxTemp, 4, 'f', 1));
         ui->avgTemp->setText(QString("%1 °C").arg(tsBatteryData.avgTemp, 4, 'f', 1));
+
+        if (tsBatteryData.maxTemp <= 25) {
+            ui->tsTemperature->setStyleSheet("image: url(:/img/res/temp-cold.svg);");
+        } else if (tsBatteryData.maxTemp > 25 && tsBatteryData.maxTemp <= 50) {
+            ui->tsTemperature->setStyleSheet("image: url(:/img/res/temp-mid.svg);");
+        } else {
+            ui->tsTemperature->setStyleSheet("image: url(:/img/res/temp-hot.svg);");
+        }
+        ui->tsTemperature->setToolTip(QString("%1 °C").arg(tsBatteryData.maxTemp, 4, 'f', 1));
     } else {
         ui->minTemp->setText("Invalid");
         ui->maxTemp->setText("Invalid");
         ui->avgTemp->setText("Invalid");
+        ui->tsTemperature->setStyleSheet("");
+        ui->tsTemperature->setToolTip("");
     }
 
     if (tsBatteryData.batteryVoltageValid) {
@@ -251,6 +288,14 @@ void MainWindow::update_ui_ts_stats()
 
     ui->tsState->setText(TS_Accu::ts_state_to_string(tsBatteryData.tsState));
 
+    if (tsBatteryData.tsState == TS_Accu::TS_STATE_PRE_CHARGING || tsBatteryData.tsState == TS_Accu::TS_STATE_OPERATE) {
+        ui->tsIndicator->setStyleSheet("image: url(:/img/res/emergency-on.svg);");
+        ui->tsIndicator->setToolTip("TS on");
+    } else {
+        ui->tsIndicator->setStyleSheet("image: url(:/img/res/emergency-off.svg);");
+        ui->tsIndicator->setToolTip("TS off");
+    }
+
     if ((tsBatteryData.errorCode & TS_Accu::ERROR_IMD_FAULT) && (tsBatteryData.errorCode & TS_Accu::ERROR_IMD_POWERSTAGE_DISABLED)) {
         ui->imdStatus->setText("Error");
         ui->imdStatus->setStyleSheet("color: rgb(255, 0, 0);");
@@ -260,6 +305,21 @@ void MainWindow::update_ui_ts_stats()
     } else {
         ui->imdStatus->setText("OK");
         ui->imdStatus->setStyleSheet("color: rgb(0, 127, 0);");
+    }
+
+    /* Status indicator:
+     * No errors, SDC closed: Check mark
+     * No errors but SDC open: exclamation with check mark
+     * Any error: exclamation mark
+     * A click on this symbol shows the error dialog which lists the errors
+     */
+
+    if (tsBatteryData.errorCode == TS_Accu::ERROR_NO_ERROR) {
+        ui->tsAccuStatus->setStyleSheet("border-image: url(:/img/res/circle-check.svg);");
+    } else if (tsBatteryData.errorCode == TS_Accu::ERROR_AMS_FAULT || tsBatteryData.errorCode == TS_Accu::ERROR_IMD_FAULT) {
+        ui->tsAccuStatus->setStyleSheet("border-image: url(:/img/res/circle-warning.svg);");
+    } else if (tsBatteryData.errorCode == TS_Accu::ERROR_SDC_OPEN) {
+        ui->tsAccuStatus->setStyleSheet("border-image: url(:/img/res/circle-info-ok.svg);");
     }
 
     if ((tsBatteryData.errorCode & TS_Accu::ERROR_AMS_FAULT) && (tsBatteryData.errorCode & TS_Accu::ERROR_AMS_POWERSTAGE_DISABLED)) {
@@ -340,4 +400,49 @@ void MainWindow::get_error_reason(TS_Accu::contactor_error_t error)
     }
 
     errOld = err;
+}
+
+void MainWindow::on_tsToggleNotification_clicked()
+{
+    if (tsNotifyOnErrors) {
+        tsNotifyOnErrors = false;
+        ui->tsToggleNotification->setStyleSheet("image: url(:/img/res/no-bell.svg);");
+    } else {
+        tsNotifyOnErrors = true;
+        ui->tsToggleNotification->setStyleSheet("image: url(:/img/res/bell.svg);");
+    }
+}
+
+void MainWindow::on_tsAccuStatus_clicked()
+{
+    if (tsBatteryData.errorCode != TS_Accu::ERROR_NO_ERROR) {
+        show_error_message();
+    }
+}
+
+void MainWindow::show_error_message()
+{
+    // Show error dialog on button click (or automatically if checkbox is checked)
+    // Close dialog if error cleares
+    errorDialog = new ErrorDialog(tsBatteryData.errorCode);
+
+    auto connectionStateChanged = QObject::connect(tsAccu, &TS_Accu::ts_state_changed, this, [=](TS_Accu::ts_state_t state){
+        if (state != TS_Accu::TS_STATE_ERROR) {
+            if (errorDialog) {
+                errorDialog->close();
+            }
+        }
+    });
+
+    auto connectionNewData = QObject::connect(tsAccu, &TS_Accu::new_data, this, [=](TS_Accu::ts_battery_data_t data) {
+        if (errorDialog) {
+            errorDialog->updateErrors(data.errorCode);
+        }
+    });
+
+    errorDialog->setAttribute(Qt::WA_DeleteOnClose);
+    errorDialog->exec();
+    QObject::disconnect(connectionStateChanged);
+    QObject::disconnect(connectionNewData);
+
 }

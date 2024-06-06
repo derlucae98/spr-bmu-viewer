@@ -37,6 +37,12 @@ private slots:
     void on_btnConfig_clicked();
     void on_btnShowErrors_clicked();
 
+    void on_tsToggleNotification_clicked();
+
+    void on_lvToggleNotification_clicked();
+
+    void on_tsAccuStatus_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -74,6 +80,8 @@ private:
     void update_ui_ts_temperature();
     void update_ui_ts_stats();
     void update_ui_ts(TS_Accu::ts_battery_data_t data);
+    bool tsNotifyOnErrors;
+    bool lvNotifyOnErrors;
     void update_ui_lv(LV_Accu::lv_battery_data_t data);
     void ts_state_changed(TS_Accu::ts_state_t state, TS_Accu::contactor_error_t);
     void lv_state_changed(LV_Accu::lv_state_t state, LV_Accu::contactor_error_t);

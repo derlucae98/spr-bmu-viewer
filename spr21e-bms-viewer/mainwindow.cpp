@@ -27,19 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnConnectionSettings->setText("");
 
     // Logos: https://www.svgrepo.com/collection/dazzle-line-icons/
-    ui->tsConnectionStatus->setStyleSheet("image: url(:/img/res/hex-check.svg);");
-    ui->tsToggleNotification->setStyleSheet("image: url(:/img/res/no-bell.svg);");
-    ui->tsAccuStatus->setStyleSheet("image: url(:/img/res/circle-info-ok.svg);");
-    ui->tsSoc->setStyleSheet("image: url(:/img/res/battery-almost-full.svg);");
-    ui->tsTemperature->setStyleSheet("image: url(:/img/res/temp-hot.svg);");
-
-    ui->lvConnectionStatus->setStyleSheet("image: url(:/img/res/hex-check.svg);");
-    ui->lvToggleNotification->setStyleSheet("image: url(:/img/res/no-bell.svg);");
-    ui->lvAccuStatus->setStyleSheet("image: url(:/img/res/circle-check.svg);");
-    ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-full.svg);");
-    ui->lvTemperature->setStyleSheet("image: url(:/img/res/temp-mid.svg);");
-
-    ui->tsIndicator->setStyleSheet("image: url(:/img/res/emergency-off.svg);");
 
     QColor bgColor = ui->tsParameters->palette().color(QWidget::backgroundRole());
     if (bgColor.lightness() < 127) {
@@ -54,32 +41,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::show_error_message()
-{
-    // Show Messagebox on button click (or automatically if checkbox is checked)
-    // Close Messagebox if error cleares
-    errorDialog = new ErrorDialog(tsBatteryData.errorCode);
 
-    auto connectionStateChanged = QObject::connect(tsAccu, &TS_Accu::ts_state_changed, this, [=](TS_Accu::ts_state_t state){
-        if (state != TS_Accu::TS_STATE_ERROR) {
-            if (errorDialog) {
-                errorDialog->close();
-            }
-        }
-    });
-
-    auto connectionNewData = QObject::connect(tsAccu, &TS_Accu::new_data, this, [=](TS_Accu::ts_battery_data_t data) {
-        if (errorDialog) {
-            errorDialog->updateErrors(data.errorCode);
-        }
-    });
-
-    errorDialog->setAttribute(Qt::WA_DeleteOnClose);
-    errorDialog->exec();
-    QObject::disconnect(connectionStateChanged);
-    QObject::disconnect(connectionNewData);
-
-}
 
 void MainWindow::append_error(QString error, severity_t severity)
 {
@@ -221,3 +183,5 @@ void MainWindow::disconnect_can_dev()
         can->disconnect_device();
     }
 }
+
+

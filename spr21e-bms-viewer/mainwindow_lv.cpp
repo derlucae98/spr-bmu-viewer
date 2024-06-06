@@ -9,14 +9,18 @@ void MainWindow::init_lv()
     QObject::connect(lvAccu, &LV_Accu::link_availability_changed, this, &MainWindow::lv_link_available);
     QObject::connect(lvAccu, &LV_Accu::lv_state_changed, this, &MainWindow::lv_state_changed);
     lvLinkAvailable = false;
+    lvNotifyOnErrors = false;
+    ui->lvToggleNotification->setStyleSheet("image: url(:/img/res/no-bell.svg);");
 }
 
 void MainWindow::lv_link_available(bool available)
 {
     if (available) {
-        //ui->linkLv->setStyleSheet("background-color: rgb(0, 255, 0);");
+        ui->lvConnectionStatus->setStyleSheet("image: url(:/img/res/hex-check.svg);");
+        ui->lvConnectionStatus->setToolTip("Connected");
     } else {
-        //ui->linkLv->setStyleSheet("background-color: rgb(255, 0, 0);");
+        ui->lvConnectionStatus->setStyleSheet("image: url(:/img/res/hex-warning.svg);");
+        ui->lvConnectionStatus->setToolTip("Disconnected");
         ui_lv_invalidate_all();
     }
 }
@@ -46,6 +50,12 @@ void MainWindow::ui_lv_invalidate_all()
     for (quint16 tempsens = 0; tempsens < LV_Accu::MAX_NUM_OF_LV_TEMPSENS; tempsens++) {
         temps->child(0)->setText(tempsens + 1, "---");
     }
+
+    ui->lvAccuStatus->setStyleSheet("");
+    ui->lvSoc->setStyleSheet("");
+    ui->lvSoc->setToolTip("");
+    ui->lvTemperature->setStyleSheet("");
+    ui->lvTemperature->setToolTip("");
 }
 
 void MainWindow::update_ui_lv(LV_Accu::lv_battery_data_t data)
@@ -69,10 +79,22 @@ void MainWindow::update_ui_lv(LV_Accu::lv_battery_data_t data)
         ui->minTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.minTemp, 4, 'f', 1));
         ui->maxTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.maxTemp, 4, 'f', 1));
         ui->avgTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.avgTemp, 4, 'f', 1));
+
+        if (lvBatteryData.maxTemp <= 25) {
+            ui->lvTemperature->setStyleSheet("image: url(:/img/res/temp-cold.svg);");
+        } else if (lvBatteryData.maxTemp > 25 && lvBatteryData.maxTemp <= 50) {
+            ui->lvTemperature->setStyleSheet("image: url(:/img/res/temp-mid.svg);");
+        } else {
+            ui->lvTemperature->setStyleSheet("image: url(:/img/res/temp-hot.svg);");
+        }
+        ui->lvTemperature->setToolTip(QString("%1 °C").arg(lvBatteryData.maxTemp, 4, 'f', 1));
+
     } else {
         ui->minTemp_LV->setText("Invalid");
         ui->maxTemp_LV->setText("Invalid");
         ui->avgTemp_LV->setText("Invalid");
+        ui->lvTemperature->setStyleSheet("");
+        ui->lvTemperature->setToolTip("");
     }
 
     QTreeWidgetItem *volts = ui->parameters_LV->topLevelItem(0);
@@ -97,8 +119,22 @@ void MainWindow::update_ui_lv(LV_Accu::lv_battery_data_t data)
 
     if (lvBatteryData.socValid) {
         ui->soc_LV->setText(QString("    %1 %").arg(lvBatteryData.soc));
+
+        if (lvBatteryData.soc <= 10) {
+            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-empty.svg);");
+        } else if (lvBatteryData.soc > 10 && lvBatteryData.soc <= 40) {
+            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-almost-empty.svg);");
+        } else if (lvBatteryData.soc > 40 && lvBatteryData.soc <= 70) {
+            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-almost-full.svg);");
+        } else {
+            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-full.svg);");
+        }
+        ui->lvSoc->setToolTip(QString("%1 %").arg(lvBatteryData.soc));
+
     } else {
         ui->soc_LV->setText("Invalid");
+        ui->lvSoc->setStyleSheet("");
+        ui->lvSoc->setToolTip("");
     }
 
     if (lvBatteryData.batteryVoltageValid) {
@@ -114,9 +150,27 @@ void MainWindow::update_ui_lv(LV_Accu::lv_battery_data_t data)
     }
 
     ui->lvState->setText(LV_Accu::lv_state_to_string(lvBatteryData.state));
+
+    if (lvBatteryData.errorCode == LV_Accu::ERROR_NO_ERROR) {
+        ui->lvAccuStatus->setStyleSheet("border-image: url(:/img/res/circle-check.svg);");
+    } else {
+        ui->lvAccuStatus->setStyleSheet("border-image: url(:/img/res/circle-warning.svg);");
+    }
+
 }
 
 void MainWindow::lv_state_changed(LV_Accu::lv_state_t state, LV_Accu::contactor_error_t)
 {
 
+}
+
+void MainWindow::on_lvToggleNotification_clicked()
+{
+    if (lvNotifyOnErrors) {
+        lvNotifyOnErrors = false;
+        ui->lvToggleNotification->setStyleSheet("image: url(:/img/res/no-bell.svg);");
+    } else {
+        lvNotifyOnErrors = true;
+        ui->lvToggleNotification->setStyleSheet("image: url(:/img/res/bell.svg);");
+    }
 }
