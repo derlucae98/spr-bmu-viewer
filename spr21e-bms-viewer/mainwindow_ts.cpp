@@ -224,21 +224,21 @@ void MainWindow::update_ui_ts_stats()
         ui->maxSoc->setText(QString("    %1 %").arg(tsBatteryData.maxSoc));
 
         if (tsBatteryData.minSoc <= 10) {
-            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-empty.svg);");
+            ui->tsSoc->setStyleSheet("image: url(:/img/res/battery-empty.svg);");
         } else if (tsBatteryData.minSoc > 10 && tsBatteryData.minSoc <= 40) {
-            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-almost-empty.svg);");
+            ui->tsSoc->setStyleSheet("image: url(:/img/res/battery-almost-empty.svg);");
         } else if (tsBatteryData.minSoc > 40 && tsBatteryData.minSoc <= 70) {
-            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-almost-full.svg);");
+            ui->tsSoc->setStyleSheet("image: url(:/img/res/battery-almost-full.svg);");
         } else {
-            ui->lvSoc->setStyleSheet("image: url(:/img/res/battery-full.svg);");
+            ui->tsSoc->setStyleSheet("image: url(:/img/res/battery-full.svg);");
         }
-        ui->lvSoc->setToolTip(QString("%1 %").arg(tsBatteryData.minSoc));
+        ui->tsSoc->setToolTip(QString("%1 %").arg(tsBatteryData.minSoc));
 
     } else {
         ui->minSoc->setText("Invalid");
         ui->maxSoc->setText("Invalid");
-        ui->lvSoc->setStyleSheet("");
-        ui->lvSoc->setToolTip("");
+        ui->tsSoc->setStyleSheet("");
+        ui->tsSoc->setToolTip("");
     }
 
     if (tsBatteryData.tempValid) {
