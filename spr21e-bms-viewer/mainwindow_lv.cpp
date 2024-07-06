@@ -80,9 +80,9 @@ void MainWindow::update_ui_lv(LV_Accu::lv_battery_data_t data)
         ui->maxTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.maxTemp, 4, 'f', 1));
         ui->avgTemp_LV->setText(QString("%1 °C").arg(lvBatteryData.avgTemp, 4, 'f', 1));
 
-        if (lvBatteryData.maxTemp <= 25) {
+        if (lvBatteryData.maxTemp <= 30) {
             ui->lvTemperature->setStyleSheet("image: url(:/img/res/temp-cold.svg);");
-        } else if (lvBatteryData.maxTemp > 25 && lvBatteryData.maxTemp <= 50) {
+        } else if (lvBatteryData.maxTemp > 30 && lvBatteryData.maxTemp <= 50) {
             ui->lvTemperature->setStyleSheet("image: url(:/img/res/temp-mid.svg);");
         } else {
             ui->lvTemperature->setStyleSheet("image: url(:/img/res/temp-hot.svg);");

@@ -105,7 +105,7 @@ void MainWindow::ts_link_available(bool available)
     if (available) {
         ui->tsConnectionStatus->setStyleSheet("image: url(:/img/res/hex-check.svg);");
         ui->tsConnectionStatus->setToolTip("Connected");
-        ui->reqTsActive->setEnabled(false);
+        ui->reqTsActive->setEnabled(true);
         ui->btnConfig->setEnabled(true);
         ui->tsTakeControl->setEnabled(true);
         ui->cbAlertOnErr->setEnabled(true);
@@ -246,9 +246,9 @@ void MainWindow::update_ui_ts_stats()
         ui->maxTemp->setText(QString("%1 °C").arg(tsBatteryData.maxTemp, 4, 'f', 1));
         ui->avgTemp->setText(QString("%1 °C").arg(tsBatteryData.avgTemp, 4, 'f', 1));
 
-        if (tsBatteryData.maxTemp <= 25) {
+        if (tsBatteryData.maxTemp <= 30) {
             ui->tsTemperature->setStyleSheet("image: url(:/img/res/temp-cold.svg);");
-        } else if (tsBatteryData.maxTemp > 25 && tsBatteryData.maxTemp <= 50) {
+        } else if (tsBatteryData.maxTemp > 30 && tsBatteryData.maxTemp <= 50) {
             ui->tsTemperature->setStyleSheet("image: url(:/img/res/temp-mid.svg);");
         } else {
             ui->tsTemperature->setStyleSheet("image: url(:/img/res/temp-hot.svg);");
