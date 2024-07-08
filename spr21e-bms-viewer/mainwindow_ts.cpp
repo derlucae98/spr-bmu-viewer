@@ -316,7 +316,7 @@ void MainWindow::update_ui_ts_stats()
 
     if (tsBatteryData.errorCode == TS_Accu::ERROR_NO_ERROR) {
         ui->tsAccuStatus->setStyleSheet("border-image: url(:/img/res/circle-check.svg);");
-    } else if (tsBatteryData.errorCode == TS_Accu::ERROR_AMS_FAULT || tsBatteryData.errorCode == TS_Accu::ERROR_IMD_FAULT) {
+    } else if (tsBatteryData.errorCode & TS_Accu::ERROR_AMS_FAULT || tsBatteryData.errorCode & TS_Accu::ERROR_IMD_FAULT) {
         ui->tsAccuStatus->setStyleSheet("border-image: url(:/img/res/circle-warning.svg);");
     } else if (tsBatteryData.errorCode == TS_Accu::ERROR_SDC_OPEN) {
         ui->tsAccuStatus->setStyleSheet("border-image: url(:/img/res/circle-info-ok.svg);");
